@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Bean Validation | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Bean Validation</h2>
+            <div class="post-date">2020-06-01</div>
+            
+            <div class="post-content">
+              <h2 id="background">Background</h2>
+<ol>
+<li>之前一直有用 Spring Boot Web 集成的 Bean Validation , 也写了自定义的Bean Validator (一般公司也仅用到这块) 对于JSR标准定义了哪些有些模糊</li>
+<li>Service层使用 Bean Validation</li>
+<li>关于Bean Validation的单元测试</li>
+<li>Bean Validation 源码Debug</li>
+</ol>
+<h2 id="definition">Definition</h2>
+<h3 id="bean-definition">Bean Definition</h3>
+<p>POJO规范</p>
+<ol>
+<li>所有属性都必须是private</li>
+<li>所有外部访问必须通过setter、getter</li>
+<li>不能有extend</li>
+<li>不能有implments</li>
+<li>不能包含预定注解，如@Entity public class Hello</li>
+</ol>
+<blockquote>
+<p>POJO是一个简单的、普通Java对象，特点是有private的属性和public的getter、setter，除此之外不具有任何特殊角色，不继承或不实现任何其它Java框架的类或接口。</p>
+</blockquote>
+<h4 id="javabean">JavaBean</h4>
+<p>JavaBean 是一种JAVA语言写成的可重用组件。JavaBean符合一定规范编写的Java类，不是一种技术，而是一种规范。它的方法命名，构造及行为必须符合特定的约定：</p>
+<ol>
+<li>所有属性为private。</li>
+<li>这个类必须具有一个公共的(public)无参构造函数</li>
+<li>private属性必须提供public的getter和setter来给外部访问，并且方法的命名也必须遵循一定的命名规范。 。</li>
+<li>这个类应是可序列化的，要实现serializable接口。</li>
+</ol>
+<h4 id="spring-bean">Spring Bean</h4>
+<p>SpringBean是受Spring管理的对象。所有能受Spring容器管理的对象，都可以成为SpringBean。</p>
+<h3 id="validation-defionition">Validation Defionition</h3>
+<p>JSR -&gt; JavaSpecification Requests的缩写,意思是“Java 规范提案”</p>
+<table>
+<thead>
+<tr>
+<th>Specification</th>
+<th>Version</th>
+<th>最低java版本</th>
+<th>Link</th>
+<th>Core</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSR303</td>
+<td>Bean Validation 1.0</td>
+<td>java6</td>
+<td><a href="https://jcp.org/en/jsr/detail?id=303">JCP</a></td>
+<td>Hibernate 对标准进行实现</td>
+</tr>
+<tr>
+<td>JSR349</td>
+<td>Bean Validation 1.1</td>
+<td>java6</td>
+<td><a href="https://jcp.org/en/jsr/detail?id=349">JCP</a></td>
+<td>增加校验方法和返回值...</td>
+</tr>
+<tr>
+<td>JSR380</td>
+<td>Bean Validation 2.0</td>
+<td>java8</td>
+<td><a href="https://jcp.org/en/jsr/detail?id=380">JCP</a></td>
+<td>add more function</td>
+</tr>
+</tbody>
+</table>
+<p>以上具体功能和提案内容可以详细看pdf</p>
+<p>链接：https://pan.baidu.com/s/1r388nywILZI41f6iQ6bTPA<br>
+提取码：rm7f</p>
+<h2 id="how-to-use">How to Use</h2>
+<p><a href="https://snailclimb.gitee.io/springboot-guide/#/./docs/advanced/spring-bean-validation">spring boot 指南 controller service unit bean Validation</a></p>
+<h3 id="写在最后">写在最后</h3>
+<p>Bean Validation 1.0 中的提案一段话</p>
+<p>Validating data is a common task that is copied in many different layers of an application, from the presentation tier to the persistentce layer. Many times the exact same validations will have to be implemented in each separate validation framework, proving time consuming and error-prone. To prevent having to re-implement these validations at each layer, many developers will bundle validations directly into their classes, cluttering them with copied validation code that is, in fact, meta-data about the class itself.</p>
+<p>This JSR will define a meta-data model and API for JavaBean validation. The default meta-data source will be annotations, with the abilty to override and extend the meta-data through the use of XML validation descriptors. It is expected that the common cases will be easily accomplished using the annotations, while more complex validations or context-aware validation configuration will be available in the XML validation descriptors.</p>
+<p>The validation API developed by this JSR will not be specific to any one tier or programming model. It will specifically not be tied to either the web tier or the persistence tier, and will be available for both server-side application programming, as well as rich client Swing application developers. This API is seen as a general extension to the JavaBeans object model, and as such is expected to be used as a core component in other specifications, such as JSF, JPA, and Bean Binding.</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/jwi5yTAXq/" class="tag">
+                    Java 基础
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/Spring/" class="tag">
+                    Spring
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/regex-match/">
+                  <h3 class="post-title">
+                    正则最短匹配
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

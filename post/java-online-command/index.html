@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Java 线上常见命令 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Java 线上常见命令</h2>
+            <div class="post-date">2020-10-10</div>
+            
+            <div class="post-content">
+              <h1 id="overview">Overview</h1>
+<ul>
+<li>定位Java进程</li>
+<li>Java 进程状态</li>
+<li>Java 启动参数</li>
+<li>Jvm 调优实战</li>
+<li>Other Command</li>
+</ul>
+<p><strong>以下命令和测试均在Java8环境执行,有些命令可能因版本情况不适用.</strong></p>
+<h2 id="定位java进程">定位java进程</h2>
+<ol>
+<li>利用java命令查看进程情况</li>
+</ol>
+<blockquote>
+<p><code>jps -l</code> -&gt; <code>/proc/pid</code></p>
+</blockquote>
+<ol start="2">
+<li>利用系统命令搜索进程</li>
+</ol>
+<blockquote>
+<p><code>ps -ef |grep &quot;process_name&quot;</code></p>
+</blockquote>
+<h2 id="java-进程状态">Java 进程状态</h2>
+<p>java进程状态有哪些?</p>
+<ol>
+<li>查看的pid (即如何定位java进程)</li>
+<li>当前进程启动的参数信息</li>
+<li>所占用的内存 cpu 磁盘空间等</li>
+<li>jvm状态(gc信息 堆信息 栈信息等)</li>
+</ol>
+<h3 id="当前进程启动的参数信息">当前进程启动的参数信息</h3>
+<p>本机的初始化参数: <code>java -XX:+PrintFlagsInitial</code></p>
+<p>进程启动参数: <code>jps -v</code> 可以查看java进程启动时所带的参数信息</p>
+<p>进程占用端口: <code>netstat -anpo |grep pid</code></p>
+<p>进程情况: <code>ps -ef |grep pid</code></p>
+<h3 id="所占用的内存-cpu-磁盘空间等">所占用的内存 cpu 磁盘空间等</h3>
+<p>内存占用情况 <code>pmap -d pid</code> 循环打印内存占用 <code>while true; do pmap -d 3447 | tail -1; sleep 2; done</code></p>
+<p>文件夹大小 <code>du -sh dir_name</code></p>
+<p>当前磁盘大小 <code>df -h .</code></p>
+<blockquote>
+<p>ls -l 命令显示的是这个目录节点信息占的大小,du 命令计算的这个目录下所有文件数据的总和。</p>
+</blockquote>
+<h4 id="线程状态">线程状态</h4>
+<p>linux 进程的线程数: <code>pstree -p pid</code> <code>ps -Lf pid</code></p>
+<p>jvm 当前线程数: <code>jstack pid | grep 'java.lang.Thread.State' | wc -l</code></p>
+<p>当前线程都处于什么状态:  <code>jstack pid | 'java.lang.Thread.State' | grep 'java.lang.Thread.State' | sort | uniq -c |sort -n</code></p>
+<p>线程状态含义 及监测</p>
+<pre><code>     9    java.lang.Thread.State: RUNNABLE
+      2    java.lang.Thread.State: TIMED_WAITING (parking)
+      1    java.lang.Thread.State: TIMED_WAITING (sleeping)
+      2    java.lang.Thread.State: WAITING (on object monitor)
+     18    java.lang.Thread.State: WAITING (parking)
+</code></pre>
+<p>java 线程状态文章 =&gt; <a href="https://blog.csdn.net/yinwenjie/article/details/84728631">jstack java线程</a></p>
+<h3 id="jvm状态">JVM状态</h3>
+<p>jvm内存占用状态: <code>jmap -heap</code></p>
+<p>线上gc查看: <code>jstat -gc pid</code></p>
+<p>栈日志导出: <code>jstack pid &gt; jstack.log</code></p>
+<p>堆日志导出: <code>jmap -dump:format=b,file=heap.log pid</code></p>
+<p>查找内存占用: <code>jmap -histo pid| head -20</code></p>
+<p>GC原因查询: <code>jstat -gccause pid</code></p>
+<p>类加载器时间: <code>jstat -class pid</code></p>
+<p>查看垃圾收集器默认=&gt; <code>java -XX:+PrintCommandLineFlags -version</code></p>
+<p>查看垃圾收集器当前进程 =&gt; <code>jmap -heap pid |grep GC</code></p>
+<blockquote>
+<p>Concurrent Mark-Sweep GC ：CMS回收器<br>
+　Mark Sweep Compact GC：串行GC（Serial GC）<br>
+　Parallel GC with 2 thread(s)： 并行GC（ParNew）</p>
+</blockquote>
+<p><a href="https://www.cnblogs.com/grey-wolf/p/9217497.html">调整垃圾收集器</a></p>
+<h2 id="java-启动参数">Java 启动参数</h2>
+<ol>
+<li>jvm版本对应的启动参数</li>
+<li>启动参数分类(额外日志型，项目优化)</li>
+</ol>
+<h3 id="official-guide">Official Guide</h3>
+<table>
+<thead>
+<tr>
+<th>官方文档</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html">Java HotSpot VM Options</a></td>
+<td>HotSpotVM 参数</td>
+</tr>
+<tr>
+<td><a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/java.html">Java SE 8 Documentation</a></td>
+<td>Java8 参数文档</td>
+</tr>
+<tr>
+<td><a href="https://docs.oracle.com/en/java/javase/11/vm/preface.html#GUID-1279D876-42D1-46EB-9D6A-FA56BE259146">Java11 Virtual Machine Guide</a></td>
+<td>Java11 虚拟机指引</td>
+</tr>
+</tbody>
+</table>
+<h3 id="项目常见参数配置">项目常见参数配置</h3>
+<p>其配置的就是 堆、栈、元空间、新生代老年代、垃圾收集器。</p>
+<p>①<code>堆</code>的大小 一般设置成一样的,防止内存在增加或者减少时的内存抖动<br>
+-Xms1024m （堆最大大小）<br>
+-Xmx1024m （堆默认大小）</p>
+<p>②<code>栈</code>的最大深度大小 其值越大 创建线程数越少,其值越小 栈的深度越小<br>
+-Xss256k （棧最大深度大小）</p>
+<p>③<code>元空间</code>大小 spring boot在启动时会load大量的类和卸载大量的类</p>
+<p>-XX:MetaspaceSize=128m （元空间默认大小）<br>
+-XX:MaxMetaspaceSize=128m （元空间最大大小）</p>
+<p>④Other 其他</p>
+<p>-Xmn256m （新生代大小）</p>
+<p>-XX:SurvivorRatio=8 （新生代分区比例 8:2）<br>
+-XX:+UseConcMarkSweepGC （指定使用的垃圾收集器，这里使用CMS收集器）<br>
+-XX:+PrintGCDetails （打印详细的GC日志）</p>
+<p>知识点：</p>
+<p>JDK8之后把-XX:PermSize 和 -XX:MaxPermGen移除了，取而代之的是<br>
+-XX:MetaspaceSize=128m （元空间默认大小）<br>
+-XX:MaxMetaspaceSize=128m （元空间最大大小）</p>
+<blockquote>
+<p>元空间 =&gt; JDK 8开始把类的元数据放到本地化的堆内存(native heap)中，这一块区域就叫Metaspace.</p>
+<p>使用本地化的内存有什么好处呢？最直接的表现就是java.lang.OutOfMemoryError: PermGen 空间问题将不复存在。不过，让Metaspace变得无限大显然是不现实的，因此我们也要限制Metaspace的大小：</p>
+<p>使用-XX:MaxMetaspaceSize参数来指定Metaspace区域的大小。JVM默认在运行时根据需要动态地设置MaxMetaspaceSize的大小。</p>
+</blockquote>
+<p>Spring Boot 项目启动就进行FullGc的问题</p>
+<blockquote>
+<p>以前只认为，Metaspace区是保存在本地内存中，是没有上限的，经查阅资料才发现，原来JDK8中，XX:MaxMetaspaceSize确实是没有上限的，最大容量与机器的内存有关；但是XX:MetaspaceSize是有一个默认值的：21M。问题就出在这里。</p>
+</blockquote>
+<h3 id="jvm关于元空间配置">JVM关于元空间配置</h3>
+<p>问题 =&gt; <a href="https://blog.csdn.net/liubenlong007/article/details/78143285">在工作过程中，遇到一个问题：Tomcat在重启或者发布的时候，会有多次的full GC。</a></p>
+<h3 id="额外日志">额外日志</h3>
+<h4 id="gc日志信息">GC日志信息</h4>
+<p><code>-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps</code></p>
+<p>输出gc日志到文件  <code>-Xloggc:/path/to/gc.log</code></p>
+<blockquote>
+<p>完整命令 java -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -Xloggc:gc.log</p>
+</blockquote>
+<h4 id="打印类加载信息">打印类加载信息</h4>
+<p>类加载 卸载信息 <code>-XX:+TraceClassLoading -XX:+TraceClassUnloading</code></p>
+<p><a href="https://gceasy.io/">GC日志在线分析</a></p>
+<h3 id="java命令行信息">java命令行信息</h3>
+<p>要获取VM命令行，请运行</p>
+<p><code>jcmd pid VM.command_line</code></p>
+<p>要查看JVM标志的完整列表，请运行</p>
+<p><code>jcmd pid VM.flags -all</code></p>
+<h2 id="jvm-调优实战">JVM 调优实战</h2>
+<p>首先为什么要调优?</p>
+<ol>
+<li>优化项目的性能,即减少GC</li>
+<li>减少应用的内存占用</li>
+<li>优化到什么程度</li>
+</ol>
+<p>调优步骤:</p>
+<ol>
+<li>
+<p>获取项目的jvm配置及相关信息 <code>jps -v</code></p>
+</li>
+<li>
+<p>获取项目的gc信息 <code>jstat -gccause</code></p>
+</li>
+<li>
+<p>获取项目的垃圾收集器和现在一些信息 <code>jmap -heap</code>   判断是否出现了内存泄露 使用<code>jmap -histo:live</code>可以强制进行FGC:</p>
+</li>
+</ol>
+<blockquote>
+<p>存泄露的判断方法是,当请求不断增加,有一部分内存没有被释放.内存没有被释放.认为即对象没有被释放-&gt;   <code>jmap -dump:live,file=path</code> 这个命令会进行full gc,并且输出文件 Jprofile</p>
+</blockquote>
+<ol start="4">
+<li>
+<p>对指标进行调优 FGC次数 理想状态FGC次数 频次越低越好(综合来看) 但是FGC次数的降低一般意味着内存的占用提升</p>
+</li>
+<li>
+<p>调整JVM 启动参数 .... 并加以观测</p>
+</li>
+</ol>
+<h3 id="常见手段">常见手段</h3>
+<p>调整堆大小到合适大小，减少GC次数</p>
+<p>适当通过 -Xmn”命令调节新生代大小，最大限度降低新对象直接进入老年代的情况</p>
+<h4 id="性能指标">性能指标</h4>
+<p>MinorGC 执行时间不到50ms； Minor GC 执行不频繁，约10秒一次； Full GC 执行时间不到1s； Full GC 执行频率不算频繁，不低于10分钟1次。</p>
+<h3 id="内存泄露观测">内存泄露观测</h3>
+<p><code>jmap -dump:format=b,file=myfile.hprof pid</code></p>
+<p>一般文件都比较大需要压缩 =&gt; 比如用 <code>zip xxx.zip file</code></p>
+<p>在7000端口启动服务，貌似查不出来啥: <code>jhat file.hprof</code></p>
+<p>以下是两个内存观测工具</p>
+<p><a href="https://www.ej-technologies.com/products/jprofiler/overview.html">Jprofile 日志文件查看</a></p>
+<p><a href="https://www.eclipse.org/mat/downloads.php">Memory Analyzer Tools</a></p>
+<h4 id="jvm-查看对象大小">JVM 查看对象大小</h4>
+<p>jmap  -histo  pid | head -20</p>
+<p>System.out.println(RamUsageEstimator.sizeOf(root))</p>
+<pre><code>     &lt;!--jol-core--&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.apache.lucene&lt;/groupId&gt;
+            &lt;artifactId&gt;lucene-core&lt;/artifactId&gt;
+            &lt;version&gt;4.0.0&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<h4 id="代码层面优化">代码层面优化</h4>
+<p>减少创建对象的数量； 减少使用全局变量和大对象；</p>
+<h2 id="other-command">Other Command</h2>
+<h3 id="项目管理">项目管理</h3>
+<ol>
+<li>生成软连接</li>
+</ol>
+<blockquote>
+<p><code>ln -s from to (文件,文件夹都可链接)</code></p>
+</blockquote>
+<h3 id="影响线上程序">影响线上程序</h3>
+<ol>
+<li>进行强制Gc</li>
+</ol>
+<blockquote>
+<p><code>jmap -histo:live</code></p>
+</blockquote>
+<h3 id="常见java-command">常见java command</h3>
+<h4 id="jinfo-命令">jinfo 命令</h4>
+<p>使用 jinfo 可以在不重启虚拟机的情况下，可以动态的修改 jvm 的参数。尤其在线上的环境特别有用</p>
+<pre><code>jinfo -flag +PrintGCDetails pid
+jinfo -flag +PrintGC pid
+</code></pre>
+<h3 id="实用的工具">实用的工具</h3>
+<h4 id="idea-debug线上代码">IDEA debug线上代码</h4>
+<pre><code>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=9190 -jar debug-demo.jar
+</code></pre>
+<p><a href="https://www.toutiao.com/a6820605776889905667/">相关配置Link</a></p>
+<h4 id="tcpdump抓包">tcpdump抓包</h4>
+<p>tcpdump -i eth0 -A -s0 port 9052</p>
+<blockquote>
+<p>-i 指定网卡 -A 表示使用 ASCII 字符串打印报文的全部数据 -s0 捕获所有数据，默认只抓96字节</p>
+</blockquote>
+<h2 id="写在最后">写在最后</h2>
+<p>以上命令要不断练习,在练习过程中不断体会jvm原理等.</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/jwi5yTAXq/" class="tag">
+                    Java 基础
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/nginx-load-balance/">
+                  <h3 class="post-title">
+                    记录 一个客户需要双节点服务的解决方案
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,619 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://boommanpro.cn/</id>
+    <title>BoomMan</title>
+    <updated>2021-01-11T07:32:55.006Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://boommanpro.cn/"/>
+    <link rel="self" href="https://boommanpro.cn/atom.xml"/>
+    <subtitle>爱生活 , 爱Coding .....</subtitle>
+    <logo>https://boommanpro.cn/images/avatar.png</logo>
+    <icon>https://boommanpro.cn/favicon.ico</icon>
+    <rights>All rights reserved 2021, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[Window Tcp 数据篡改]]></title>
+        <id>https://boommanpro.cn/post/window-tcp-update/</id>
+        <link href="https://boommanpro.cn/post/window-tcp-update/">
+        </link>
+        <updated>2021-01-07T09:53:28.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="背景">背景</h1>
+<p>什么时候需要修改TCP传输的数据 ? 如果我们知道TCP中的数据,并且可以修改,可以做什么 ?</p>
+<p>TCP数据修改思路:</p>
+<ol>
+<li>Windows平台 Winsock api 替换本机ddl</li>
+<li>Linux平台 netfilter 库</li>
+<li>通用 代理中间人攻击</li>
+</ol>
+<p>常见工具:</p>
+<ol>
+<li>WPE三剑客</li>
+<li>HookMe</li>
+<li>基于winsock的一系列工具</li>
+</ol>
+<p>因个人对dll等不熟悉,netfilter尝试失败等原因,遂采用代理中间人方式。</p>
+<p>但是了解tcp的都应该知道,tcp和http传输消息不同的是，tcp的包中只有源信息和目的信息,而http的应用层中包含了目的服务的信息。那么如果修改目的信息为中间人服务，那么原本的目的信息去哪里了?</p>
+<p>这里可以采用别人开发好的socks5代理服务，它基于dll代理，与中间人服务器建立连接，建立连接成功后，并且发送一个tcp包，里面包含了原始信息包。这样socks5服务器就有了中间人的条件。</p>
+<p>客户端主机 &lt;=&gt; 代理服务器  &lt;=&gt; 目标服务器</p>
+<h2 id="修改逻辑">修改逻辑</h2>
+<p>以golang代码为例</p>
+<pre><code>func proxy(dst io.Writer, src io.Reader, lead bool, errCh chan error) {
+	//这块使用的copy
+	var err error
+	//发送的规则
+	if lead {
+		//src是请求信息
+		// 问题是如何解密封包中的含义是什么,然后就可以编码修改发送和返回
+		bufReq := bufio.NewReader(src)
+		for ; ; {
+			//需要将发送指令接收到，然后重写 发送到服务端
+			var buf [128]byte
+			n ,_:=bufReq.Read(buf[:])
+			fmt.Printf(&quot;接收到实际客户端消息%s&quot;,string(buf[:n]))
+
+			dst.Write(([]byte)(string(buf[:n])+&quot;1&quot;))
+		}
+	} else {
+		//接受的规则
+		_, err = io.Copy(dst, src)
+	}
+
+	if tcpConn, ok := dst.(closeWriter); ok {
+		tcpConn.CloseWrite()
+	}
+	errCh &lt;- err
+}
+
+</code></pre>
+<p>假设tcp中的消息都是明文，且单个消息小于等于128，这样修改逻辑就完成的。当然具体需要和实际结合。</p>
+<p>消息修改，并且没有问题，需要严格遵守服务端消息格式，加密解密，盐值，序号等。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[2021年 Flag]]></title>
+        <id>https://boommanpro.cn/post/2021-flag/</id>
+        <link href="https://boommanpro.cn/post/2021-flag/">
+        </link>
+        <updated>2021-01-04T06:26:23.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="技术学习">技术学习</h1>
+<h2 id="golang">Golang</h2>
+<p>学习golang项目源码,并进行源码分享</p>
+<p><a href="https://github.com/fatedier/frp">fatedier/frp</a><br>
+<a href="https://github.com/minio/minio">minio/minio</a><br>
+<a href="https://github.com/buger/goreplay">buger/goreplay</a></p>
+<h2 id="java">Java</h2>
+<p>学习java项目源码,并进行源码分享<br>
+<a href="https://github.com/netty/netty">netty/netty</a><br>
+<a href="https://github.com/alibaba/nacos">nacos</a><br>
+<a href="https://github.com/alibaba/arthas">alibaba/arthas</a><br>
+<a href="https://github.com/apache/kafka">apache/kafka</a><br>
+<a href="https://github.com/elastic/elasticsearch">elastic/elasticsearch</a><br>
+<a href="https://github.com/apache/commons-lang">apache/commons-lang</a></p>
+<h2 id="spring">Spring</h2>
+<p>IOC 使用,hook<br>
+AOP 使用</p>
+<h2 id="存储层">存储层</h2>
+<p>针对存储层技术选型有对应解决方案<br>
+MySQL、MongoDb、ElasticSearch、Hbase。</p>
+<h2 id="算法层">算法层</h2>
+<p>LeetCode 目标1000题，现在474.</p>
+<h1 id="生活类">生活类</h1>
+<h2 id="生活分享">生活分享</h2>
+<p>按月定期进行生活分享，对每月做总结。</p>
+<h2 id="健身计划">健身计划</h2>
+<p>维持体重在125-130左右</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Spring Boot 2.4 外部化配置的改变]]></title>
+        <id>https://boommanpro.cn/post/spring-boot-external-config/</id>
+        <link href="https://boommanpro.cn/post/spring-boot-external-config/">
+        </link>
+        <updated>2021-01-04T03:15:15.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="official-guide">Official Guide</h2>
+<p><a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-Config-Data-Migration-Guide">官方升级指南</a></p>
+<p>熟悉外部化配置的同学应该知道，我们获取属性都是从 Bean =&gt; Environment中获取的，所以我们打印 Standard的getPropertySources()即可知道</p>
+<h2 id="同样是外部化配置-springprofilesactivedev">同样是外部化配置 spring.profiles.active=dev</h2>
+<p>2.3.5.RELEASE</p>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1609730299381.png" alt="" loading="lazy"></figure>
+<p>2.4.1</p>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1609730341477.png" alt="" loading="lazy"></figure>
+<h2 id="为什么做了如此改变">为什么做了如此改变</h2>
+<p>官方issue : <a href="https://github.com/spring-projects/spring-boot/issues/2404">#2404</a> =&gt;<a href="https://github.com/spring-projects/spring-boot/issues/3845">#3845</a></p>
+<p>即可了解到 =&gt;<br>
+2.4之前 =&gt; 即时我们采用外部化配置，也会有困惑,貌似外部化配置不生效的问题，因为他是按照外部化 dev =&gt; 内部 dev ,外部default,内部 default 这样加载</p>
+<p>2.4之后 =&gt; 按照之前顺序 先加载外部化 file,再加载内部的classpath文件. 这样只要外面配置了文件就一定会覆盖内部的，会生效。</p>
+<h2 id="24的外部化配置还有哪些">2.4的外部化配置还有哪些 ?</h2>
+<p>增加了组概念<br>
+增加了对容器化等支持<br>
+增加了方便的import 导入其他配置文件到environment 之间我们做过类似的事情 =&gt; <a href="https://boommanpro.cn/post/spring-boot-enableConfigurationProperties/">让@EnableConfigurationProperties的值注入到@Value中</a></p>
+<h2 id="本质上代码是怎么改的">本质上代码是怎么改的 ?</h2>
+<p>原本的配置文件加载类 <code>ConfigFileApplicationListener</code>标记了@Deprecated  favor of =&gt; <code>org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor</code> =&gt; <code>org.springframework.boot.context.config.ConfigDataEnvironment</code></p>
+<p>这样就改变了加载策略，从而减少使用困惑(明明配置了外部化文件，为什么会不生效呢?)</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[spring-boot-devtools 使用引发的一系列问题]]></title>
+        <id>https://boommanpro.cn/post/spring-boot-devtools-error/</id>
+        <link href="https://boommanpro.cn/post/spring-boot-devtools-error/">
+        </link>
+        <updated>2021-01-03T09:02:08.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>在看 gitee的一个开源项目 =&gt; <a href="https://gitee.com/huanzi-qch/base-admin.git">gitee-base-admin</a> 的时候,发现其中的项目日志通过websocket推送到客户端挺有意义的.个人项目可以加上这个小功能。</p>
+<p>但是 其实现是每个用户都新建线程去推日志, 线程数和用户数 1:1. 并且无法对集群日志监听.遂想实现更通用(优雅)的方法实现</p>
+<h2 id="改写思路">改写思路</h2>
+<ol>
+<li>将原本的读取本地日志文件 =&gt; logging的append机制 =&gt; append 多份 =&gt; 追加一份到自定义的 Appender</li>
+<li>Appender将消息写入到Dispatcher中进行分发处理</li>
+<li>将Dispatcher抽象为接口,做多份实现 以满足 单机基于内存的,集群基于mq中间件的情况</li>
+<li>将用户的websocket上下线推送 =&gt; 缓存n行(CircularFifoQueue)做首次推送,其他的消息做轮询用户推送,可以异步化防止单条消息阻塞时间长的问题。 新用户推送需要注意防止消息丢失问题</li>
+<li>coding</li>
+</ol>
+<h2 id="坑点出现了">坑点出现了</h2>
+<p>在项目启动的时候,启动没有报错，就是没有新消息过来，但是append也写入消息，但是就是取不到消息可以进行消费,后发现两个Dispatcher不是一个实例，饿汉式的单例失效了? 竟然不是一个类加载器?</p>
+<p>原因如下:</p>
+<p><code>spring-boot-devtools</code> 对项目的代码是 RestartClassLoader,jar包的代码则是App,又因为我们是通过logback构造的append,所以就算是项目的代码，构造方式，或者流程不一，导致类加载器不一样，最终体现在单例不是单例了。</p>
+<p>怎么解决呢? 不用devtools即可 !!! 或者百度dev-tools 配置 or jrebl不香吗</p>
+<h2 id="编写过程中的注意点">编写过程中的注意点</h2>
+<p>因为logging的优先级问题,所以不能采用bean的方式构造,我采用的是java spi机制实现多环境切换</p>
+<h2 id="classloader">ClassLoader</h2>
+<ol>
+<li>jar包隔离</li>
+<li>动态debug</li>
+</ol>
+<p>加载类实例的几种方式 ?</p>
+<ol>
+<li>Class.forName</li>
+<li>new</li>
+<li>ClassLoader.loadClass</li>
+<li>other 一些序列化什么的</li>
+<li>spi =&gt; ServiceLoader</li>
+</ol>
+<h2 id="classloader-一些点">ClassLoader 一些点</h2>
+<ol>
+<li>ClassLoader.loadClass 类加载器和当前加载的Class不一致时 会导致</li>
+</ol>
+<pre><code class="language-java">com.boommanpro.Parent cannot be cast to com.boommanpro.Parent
+</code></pre>
+<ol>
+<li>
+<p>new 方式使用的是当前代码所在类加载器加载，而不是调用当前代码的代码所在类加载器加载</p>
+</li>
+<li>
+<p>Class.forName运作时，通过Reflection.getCallerClass()，能够获取是谁调用了Class.forName，最终还是和new 一致性</p>
+</li>
+<li>
+<p>代码 Class有类加载器,线程有类加载器 ServiceLoader用线程的</p>
+</li>
+</ol>
+<h2 id="什么时候类会被加载">什么时候类会被加载</h2>
+<p>参照 <a href="https://www.cnblogs.com/zhixie/p/11766080.html">java类在何时被加载</a></p>
+<p>说明了以下几种方式</p>
+<ol>
+<li>main类</li>
+<li>创建类的实例 new创建子类的实例</li>
+<li>访问类的静态方法</li>
+<li>访问类的静态变量</li>
+<li>反射</li>
+</ol>
+<p>补充两点:</p>
+<ol start="6">
+<li>cast -&gt;       Object o = new Object(); Parent o2 = (Parent) o; 本质是 Parent.class.cast(o);</li>
+<li>instanceof   =&gt;  <code>java.lang.Class#isInstance</code></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[分布式id服务 tinyId源码学习]]></title>
+        <id>https://boommanpro.cn/post/tinyid/</id>
+        <link href="https://boommanpro.cn/post/tinyid/">
+        </link>
+        <updated>2020-12-28T06:26:59.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>我们大致了解常见分布式id有9种解决方案如下:</p>
+<ol>
+<li>Redis自增id</li>
+<li>UUID</li>
+<li>数据库id</li>
+<li>多主数据库id</li>
+<li>分段id</li>
+<li>snowflake</li>
+<li>基于snowflake的百度 uid-generator</li>
+<li>基于snowflake的美团 leaf</li>
+<li>滴滴的分段 tinyId</li>
+</ol>
+<p>基于高可用,高性能,简单易用性,使用tinyId和学习tinyId源码.<br>
+<code>关于tinyid，并不是滴滴官方产品，只是滴滴拥有的代码。</code></p>
+<p><a href="https://github.com/didi/tinyid/wiki">tinyId-官方wiki</a></p>
+<p><img src="https://boommanpro.cn//post-images/1609137839166.png" alt="" loading="lazy"><br>
+代码行数统计<br>
+<img src="https://boommanpro.cn//post-images/1609137842127.png" alt="" loading="lazy"></p>
+<h2 id="简单使用">简单使用</h2>
+<pre><code class="language-shell">
+## git原版
+git clone https://github.com/didi/tinyid.git
+
+## cnpmjs 加速版本
+git clone https://github.com.cnpmjs.org/didi/tinyid.git
+
+</code></pre>
+<h2 id="源码分析点">源码分析点</h2>
+<ol>
+<li>项目模块 <code>tinyid-base</code>  <code>tinyid-client</code> <code>tinyid-server</code> 之间的关系</li>
+</ol>
+<pre><code>tinyid-base 
+1. SegmentId 中定义了号段核心实体，用于获取nextId()
+2. 定义公用的 IdGeneratorFactory,IdGenerator,SegmentIdService 接口，让client和server实现其各自方法。
+
+tinyid-server 是部署分布式id服务的
+
+tinyid-server是java client,需要自己install到本地,官方没有发布到maven仓库
+</code></pre>
+<ol start="2">
+<li>client IdGenerator 是如何保证高性能,高可用的</li>
+</ol>
+<pre><code>1. 高性能,不论调用的是nextId还是batch方法,本质是在本地生成的,如果超出了本地生成策略。去服务器获取Segment段的长度. 不必每次发送http请求获取。
+2. 高可用,客户端在resource配置 tinyid_client.properties文件,其参数 tinyid.server =&gt;
+#(tinyid.server=localhost:9999/gateway,ip2:port2/prefix,...)  用逗号分隔,达到负载均衡的效果。
+详情可看源码 com.xiaoju.uemc.tinyid.client.factory.impl.IdGeneratorFactoryClient#init
+当获取新的segment时会choose,算法是 random
+
+</code></pre>
+<ol start="3">
+<li>服务器如何搭建集群</li>
+</ol>
+<pre><code>为了防止服务端挂掉产生的单点问题。导致服务不可用,遂需要搭建集群，直接搭建多节点就行。
+
+关于mysql的多主数据源问题=&gt; com.xiaoju.uemc.tinyid.base.entity.SegmentId#init
+
+如果你有多个数据源达到数据库的高可用,需要配置数据库 delta=数据库个数
+remainder 从0按顺序递增
+
+</code></pre>
+<pre><code class="language-java">
+    /**
+     * 这个方法主要为了1,4,7,10...这种序列准备的
+     * 设置好初始值之后，会以delta的方式递增，保证无论开始id是多少都能生成正确的序列
+     * 如当前是号段是(1000,2000]，delta=3, remainder=0，则经过这个方法后，currentId会先递增到1002,之后每次增加delta
+     * 因为currentId会先递增，所以会浪费一个id，所以做了一次减delta的操作，实际currentId会从999开始增，第一个id还是1002
+     */
+    public void init() {
+        if (isInit) {
+            return;
+        }
+        synchronized (this) {
+            if (isInit) {
+                return;
+            }
+            long id = currentId.get();
+            if (id % delta == remainder) {
+                isInit = true;
+                return;
+            }
+            for (int i = 0; i &lt;= delta; i++) {
+                id = currentId.incrementAndGet();
+                if (id % delta == remainder) {
+                    // 避免浪费 减掉系统自己占用的一个id
+                    currentId.addAndGet(0 - delta);
+                    isInit = true;
+                    return;
+                }
+            }
+        }
+    }
+</code></pre>
+<ol start="4">
+<li><code>tinyid-server</code>  中是如何建立多数据源的</li>
+</ol>
+<pre><code>核心是 =&gt; org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource
+
+在读取envionment配置时,没见过的一个用法是 RelaxedPropertyResolver,可以根据前缀获取信息
+</code></pre>
+<ol start="5">
+<li><code>tinyid-server</code>的maven profiles配置学习</li>
+</ol>
+<pre><code>    &lt;profiles&gt;
+        &lt;profile&gt;
+            &lt;id&gt;online&lt;/id&gt;
+            &lt;properties&gt;
+                &lt;package.environment&gt;online&lt;/package.environment&gt;
+            &lt;/properties&gt;
+        &lt;/profile&gt;
+        &lt;profile&gt;
+            &lt;id&gt;offline&lt;/id&gt;
+            &lt;activation&gt;
+                &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
+            &lt;/activation&gt;
+            &lt;properties&gt;
+                &lt;package.environment&gt;offline&lt;/package.environment&gt;
+            &lt;/properties&gt;
+        &lt;/profile&gt;
+    &lt;/profiles&gt;
+
+    
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;${spring.version}&lt;/version&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;repackage&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+        &lt;resources&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/resources/${package.environment}&lt;/directory&gt;
+            &lt;/resource&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/resources/base&lt;/directory&gt;
+            &lt;/resource&gt;
+        &lt;/resources&gt;
+    &lt;/build&gt;
+
+</code></pre>
+<p>不过貌似一般不这么用<sub>V</sub></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[嵌入式数据库 Sqlite]]></title>
+        <id>https://boommanpro.cn/post/sqlite/</id>
+        <link href="https://boommanpro.cn/post/sqlite/">
+        </link>
+        <updated>2020-12-21T07:51:58.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="嵌入式数据库">嵌入式数据库</h2>
+<p>技术选型 Sqlite和h2</p>
+<p>h2建表完字段名称是大写,和原本设计思路有偏差，放弃，遂采用Sqllite</p>
+<p>并且navicat可以编辑Sqlite，而不能编辑h2</p>
+<h2 id="use-in-spring-boot">Use in Spring Boot</h2>
+<p>整合Spring data jpa  jdbcTemplate</p>
+<pre><code>
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.xerial&lt;/groupId&gt;
+            &lt;artifactId&gt;sqlite-jdbc&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.zsoltfabok&lt;/groupId&gt;
+            &lt;artifactId&gt;sqlite-dialect&lt;/artifactId&gt;
+            &lt;version&gt;1.0&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<pre><code class="language-properties">spring.datasource.url=jdbc:sqlite::resource:db/sqlite/db_freyr_test.db
+spring.datasource.username=
+spring.datasource.password=
+spring.datasource.driver-class-name=org.sqlite.JDBC
+spring.datasource.platform=org.hibernate.dialect.SQLiteDialect
+</code></pre>
+<p>到此 jpa和jdbcTemplate 整合完毕</p>
+<h2 id="遇到问题总结">遇到问题总结</h2>
+<pre><code>Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.relational.core.dialect.Dialect]: Factory method 'jdbcDialect' threw exception; nested exception is org.springframework.data.jdbc.repository.config.DialectResolver$NoDialectException: Cannot determine a dialect for org.springframework.jdbc.core.JdbcTemplate@51eb0e84. Please provide a Dialect.
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:650)
+	... 34 common frames omitted
+Caused by: org.springframework.data.jdbc.repository.config.DialectResolver$NoDialectException: Cannot determine a dialect for org.springframework.jdbc.core.JdbcTemplate@51eb0e84. Please provide a Dialect.
+	at org.springframework.data.jdbc.repository.config.DialectResolver.lambda$getDialect$2(DialectResolver.java:80)
+	at java.util.Optional.orElseThrow(Optional.java:290)
+	at org.springframework.data.jdbc.repository.config.DialectResolver.getDialect(DialectResolver.java:79)
+	at org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration.jdbcDialect(AbstractJdbcConfiguration.java:144)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
+	... 35 common frames omitted
+
+</code></pre>
+<p><a href="https://github.com/taosdata/TDengine/issues/3678">2.3.4.RELEASE 版本会有问题</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[SpringElUtil 工具类]]></title>
+        <id>https://boommanpro.cn/post/springelutil-code/</id>
+        <link href="https://boommanpro.cn/post/springelutil-code/">
+        </link>
+        <updated>2020-12-17T11:05:16.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="springelutil-工具类">SpringElUtil 工具类</h1>
+<p>在项目中频繁使用SpringEL表达式进行数据解析,过滤等操作. 遂抽取工具类使用</p>
+<h2 id="show-me-code">Show me code</h2>
+<pre><code class="language-java">
+import java.util.concurrent.ConcurrentHashMap;
+
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationContextException;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.expression.*;
+import org.springframework.expression.Expression;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
+import org.springframework.expression.spel.support.StandardTypeLocator;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author boommanpro
+ * @date 2020/12/17 17:51
+ */
+@Component
+public class SpringElUtil implements ApplicationContextAware {
+
+    private static StandardEvaluationContext context;
+
+    private static ExpressionParser expressionParser;
+
+    private static final ConcurrentHashMap&lt;String, Expression&gt; EXPRESSION_MAP = new ConcurrentHashMap&lt;&gt;();
+
+    public static &lt;T&gt; T getValue(String expressionString) {
+        return getValue(expressionString, null);
+    }
+
+    @SuppressWarnings(&quot;all&quot;)
+    public static &lt;T&gt; T getValue(String expressionString, Object rootObject) {
+        Expression expression = getExpression(expressionString);
+        return ((T) expression.getValue(context, rootObject));
+    }
+
+
+    private static Expression getExpression(String expressionString) {
+        return EXPRESSION_MAP.computeIfAbsent(expressionString, s -&gt; expressionParser.parseExpression(s));
+    }
+
+
+    @Override
+    @SuppressWarnings(&quot;all&quot;)
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        if (applicationContext instanceof ConfigurableApplicationContext) {
+            ConfigurableApplicationContext ac = (ConfigurableApplicationContext) applicationContext;
+            context = new StandardEvaluationContext();
+            context.addPropertyAccessor(new BeanExpressionContextAccessor());
+            context.addPropertyAccessor(new BeanFactoryAccessor());
+            context.addPropertyAccessor(new MapAccessor());
+            context.addPropertyAccessor(new EnvironmentAccessor());
+            context.setBeanResolver(new BeanFactoryResolver(ac.getBeanFactory()));
+            context.setTypeLocator(new StandardTypeLocator(ac.getBeanFactory().getBeanClassLoader()));
+            //初始化上下文
+            expressionParser = new SpelExpressionParser();
+        } else {
+            throw new ApplicationContextException(&quot;can't cast ConfigurableApplicationContext&quot;);
+        }
+    }
+}
+
+</code></pre>
+<h2 id="example">Example</h2>
+<pre><code>#result = 1 + 2
+#{6.0221415E+23D instanceof T(Double)}
+intArray[idx]-- le 0xFF
+{1, 2, 3}
+(true and false) || variable not null ? 1.0f : 0.0f
+Members.?[Nationality == 'Serbian']
+'5.00' matches '\^-?\\d+(\\.\\d{2})?$'
+new java.lang.String('stringLiteral')
+${myPropertyKey}
+@myBean.instanceMethod(1, 2)
+T(String).CASE_INSENSITIVE_ORDER
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[VSCode - Alibaba Cloud Toolkit]]></title>
+        <id>https://boommanpro.cn/post/vscode-alibaba-cloud-toolkit/</id>
+        <link href="https://boommanpro.cn/post/vscode-alibaba-cloud-toolkit/">
+        </link>
+        <updated>2020-12-09T11:04:00.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>前端在内网开发部署测试环境很慢,或者说很繁琐。之前在互联网环境,我们都是使用Jenkins做打包部署工作的。这一次介绍 <code>Alibaba Cloud Toolkit</code> 简化部署流程，或者一键部署项目。</p>
+<h2 id="插件地址">插件地址</h2>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=alibabacloud-cloudtoolkit.toolkit-vscode">Alibaba Cloud Toolkit</a></p>
+<h2 id="下载安装extension">下载安装Extension</h2>
+<p>互联网直接在vscode左侧搜索下载就行。下图为在线下载</p>
+<ol>
+<li>
+<p>下载过程<br>
+<img src="https://boommanpro.cn//post-images/1607512179792.png" alt="" loading="lazy"></p>
+</li>
+<li>
+<p>安装</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1607512218202.png" alt="" loading="lazy"></figure>
+<h2 id="使用教程-部署到私有服务器上">使用教程 部署到私有服务器上</h2>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1607512315392.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://boommanpro.cn//post-images/1607512518138.png" alt="" loading="lazy"></figure>
+<h2 id="写在最后">写在最后</h2>
+<p>VSCode - Alibaba Cloud Toolkit 和 IDEA 的plugins 大同小异，使用起来都是一样的。如果上述不满足你的要求，可以对build的前后做aop,增加相关脚本，如备份等等。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[高并发数据爬取实战]]></title>
+        <id>https://boommanpro.cn/post/concurrent-crawler/</id>
+        <link href="https://boommanpro.cn/post/concurrent-crawler/">
+        </link>
+        <updated>2020-12-01T07:39:39.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>有一个1300w的<code>record.csv</code>文件,其内容示例如下，文件大小2G。csv文件用逗号分隔,第一部分是唯一id,第二部分是爬取地址。</p>
+<pre><code class="language-csv">recordid,entranceimage
+adfa-20932-ada-daf1a,http://xxxxx
+adfa-20932-ada-dafa2,http://xxxxx
+</code></pre>
+<p>需求:</p>
+<ol>
+<li>单机爬取文件，具有容灾机制</li>
+<li>性能要高，具有稳定性</li>
+<li>部署使用起来要简单，遂不依赖mysql,mongodb等记录，纯文件</li>
+</ol>
+<h2 id="需求分解">需求分解</h2>
+<ol>
+<li>要有容灾机制，遂使用status.txt记录上一次执行到record.csv文件多少行。方便服务重启后能继续上一次的记录跑。</li>
+<li>要具有稳定性，不能跑不起来吧。单文件2G不能一次加载到内存中，遂采用nio按行(readLine)读取 <code>record.csv</code>文件</li>
+<li>性能要高 =&gt; 采用多线程工作。又因为容灾需要从上一次跑，遂不能丢失。采用生产者将Task放到线程池里，消费者 <code>LinkedBlockingQueue&lt;Future&lt;T&gt;&gt;</code>用队列有序消费。记录日志和status.txt文件行。</li>
+<li>稳定性高，减少项目GC次数，对于频繁创建对象，情况允许创建对象池。</li>
+<li>爬取数据的结果是图片，直接存储到本地文件，遂采用<code>零拷贝</code></li>
+</ol>
+<pre><code class="language-java">     InputStream is2 = httpUrlConn.getInputStream();
+     Path target = Paths.get(&quot;&quot;,imageData.getPath());
+     Files.createDirectories(target.getParent());
+     Files.copy(is2, target, StandardCopyOption.REPLACE_EXISTING);
+</code></pre>
+<h2 id="相关资料总结">相关资料总结</h2>
+<p>优化方案</p>
+<ol>
+<li>Files 去readLine <code>BufferedReader reader = Files.newBufferedReader(Paths.get(DATA_FILE_NAME), StandardCharsets.UTF_8);</code></li>
+<li>status.txt只记录总行数 log.txt记录日志 分开记录</li>
+<li>对象池 在代码中减少对象的创建 减少jvm gc</li>
+<li>基于zero-copy进行拷贝文件<a href="https://blog.csdn.net/weixin_43513980/article/details/105835427">zero-copy</a></li>
+<li>单生产者 消费者 毒丸问题 <a href="https://blog.csdn.net/hnhygkx/article/details/105144615">消费者停止问题</a></li>
+<li>HttpURLConnection 连接复用问题 =&gt;<a href="https://blog.csdn.net/u012216753/article/details/78084327">KeepAlive</a></li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java类注释解析]]></title>
+        <id>https://boommanpro.cn/post/java-parser/</id>
+        <link href="https://boommanpro.cn/post/java-parser/">
+        </link>
+        <updated>2020-11-19T09:31:20.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="需求背景">需求背景</h2>
+<p>在项目中有一些数据转换工具方法如下</p>
+<ul>
+<li>ip整形转字符串</li>
+<li>时间戳转换</li>
+<li>字典转换<br>
+大约有30-40种<br>
+这些都维护在java代码中，之前是共同维护文档。但随着代码升级和更新，人员变动等原因，文档会存在维护不及时，文档和代码版本 tag对应不上的情况。</li>
+</ul>
+<p>遂思考采用java代码 =&gt; 文档的形式进行维护，方便其他人员去查看和使用。</p>
+<h2 id="开源工具">开源工具</h2>
+<p><a href="https://github.com/geningxiang/javadoc-help">javadoc-help</a></p>
+<p>方法 =&gt;</p>
+<ol>
+<li>git clone https://github.com/geningxiang/javadoc-help.git</li>
+<li>修改如下文件的如下信息<br>
+<img src="https://boommanpro.cn//post-images/1605779488382.png" alt="" loading="lazy"></li>
+<li>进行相关扩展</li>
+</ol>
+<p>如 =&gt; 将读取到的信息存储在excel中或者mysql中<br>
+4. 通过maven 命令将插件install 到本地<br>
+5. 在项目中导入maven插件<br>
+6. 执行命令</p>
+<pre><code>mvn clean package -Dmaven.test.skip=true
+
+mvn javadoc-mvn:javaDoc
+</code></pre>
+]]></content>
+    </entry>
+</feed>

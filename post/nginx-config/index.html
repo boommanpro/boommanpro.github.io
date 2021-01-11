@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Nginx 常见配置 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Nginx 常见配置</h2>
+            <div class="post-date">2020-01-11</div>
+            
+            <div class="post-content">
+              <h2 id="nginx-安装">Nginx 安装</h2>
+<p>vim nginx-install.sh</p>
+<pre><code class="language-shell">#!/bin/bash
+
+
+nginx_file=&quot;nginx-1.16.1&quot;
+
+nginx_tar_gz=$nginx_file&quot;.tar.gz&quot;
+
+
+
+echo &quot;开始执行&quot; 
+
+tar -zxf $nginx_tar_gz
+
+mv $nginx_file /usr/local/$nginx_file
+
+
+cd /usr/local/$nginx_file
+
+pwd
+
+
+yum -y install gcc-c++ &amp;&amp; yum -y install pcre pcre-devel &amp;&amp; yum -y install zlib zlib-devel &amp;&amp; yum -y install openssl openssl-devel
+
+mkdir -p /var/temp/nginx
+
+./configure \
+--prefix=/usr/local/nginx \
+--pid-path=/var/run/nginx/nginx.pid \
+--lock-path=/var/lock/nginx.lock \
+--error-log-path=/usr/local/nginx/log/error.log \
+--http-log-path=/usr/local/nginx/log/access.log \
+--with-http_gzip_static_module \
+--with-http_auth_request_module \
+--with-http_ssl_module \
+--http-client-body-temp-path=/var/temp/nginx/client \
+--http-proxy-temp-path=/var/temp/nginx/proxy \
+--http-fastcgi-temp-path=/var/temp/nginx/fastcgi \
+--http-uwsgi-temp-path=/var/temp/nginx/uwsgi \
+--http-scgi-temp-path=/var/temp/nginx/scgi
+
+make &amp;&amp; make install
+
+echo &quot;安装完毕&quot;
+
+
+</code></pre>
+<h2 id="link-百度网盘">Link 百度网盘</h2>
+<p>包含nginx源码 及安装脚本<br>
+链接：https://pan.baidu.com/s/1Hdb4e666BS4e-iq5SeFdOw<br>
+提取码：96fv</p>
+<h2 id="域名访问配置">域名访问配置</h2>
+<pre><code class="language-nginx.conf">
+    upstream yapi{
+        server 127.0.0.1:40001;
+    }
+    server {
+    listen 80;
+    server_name  yapi.inno-server.com;
+    access_log     /var/log/nginx/yapi.example.com-access.log;
+    error_log     /var/log/nginx/yapi.example.com-error.log;
+    location / {
+        proxy_pass_header Server;
+        proxy_set_header Host $http_host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Scheme $scheme;
+        proxy_pass http://yapi;
+    }
+    }
+
+
+    server {
+    listen 80;
+    server_name  demo.inno-server.com;
+    access_log     /var/log/nginx/demo.example.com-access.log;
+    error_log     /var/log/nginx/demo.example.com-error.log;
+    
+    location = /index.html {
+            add_header Cache-Control &quot;no-cache, no-store&quot;;
+            root   /.../;
+    }
+
+    location /file/ {
+         root   /usr/local/wa-direct-query;
+    }
+
+    location /api/ {
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_set_header X-NginX-Proxy true;
+            proxy_pass http://127.0.0.1:30012;
+            proxy_redirect off;
+    }
+    }
+</code></pre>
+<h2 id="location-proxypass-配置-匹配问题">location &lt;-&gt; proxypass 配置 (匹配问题)</h2>
+<p><a href="https://blog.csdn.net/wyl9527/article/details/89671506">原文Link</a></p>
+<ol>
+<li>proxy_pass后面 <code>存在</code>    <code>/</code>  ; 则nginx不会把location中匹配的路径部分代理走;<br>
+result -&gt; proxy_pass +request</li>
+<li>proxy_pass后面<code>不存在</code>  <code>/</code> ; 则nginx会将location进行append<br>
+result -&gt; proxy_pass/location+request</li>
+</ol>
+<p>在nginx中配置proxy_pass时，如果在，相当于是绝对根路径，;如果没有/，则会把匹配的路径部分给代理走。</p>
+<pre><code># 第一种
+location  /abc
+    {
+        proxy_pass http://106.12.74.123:83/;
+        proxy_set_header Host   $host;
+        proxy_set_header X-Real-IP      $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+ 
+# 结论：会被代理到http://106.12.74.123/index.html 这个url
+ 
+ 
+ 
+# 第二种(相对于第一种，最后少一个 /)
+location  /abc
+    {
+        proxy_pass http://106.12.74.123:83;
+        proxy_set_header Host   $host;
+        proxy_set_header X-Real-IP      $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+ 
+# 结论：会被代理到http://106.12.74.123/abc/index.html 这个url
+ 
+ 
+ 
+第三种：
+location  /abc
+    {
+        proxy_pass http://106.12.74.123:83/linux/;
+        proxy_set_header Host   $host;
+        proxy_set_header X-Real-IP      $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+ 
+# 结论：会被代理到http://106.12.74.123/linux/index.html 这个url。
+ 
+ 
+ 
+# 第四种(相对于第三种，最后少一个 / )：
+location  /abc
+    {
+        proxy_pass http://106.12.74.123:83/linux;
+        proxy_set_header Host   $host;
+        proxy_set_header X-Real-IP      $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+ 
+# 结论：会被代理到http://106.12.74.123/linuxindex.html 这个url
+</code></pre>
+<h2 id="nginx-模拟安全认证网关">Nginx 模拟安全认证网关</h2>
+<pre><code> server {
+        listen       80;
+        server_name  localhost;
+
+
+         location /wadsj/ {
+             proxy_pass http://demo.inno-server.com/;
+         }
+ }
+</code></pre>
+<h2 id="nginx-配置中location-root-的注意事项">Nginx 配置中location root 的注意事项</h2>
+<p>在配置Nginx服务的时候，可以给不同的uri访问指向不同的位置，例如下面的配置：</p>
+<pre><code>server {
+       listen       80;
+       server_name  www.xx.com;
+
+       location / {
+          root   D:/www;      #定义默认根目录位置（windows系统）
+          index index.php index.html index.htm;   #定义首页索引文件的名称
+       }
+ 
+       location /abc {
+          root   D:/files/xx;      #定义其他请求的根目录位置（windows系统）
+          index index.php index.html index.htm;   #定义首页索引文件的名称
+       }
+}
+</code></pre>
+<p>关于 location和root后面加/和不加没什么区别.默认加上就行<br>
+ 这里的默认路径没有问题，而/abc这个路径要想正常访问，在“D:/files/xx”目录下还需要有一个abc目录，否则会抛出404异常</p>
+<h2 id="nginx的location-root-alias指令用法和区别">nginx的location、root、alias指令用法和区别</h2>
+<p>nginx指定文件路径有两种方式root和alias，指令的使用方法和作用域：<br>
+[root]<br>
+语法：root path<br>
+默认值：root html<br>
+配置段：http、server、location、if<br>
+[alias]<br>
+语法：alias path<br>
+配置段：location</p>
+<p>root与alias主要区别在于nginx如何解释location后面的uri，这会使两者分别以不同的方式将请求映射到服务器文件上。<br>
+root的处理结果是：root路径＋location路径<br>
+alias的处理结果是：使用alias路径替换location路径<br>
+alias是一个目录别名的定义，root则是最上层目录的定义。<br>
+还有一个重要的区别是alias后面必须要用“/”结束，否则会找不到文件的。。。而root则可有可无~~</p>
+<p>root实例：</p>
+<pre><code>location ^~ /t/ {
+     root /www/root/html/;
+}
+</code></pre>
+<pre><code>location ^~ /t/ {
+     root /www/root/html/;
+}
+</code></pre>
+<p>如果一个请求的URI是/t/a.html时，web服务器将会返回服务器上的/www/root/html/t/a.html的文件。</p>
+<p>alias实例：</p>
+<pre><code class="language-nginx">location ^~ /t/ {
+ alias /www/root/html/new_t/;
+}
+</code></pre>
+<pre><code class="language-nginx.conf">location ^~ /t/ {
+ alias /www/root/html/new_t/;
+}
+</code></pre>
+<p>如果一个请求的URI是/t/a.html时，web服务器将会返回服务器上的/www/root/html/new_t/a.html的文件。注意这里是new_t，因为alias会把location后面配置的路径丢弃掉，把当前匹配到的目录指向到指定的目录。</p>
+<p>注意：</p>
+<ol>
+<li>使用alias时，目录名后面一定要加&quot;/&quot;。</li>
+<li>alias在使用正则匹配时，必须捕捉要匹配的内容并在指定的内容处使用。</li>
+<li>alias只能位于location块中。（root可以不放在location中）</li>
+</ol>
+<h2 id="https证书配置腾讯云为例">https证书配置(腾讯云为例)</h2>
+<h2 id="nginx-常见配置参数">nginx 常见配置参数</h2>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>proxy_pass</code></td>
+<td>代理</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="nginx-常见用法">Nginx 常见用法</h2>
+<h3 id="nginx转发内网图片">Nginx转发内网图片</h3>
+<p>假设原本图片地址:</p>
+<blockquote>
+<p>http://xxx.xxx.xxx.xxx/static/v1/image/image_20191021/task/face.jpg</p>
+</blockquote>
+<p>-&gt;</p>
+<blockquote>
+<p>http://nginx:80/image_proxy?url=http://106.52.99.118/static/v1/image/image_20191021/task/face.jpg</p>
+</blockquote>
+<p>nginx 转发图片</p>
+<pre><code class="language-nginx.conf">    location /image_proxy {
+    if ($query_string ~*  ^(.*)url=(.*)$){
+           set $imageUrl $2;
+           proxy_pass $imageUrl;
+      }
+    }
+</code></pre>
+<h2 id="conf详细说明明">conf详细说明明</h2>
+<hr>
+<p>conf配置说明原文：http://www.cnblogs.com/xiaogangqq123/archive/2011/03/02/1969006.html</p>
+<pre><code>#运行用户  
+user www-data;      
+#启动进程,通常设置成和cpu的数量相等  
+worker_processes  1;  
+  
+#全局错误日志及PID文件  
+error_log  /var/log/nginx/error.log;  
+pid        /var/run/nginx.pid;  
+  
+#工作模式及连接数上限  
+events {  
+    use   epoll;             #epoll是多路复用IO(I/O Multiplexing)中的一种方式,但是仅用于linux2.6以上内核,可以大大提高nginx的性能  
+    worker_connections  1024;#单个后台worker process进程的最大并发链接数  
+    # multi_accept on;   
+}  
+  
+#设定http服务器，利用它的反向代理功能提供负载均衡支持  
+http {  
+     #设定mime类型,类型由mime.type文件定义  
+    include       /etc/nginx/mime.types;  
+    default_type  application/octet-stream;  
+    #设定日志格式  
+    access_log    /var/log/nginx/access.log;  
+  
+    #sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，对于普通应用，  
+    #必须设为 on,如果用来进行下载等应用磁盘IO重负载应用，可设置为 off，以平衡磁盘与网络I/O处理速度，降低系统的uptime.  
+    sendfile        on;  
+    #tcp_nopush     on;  
+  
+    #连接超时时间  
+    #keepalive_timeout  0;  
+    keepalive_timeout  65;  
+    tcp_nodelay        on;  
+      
+    #开启gzip压缩  
+    gzip  on;  
+    gzip_disable &quot;MSIE [1-6]\.(?!.*SV1)&quot;;  
+  
+    #设定请求缓冲  
+    client_header_buffer_size    1k;  
+    large_client_header_buffers  4 4k;  
+  
+    include /etc/nginx/conf.d/*.conf;  
+    include /etc/nginx/sites-enabled/*;  
+  
+    #设定负载均衡的服务器列表  
+     upstream mysvr {  
+    #weigth参数表示权值，权值越高被分配到的几率越大  
+    #本机上的Squid开启3128端口  
+    server 192.168.8.1:3128 weight=5;  
+    server 192.168.8.2:80  weight=1;  
+    server 192.168.8.3:80  weight=6;  
+    }  
+  
+  
+   server {  
+    #侦听80端口  
+        listen       80;  
+        #定义使用www.xx.com访问  
+        server_name  www.xx.com;  
+  
+        #设定本虚拟主机的访问日志  
+        access_log  logs/www.xx.com.access.log  main;  
+  
+    #默认请求  
+    location / {  
+          root   /root;      #定义服务器的默认网站根目录位置  
+          index index.php index.html index.htm;   #定义首页索引文件的名称  
+  
+          fastcgi_pass  www.xx.com;  
+         fastcgi_param  SCRIPT_FILENAME  $document_root/$fastcgi_script_name;   
+          include /etc/nginx/fastcgi_params;  
+        }  
+  
+    # 定义错误提示页面  
+    error_page   500 502 503 504 /50x.html;    
+        location = /50x.html {  
+        root   /root;  
+    }  
+  
+    #静态文件，nginx自己处理  
+    location ~ ^/(images|javascript|js|css|flash|media|static)/ {  
+        root /var/www/virtual/htdocs;  
+        #过期30天，静态文件不怎么更新，过期可以设大一点，如果频繁更新，则可以设置得小一点。  
+        expires 30d;  
+    }  
+    #PHP 脚本请求全部转发到 FastCGI处理. 使用FastCGI默认配置.  
+    location ~ \.php$ {  
+        root /root;  
+        fastcgi_pass 127.0.0.1:9000;  
+        fastcgi_index index.php;  
+        fastcgi_param SCRIPT_FILENAME /home/www/www$fastcgi_script_name;  
+        include fastcgi_params;  
+    }  
+    #设定查看Nginx状态的地址  
+    location /NginxStatus {  
+        stub_status            on;  
+        access_log              on;  
+        auth_basic              &quot;NginxStatus&quot;;  
+        auth_basic_user_file  conf/htpasswd; 
+ 
+        deny all;  
+    }  
+       
+     }  
+}  
+</code></pre>
+<p>以上是一些基本的配置,使用Nginx最大的好处就是负载均衡</p>
+<p>如果要使用负载均衡的话,可以修改配置http节点如下：</p>
+<pre><code>#设定http服务器，利用它的反向代理功能提供负载均衡支持  
+http {  
+     #设定mime类型,类型由mime.type文件定义  
+    include       /etc/nginx/mime.types;  
+    default_type  application/octet-stream;  
+    #设定日志格式  
+    access_log    /var/log/nginx/access.log;  
+  
+    #省略上文有的一些配置节点  
+  
+    #。。。。。。。。。。  
+  
+    #设定负载均衡的服务器列表  
+     upstream mysvr {  
+    #weigth参数表示权值，权值越高被分配到的几率越大  
+    server 192.168.8.1x:3128 weight=5;#本机上的Squid开启3128端口  
+    server 192.168.8.2x:80  weight=1;  
+    server 192.168.8.3x:80  weight=6;  
+    }  
+  
+   upstream mysvr2 {  
+    #weigth参数表示权值，权值越高被分配到的几率越大  
+  
+    server 192.168.8.x:80  weight=1;  
+    server 192.168.8.x:80  weight=6;  
+    }  
+  
+   #第一个虚拟服务器  
+   server {  
+    #侦听192.168.8.x的80端口  
+        listen       80;  
+        server_name  192.168.8.x;  
+  
+      #对aspx后缀的进行负载均衡请求  
+    location ~ .*\.aspx$ {  
+  
+         root   /root;      #定义服务器的默认网站根目录位置  
+          index index.php index.html index.htm;   #定义首页索引文件的名称  
+  
+          proxy_pass  http://mysvr ;#请求转向mysvr 定义的服务器列表  
+  
+          #以下是一些反向代理的配置可删除.  
+  
+          proxy_redirect off;  
+  
+          #后端的Web服务器可以通过X-Forwarded-For获取用户真实IP  
+          proxy_set_header Host $host;  
+          proxy_set_header X-Real-IP $remote_addr;  
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;  
+          client_max_body_size 10m;    #允许客户端请求的最大单文件字节数  
+          client_body_buffer_size 128k;  #缓冲区代理缓冲用户端请求的最大字节数，  
+          proxy_connect_timeout 90;  #nginx跟后端服务器连接超时时间(代理连接超时)  
+          proxy_send_timeout 90;        #后端服务器数据回传时间(代理发送超时)  
+          proxy_read_timeout 90;         #连接成功后，后端服务器响应时间(代理接收超时)  
+          proxy_buffer_size 4k;             #设置代理服务器（nginx）保存用户头信息的缓冲区大小  
+          proxy_buffers 4 32k;               #proxy_buffers缓冲区，网页平均在32k以下的话，这样设置  
+          proxy_busy_buffers_size 64k;    #高负荷下缓冲大小（proxy_buffers*2）  
+          proxy_temp_file_write_size 64k;  #设定缓存文件夹大小，大于这个值，将从upstream服务器传  
+  
+       }  
+  
+     }  
+}  
+</code></pre>
+<p>##关于负载均衡</p>
+<pre><code>拓展：
+
+1、轮询（默认）
+每个请求按时间顺序逐一分配到不同的后端服务器，如果后端服务器down掉，能自动剔除。
+
+2、weight
+指定轮询几率，weight和访问比率成正比，用于后端服务器性能不均的情况。
+例如：
+upstream bakend {
+server 192.168.159.10 weight=10;
+server 192.168.159.11 weight=10;
+}
+
+3、ip_hash
+每个请求按访问ip的hash结果分配，这样每个访客固定访问一个后端服务器，可以解决session的问题。
+例如：
+upstream resinserver{
+ip_hash;
+server 192.168.159.10:8080;
+server 192.168.159.11:8080;
+}
+
+
+4、fair（第三方）
+按后端服务器的响应时间来分配请求，响应时间短的优先分配。
+upstream resinserver{
+server server1;
+server server2;
+fair;
+}
+
+
+5、url_hash（第三方）
+
+按访问url的hash结果来分配请求，使每个url定向到同一个后端服务器，后端服务器为缓存时比较有效。
+例：在upstream中加入hash语句，server语句中不能写入weight等其他的参数，hash_method是使用的hash算法
+
+upstream resinserver{
+server squid1:3128;
+server squid2:3128;
+hash $request_uri;
+hash_method crc32;
+}
+
+tips:
+
+upstream resinserver{#定义负载均衡设备的Ip及设备状态
+ip_hash;
+server 127.0.0.1:8000 down;
+server 127.0.0.1:8080 weight=2;
+server 127.0.0.1:6801;
+server 127.0.0.1:6802 backup;
+}
+
+在需要使用负载均衡的server中增加
+proxy_pass http://resinserver/;
+
+
+每个设备的状态设置为:
+1.down 表示单前的server暂时不参与负载
+2.weight 默认为1.weight越大，负载的权重就越大。
+3.max_fails ：允许请求失败的次数默认为1.当超过最大次数时，返回proxy_next_upstream 模块定义的错误
+4.fail_timeout:max_fails次失败后，暂停的时间。
+5.backup： 其它所有的非backup机器down或者忙的时候，请求backup机器。所以这台机器压力会最轻。
+
+nginx支持同时设置多组的负载均衡，用来给不用的server来使用。
+
+client_body_in_file_only 设置为On 可以讲client post过来的数据记录到文件中用来做debug
+client_body_temp_path 设置记录文件的目录 可以设置最多3层目录
+location 对URL进行匹配.可以进行重定向或者进行新的代理 负载均衡
+</code></pre>
+<p>##nginx配置ssl证书,微信小程序服务器</p>
+<pre><code>server {
+    server_name 192.168.1.100; # 客户端直接用IP来访问
+    # 这是默认的SSL端口，可以修改为其它端口，浏览器用https访问url时，默认就是用这个端口，
+    # 如果下面listen修改成其它端口，那浏览器用https访问时，就要指定端口了。
+    listen 443; 
+    ssl on;
+    #地址
+    ssl_certificate /home/xiaobai/server_cert.crt;
+    #使用无密码私钥
+    ssl_certificate_key /usr/xiaobai/private.key;
+}
+</code></pre>
+<p>详细 有针对性配置:http://www.cnblogs.com/ajianbeyourself/p/3898911.html</p>
+<h2 id="腾讯云nginx证书配置">腾讯云Nginx证书配置</h2>
+<pre><code>2. Nginx 证书部署
+
+2.1 获取证书
+
+Nginx文件夹内获得SSL证书文件 1_www.domain.com_bundle.crt 和私钥文件 2_www.domain.com.key,
+1_www.domain.com_bundle.crt 文件包括两段证书代码 “-----BEGIN CERTIFICATE-----”和“-----END CERTIFICATE-----”,
+2_www.domain.com.key 文件包括一段私钥代码“-----BEGIN RSA PRIVATE KEY-----”和“-----END RSA PRIVATE KEY-----”。
+
+2.2 证书安装
+
+将域名 www.domain.com 的证书文件1_www.domain.com_bundle.crt 、私钥文件2_www.domain.com.key保存到同一个目录，例如/usr/local/nginx/conf目录下。
+更新Nginx根目录下 conf/nginx.conf 文件如下：
+
+server {
+        listen 443;
+        server_name www.domain.com; #填写绑定证书的域名
+        ssl on;
+        ssl_certificate 1_www.domain.com_bundle.crt;
+        ssl_certificate_key 2_www.domain.com.key;
+        ssl_session_timeout 5m;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2; #按照这个协议配置
+        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;#按照这个套件配置
+        ssl_prefer_server_ciphers on;
+        location / {
+            root   html; #站点目录
+            index  index.html index.htm;
+        }
+    }
+配置完成后，先用bin/nginx –t来测试下配置是否有误，正确无误的话，重启nginx。就可以使 https://www.domain.com 来访问了。
+
+注：
+
+配置文件参数	说明
+listen 443	SSL访问端口号为443
+ssl on	启用SSL功能
+ssl_certificate	证书文件
+ssl_certificate_key	私钥文件
+ssl_protocols	使用的协议
+ssl_ciphers	配置加密套件，写法遵循openssl标准
+2.3 使用全站加密，http自动跳转https（可选）
+
+对于用户不知道网站可以进行https访问的情况下，让服务器自动把http的请求重定向到https。
+在服务器这边的话配置的话，可以在页面里加js脚本，也可以在后端程序里写重定向，当然也可以在web服务器来实现跳转。Nginx是支持rewrite的（只要在编译的时候没有去掉pcre）
+在http的server里增加rewrite ^(.*) https://$host$1 permanent;
+在80端口上 添加 rewrite     ^   https://$server_name:443$request_uri? permanent;
+
+
+ server {
+        listen       80;
+        server_name  localhost;
+        rewrite     ^   https://$server_name:443$request_uri? permanent;
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location / {
+            root   html;
+            index  index.html index.htm;
+        }
+
+
+
+
+这样就可以实现80进来的请求，重定向为https了。
+</code></pre>
+<h2 id="关于nginx的配置">关于Nginx的配置</h2>
+<p>location配置</p>
+<p>location 匹配完毕后会将 url全部拼接到 root</p>
+<p>alias 则不会匹配</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/frp-tools/">
+                  <h3 class="post-title">
+                    FRP配置部署 基于最新版本 v0.22.0
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

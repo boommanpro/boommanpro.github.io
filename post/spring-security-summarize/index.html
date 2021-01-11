@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Spring Security 登录配置总结 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Spring Security 登录配置总结</h2>
+            <div class="post-date">2020-02-13</div>
+            
+            <div class="post-content">
+              <h1 id="引言">引言</h1>
+<p>一般情况下 , Spring Secuirty默认的配置是不够,常常需要自定义化.本文就Spring Security对接</p>
+<ol>
+<li>用户名密码登录(普通认证) NORMAL_AUTHENTICATION</li>
+<li>不需要用户名密码登录(预览认证) PREVIEW_AUTHENTICATION</li>
+<li>CAS登录认证 CAS_AUTHENTICATION</li>
+<li>PKI认证 PKI_AUTHENTICATION</li>
+<li>混合认证 e.g. PKI_AND_NORMAL_AUTHENTICATION</li>
+<li>JL-CAS对接技巧 JL_CAS_AUTHENTICATION</li>
+<li>more and more ...<br>
+展开讨论</li>
+</ol>
+<p>and more</p>
+<p>Spring Security CookieSession和HeaderSession -&gt;<code>HttpSessionIdResolver</code><br>
+Spring Security Concurrency Controller<br>
+Spring Security + Spring Session ...</p>
+<p><a href="http://www.javaboy.org/">江南一点雨 - Spring Secuirty 关于这块讲的不错</a></p>
+<h2 id="核心思路">核心思路</h2>
+<p>使用  @EnableWebSecurity 开启WebSecuirty<br>
+通过继承WebSecurityConfigurerAdapter来重写相关方法来自定义化.</p>
+<h2 id="用户名密码登录-normal_authentication">用户名密码登录 NORMAL_AUTHENTICATION</h2>
+<p>一般需要配置以下内容:</p>
+<ul>
+<li>PasswordEncoder</li>
+<li>UserDetailsService</li>
+<li>AuthenticationEntryPoint</li>
+<li>AuthenticationSuccessHandler</li>
+<li>AuthenticationFailureHandler</li>
+<li>LogoutSuccessHandler</li>
+</ul>
+<p>[cnblog-&gt; spring security架构] (https://www.cnblogs.com/yanzhenjingyan/p/10382594.html)</p>
+<h2 id="预览认证-preview_authentication">预览认证 PREVIEW_AUTHENTICATION</h2>
+<pre><code class="language-java">       @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.authorizeRequests()
+                    .anyRequest().permitAll().and().logout().permitAll();
+            http.addFilterBefore(previewAuthenticationFilter(), WebAsyncManagerIntegrationFilter.class);
+        }
+</code></pre>
+<p>因为Spring Secuirty核心是验证SecurityContextHolder.getContext().getAuthentication();<br>
+所以我们构造一个可登录的用户在Filter中即可</p>
+<h2 id="cas登录认证-cas_authentication">CAS登录认证 CAS_AUTHENTICATION</h2>
+<p>CAS配置代码放到文章末尾,防止太长,引起大家反感.</p>
+<ol>
+<li>引入spring-secuirty和cas相关包</li>
+</ol>
+<pre><code class="language-xml">        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-security&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.jasig.cas.client&lt;/groupId&gt;
+            &lt;artifactId&gt;cas-client-core&lt;/artifactId&gt;
+            &lt;version&gt;3.6.1&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--        Spring Security For CAS   --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-security-cas&lt;/artifactId&gt;
+            &lt;version&gt;4.1.0.RELEASE&lt;/version&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<ol start="2">
+<li>进行CAS相关配置<br>
+详情见文末CAS相关代码</li>
+</ol>
+<h2 id="pki认证-pki_authentication">PKI认证 PKI_AUTHENTICATION</h2>
+<p>纯PKI认证其实可预览认证有些相似,使用一个Filter进行处理,使之与Spring Secuirty结合即可</p>
+<pre><code class="language-java">        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.cors().disable();
+            http.authorizeRequests()
+                    .anyRequest().permitAll().and().logout().permitAll();
+            http.addFilterAfter(pkiAuthenticationFilter(), AnonymousAuthenticationFilter.class);
+        }
+</code></pre>
+<p>在使用bean配置Filter的时候，Filter会被创建两次,即会走两次可以通过以下方式处理</p>
+<pre><code class="language-java">    private static final String FILTER_APPLIED = &quot;__spring_security_pkiAuthenticationFilter_filterApplied&quot;;
+
+
+    if (servletRequest.getAttribute(FILTER_APPLIED) != null) {
+            chain.doFilter(servletRequest, servletResponse);
+            return;
+        }
+</code></pre>
+<h2 id="混合认证-eg-pki_and_normal_authentication">混合认证 e.g. PKI_AND_NORMAL_AUTHENTICATION</h2>
+<p>混合认证的时候需要注意的是PKI和NORMAL中的鉴权和放行要一致,<br>
+PKI中要放行登录登出等操作.PKI的Filter要允许用户未登录的情况.</p>
+<pre><code class="language-java">       if (excludeAuthentication.contains(request.getRequestURI())) {
+            chain.doFilter(request, response);
+            return;
+        }
+</code></pre>
+<h2 id="jl-cas对接技巧-jl_cas_authentication">JL-CAS对接技巧 JL_CAS_AUTHENTICATION</h2>
+<ol>
+<li>直接使用JL-CAS中已经写好的Filter和当前Spring Secuirty Filter链进行整合处理,提取相关配置到Config中</li>
+<li>使用原生的CAS系统,Security-CAS模块,进行简单整改即可使用。</li>
+</ol>
+<h2 id="other-config">Other Config</h2>
+<h3 id="csrf">csrf</h3>
+<p>当前端请求接口失败时可以关闭，正常来说是不应该关闭的.</p>
+<pre><code class="language-java">http.csrf().disable();
+</code></pre>
+<p>一般来说csrf防御措施:</p>
+<ol>
+<li>验证 HTTP Referer 字段</li>
+<li>添加 token 并验证</li>
+<li>HTTP 头中自定义属性并验证</li>
+</ol>
+<p>Spring Secuirty是添加<code>_csrf</code>字段进行防御的.</p>
+<p>前端适配方式 : 可以在ajax或form提交之前通过接口获取csrf_token，并追加到header或parameter中，然后一并提交</p>
+<h3 id="successhandler">SuccessHandler</h3>
+<p>实现 AuthenticationSuccessHandler接口</p>
+<p>重写onAuthenticationSuccess方法,目的是用户登录成功后进行一些处理.</p>
+<p>e.g. 更新用户最后一次登录时间<br>
+e.g. 记录登录日志等.<br>
+e.g. 登录成功返回特定json信息</p>
+<h3 id="failurehandler">FailureHandler</h3>
+<p>实现 AuthenticationFailureHandler接口</p>
+<p>重写 onAuthenticationFailure方法,目的是用户登录失败后进行一些处理</p>
+<p>e.g. 根据异常 <code>exception.getCause()</code> 返回不同登录失败原因<br>
+e.g. 登录失败返回特定json信息</p>
+<h3 id="macloginurlauthenticationentrypoint">MacLoginUrlAuthenticationEntryPoint</h3>
+<p>实现 AuthenticationEntryPoint 接口</p>
+<p>当用户没有携带有效信息访问 -&gt; 需鉴权接口时 会走到这里</p>
+<p>默认的实现方式是403 || 错误页</p>
+<p>如果需要特殊处理,如HttpStatus为200,返回的json体中进行错误码响应时,重写此方法即可.</p>
+<h3 id="exceptionfilter">ExceptionFilter</h3>
+<p>在SpringMVC中<code>@ControllerAdvice</code>是无法捕获Filter中的异常的,为了能够统一异常处理.</p>
+<ol>
+<li>定义一个ExceptionFilter 并放置在Filter链的最前端</li>
+<li>捕获<code>chain.doFilter(request, response);</code>的异常,存储到Attribute中</li>
+<li>foward到指定controller中 假定地址 -&gt; <code>/error/rethrow</code></li>
+<li>在<code>/error/rethrow</code> 中重新抛出异常</li>
+<li>在@ControllerAdive中进行处理</li>
+</ol>
+<p>以上就是统一处理Filter中的异常.避免传统使用  response.getWriter()的方式.简单优雅.</p>
+<h3 id="globaldefaultexceptionhandler">GlobalDefaultExceptionHandler</h3>
+<p>在项目中我们经常会定义一个全局异常处理来统一返回的数据结构 关键注解<code>@RestController</code></p>
+<p>下面列出常处理的异常</p>
+<ul>
+<li>MethodArgumentNotValidException || 使用@Valid校验失败</li>
+<li>MissingServletRequestParameterException || @RequestParam 参数未找到</li>
+<li>MethodArgumentTypeMismatchException || 在@RequestMapping中注入Object 但是不存在</li>
+<li>BindException || 在 TypeConverter失败时</li>
+<li>HttpRequestMethodNotSupportedException || 请求方式未找到 如用GET方式调用POST接口</li>
+<li>HttpMessageNotReadableException || @RequestBody 接受不到时 前端应使用json传输</li>
+<li>ConstraintViolationException || 在方法上参数使用 @NotBlank等校验失败时</li>
+<li>Exception || 兜底异常</li>
+<li>CustomerException || 自定义RuntimeException</li>
+</ul>
+<p>下面是一个异常获取核心信息的方法,分享出来</p>
+<pre><code class="language-java">    private Map&lt;String, String&gt; from2Message(List&lt;ObjectError&gt; allErrors) {
+        Map&lt;String, String&gt; errorMap = new HashMap&lt;&gt;(allErrors.size());
+        for (ObjectError allError : allErrors) {
+            if (Objects.requireNonNull(allError.getDefaultMessage()).length() &gt; 100) {
+                errorMap.put(((FieldError) allError).getField(), ((FieldError) allError).getRejectedValue() + &quot;格式不正确&quot;);
+                continue;
+            }
+            if (allError instanceof FieldError) {
+                errorMap.put(((FieldError) allError).getField(), allError.getDefaultMessage());
+            } else {
+                errorMap.put(allError.getObjectName(), allError.getDefaultMessage());
+            }
+        }
+        return errorMap;
+    }
+</code></pre>
+<h2 id="写在文章末尾">写在文章末尾</h2>
+<p>Spring Secuirty只是Spring Boot帮我们封装好的一种工具,以上所有功能都可以通过Java Web方式实现,只不过实现的难度大小,实现的兼容情况不尽相同.</p>
+<p>最终想说的是,当你想用Spring Security整合某种登录时,先想清楚用filter如何整合.然后结合起来,so easy.</p>
+<p>最终Spring Secuirty能帮我们的是,当登录方式切换时,代码改动量很少. 也很少有项目需要不断改登录方式,GA除外...</p>
+<h2 id="append">Append</h2>
+<h3 id="cas-配置代码">CAS 配置代码</h3>
+<p>其中CASProperties配置</p>
+<pre><code class="language-java">/**
+ * @author wangqimeng
+ * @date 2019/12/5 11:09
+ */
+@Data
+public class CasConfigProperties {
+
+    /**
+     * CAS服务登录地址
+     */
+
+    private String casServerUrl;
+
+    /**
+     * CAS服务登录地址
+     */
+    private String casServerLoginUrl;
+
+    /**
+     * CAS服务登出地址
+     */
+    private String casServerLogoutUrl;
+
+    /**
+     * app地址
+     */
+    private String appServerUrl;
+
+    /**
+     * app 登录地址
+     */
+    private String appLoginUrl;
+
+    /**
+     * app登出地址
+     */
+    private String appLogoutUrl;
+
+}
+
+</code></pre>
+<p>其中 WebSecurityConfigurerAdapter 配置</p>
+<pre><code class="language-java">    @EnableWebSecurity
+    @ConditionalOnProperty(prefix = &quot;authentication&quot;, name = &quot;type&quot;, havingValue = &quot;cas_authentication&quot;)
+    public static class CasAuthenticationConfiguration extends WebSecurityConfigurerAdapter {
+
+
+
+        @Resource
+        private CasConfigProperties casProperties;
+
+        @Resource
+        private AuthenticationConfigProperties authenticationConfigProperties;
+
+        @Bean
+        @ConfigurationProperties(prefix = &quot;sso&quot;)
+        public CertificateProperties certificateProperties() {
+            return new CertificateProperties();
+        }
+
+        @Bean
+        @ConfigurationProperties(prefix = &quot;authentication.cas-config&quot;)
+        public CasConfigProperties casProperties() {
+            return new CasConfigProperties();
+        }
+
+        @Bean
+        @ConditionalOnProperty(prefix = &quot;sso&quot;, value = &quot;auto-import-certificate&quot;, havingValue = &quot;true&quot;, matchIfMissing = false)
+        public AutoImportRunner autoImportRunner() {
+            return new AutoImportRunner();
+        }
+
+        /**
+         * 定义认证用户信息获取来源，密码校验规则等
+         */
+        @Override
+        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+            super.configure(auth);
+            auth.authenticationProvider(casAuthenticationProvider());
+        }
+
+        @Override
+        public void configure(WebSecurity web) throws Exception {
+            web.debug(authenticationConfigProperties.isDebug());
+        }
+
+        /**
+         * 定义安全策略
+         */
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http.csrf().and()
+                    .headers()
+                    .frameOptions().sameOrigin()
+                    .xssProtection()
+                    .block(true);
+
+            http
+                    .headers()
+                    .cacheControl()
+                    .and()
+                    .contentTypeOptions()
+                    .and()
+                    .httpStrictTransportSecurity()
+                    .and()
+                    .xssProtection();
+
+            http.authorizeRequests()
+                    //配置安全策略
+                    .antMatchers(&quot;/api/**&quot;).authenticated()//login下请求需要验证
+                    .and()
+                    .logout()
+                    .permitAll()
+                    //定义logout不需要验证
+                    .and()
+                    //使用form表单登录
+                    .formLogin();
+
+            http.exceptionHandling().authenticationEntryPoint(customerCasAuthenticationEntryPoint())
+                    .and()
+                    .addFilter(casAuthenticationFilter(casAuthenticationSuccessHandler()))
+                    .addFilterBefore(casLogoutFilter(), LogoutFilter.class)
+                    .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
+            ;
+
+            //禁用CSRF
+            http.csrf().disable();
+
+        }
+
+        @Bean
+        public CasAuthenticationSuccessHandler casAuthenticationSuccessHandler() {
+            return new CasAuthenticationSuccessHandler();
+        }
+
+        @Bean
+        public ServletListenerRegistrationBean&lt;SingleSignOutHttpSessionListener&gt; singleSignOutHttpSessionListener() {
+            ServletListenerRegistrationBean&lt;SingleSignOutHttpSessionListener&gt; servletListenerRegistrationBean = new ServletListenerRegistrationBean&lt;&gt;();
+            servletListenerRegistrationBean.setListener(new SingleSignOutHttpSessionListener());
+            servletListenerRegistrationBean.setEnabled(true);
+            return servletListenerRegistrationBean;
+        }
+
+        /**
+         * 指定service相关信息
+         */
+        @Bean
+        public ServiceProperties serviceProperties() {
+            ServiceProperties serviceProperties = new ServiceProperties();
+            serviceProperties.setService(casProperties.getAppServerUrl() + casProperties.getAppLoginUrl());
+            serviceProperties.setAuthenticateAllArtifacts(true);
+            return serviceProperties;
+        }
+
+        /**
+         * 认证的入口
+         */
+        @Bean
+        public CustomerCasAuthenticationEntryPoint customerCasAuthenticationEntryPoint() {
+            CustomerCasAuthenticationEntryPoint customerCasAuthenticationEntryPoint = new CustomerCasAuthenticationEntryPoint();
+            customerCasAuthenticationEntryPoint.setLoginUrl(casProperties.getCasServerLoginUrl());
+            customerCasAuthenticationEntryPoint.setServiceProperties(serviceProperties());
+            customerCasAuthenticationEntryPoint.setAuthenticationRedirectStrategy(new CasAuthenticationRedirectStrategy());
+            return customerCasAuthenticationEntryPoint;
+        }
+
+        /**
+         * CAS认证过滤器
+         */
+        @Bean
+        public CasAuthenticationFilter casAuthenticationFilter(CasAuthenticationSuccessHandler casAuthenticationSuccessHandler) throws Exception {
+            CasAuthenticationFilter casAuthenticationFilter = new CasAuthenticationFilter();
+            casAuthenticationFilter.setAuthenticationManager(authenticationManager());
+            casAuthenticationFilter.setFilterProcessesUrl(casProperties.getAppLoginUrl());
+            casAuthenticationFilter.setAuthenticationSuccessHandler(casAuthenticationSuccessHandler);
+            return casAuthenticationFilter;
+        }
+
+        @Bean
+        public Cas30ServiceTicketValidator cas30ServiceTicketValidator() {
+            return new Cas30ServiceTicketValidator(casProperties.getCasServerUrl());
+        }
+
+        /**
+         * cas 认证 Provider
+         */
+        @Bean
+        public CasAuthenticationProvider casAuthenticationProvider() {
+            CasAuthenticationProvider casAuthenticationProvider = new CasAuthenticationProvider();
+            casAuthenticationProvider.setAuthenticationUserDetailsService(customUserDetailsService());
+            //casAuthenticationProvider.setUserDetailsService(customUserDetailsService()); //这里只是接口类型，实现的接口不一样，都可以的。
+            casAuthenticationProvider.setServiceProperties(serviceProperties());
+            casAuthenticationProvider.setTicketValidator(cas30ServiceTicketValidator());
+            casAuthenticationProvider.setKey(&quot;casAuthenticationProviderKey&quot;);
+            return casAuthenticationProvider;
+        }
+
+        /**
+         * 用户自定义的AuthenticationUserDetailsService
+         */
+        @Bean
+        public AuthenticationUserDetailsService&lt;CasAssertionAuthenticationToken&gt; customUserDetailsService() {
+            return new CasUserDetailsService();
+        }
+
+        /**
+         * 单点登出过滤器
+         */
+        @Bean
+        public SingleSignOutFilter singleSignOutFilter() {
+            SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+            singleSignOutFilter.setIgnoreInitConfiguration(true);
+            return singleSignOutFilter;
+        }
+
+        /**
+         * 请求单点退出过滤器
+         */
+        @Bean
+        public LogoutFilter casLogoutFilter() {
+            LogoutFilter logoutFilter = new LogoutFilter(casProperties.getCasServerLogoutUrl(), new SecurityContextLogoutHandler());
+            logoutFilter.setFilterProcessesUrl(casProperties.getAppLogoutUrl());
+            return logoutFilter;
+        }
+
+    }
+
+</code></pre>
+<p>其中CasUserDetailsService,需要的字段需要自己自定义</p>
+<pre><code class="language-java">/**
+ * 用于加载用户信息 实现UserDetailsService接口，或者实现AuthenticationUserDetailsService接口
+ */
+public class CasUserDetailsService implements AuthenticationUserDetailsService&lt;CasAssertionAuthenticationToken&gt; {
+    @Override
+    public UserDetails loadUserDetails(CasAssertionAuthenticationToken token) throws UsernameNotFoundException {
+        // 结合具体的逻辑去实现用户认证，并返回继承UserDetails的用户对象;
+        System.out.println(&quot;当前的用户名是：&quot;+token.getName());
+
+        //获取用户信息
+        UserInfo userInfo = new UserInfo();
+        userInfo.setUsername(token.getName());
+        userInfo.setRole(&quot;ROLE_USER&quot;);
+        Map&lt;String, Object&gt; userAttributess = token.getAssertion().getPrincipal().getAttributes();
+        //System.out.println(userAttributess.toString());
+        if (userAttributess != null) {
+            userInfo.setId( String.valueOf(userAttributess.get(&quot;id&quot;)));
+            userInfo.setNickname( String.valueOf(userAttributess.get(&quot;nickname&quot;)));
+            userInfo.setRealName( String.valueOf(userAttributess.get(&quot;real_name&quot;)));
+            userInfo.setEmail( String.valueOf(userAttributess.get(&quot;email&quot;)));
+            userInfo.setCountryCode( String.valueOf(userAttributess.get(&quot;country_code&quot;)));
+        }
+
+        System.out.println(userInfo.toString());
+        return userInfo;
+    }
+
+}
+</code></pre>
+<h4 id="关于项目启动导入cas证书的工具类">关于项目启动导入CAS证书的工具类</h4>
+<p>link my csdn blog -&gt; <a href="https://blog.csdn.net/boom_man/article/details/102625460">JVM证书导入: 通过java代码导入证书</a></p>
+<h2 id="isassignableform-和instanceof区别">isAssignableForm 和instanceof区别</h2>
+<p>isAssignableFrom()方法与instanceof关键字的区别总结为以下两个点：</p>
+<p>isAssignableFrom()方法是从类继承的角度去判断，instanceof关键字是从实例继承的角度去判断。<br>
+isAssignableFrom()方法是判断是否为某个类的父类，instanceof关键字是判断是否某个类的子类。</p>
+<h2 id="append-2">Append</h2>
+<p>正常做法是</p>
+<ol>
+<li>新增AuthenticationProvider  (可以顺便新增自己的Authentication其Details存储认证信息)</li>
+<li>新增AuthenticationFilter 它继承自 AbstractAuthenticationProcessingFilter</li>
+<li>把他们添加到Spring Security的链路中</li>
+</ol>
+<p>core 每一类认证系统就是authentication+AuthenticationFilter+AuthenticationProvider</p>
+<p>其中AuthenticationFilter作用是管理请求来临是你要哪些信息，认证成功后你要做什么。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/Spring/" class="tag">
+                    Spring
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/jenkins/">
+                  <h3 class="post-title">
+                    服务器Jenkins搭建
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

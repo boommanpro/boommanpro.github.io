@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Spring Data Jpa 使用姿势 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Spring Data Jpa 使用姿势</h2>
+            <div class="post-date">2020-01-14</div>
+            
+            <div class="post-content">
+              <h2 id="spring-data-jpa-guide">Spring Data Jpa Guide</h2>
+<p>Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories. This module deals with enhanced support for JPA based data access layers. It makes it easier to build Spring-powered applications that use data access technologies.</p>
+<p>Implementing a data access layer of an application has been cumbersome for quite a while. Too much boilerplate code has to be written to execute simple queries as well as perform pagination, and auditing. Spring Data JPA aims to significantly improve the implementation of data access layers by reducing the effort to the amount that’s actually needed. As a developer you write your repository interfaces, including custom finder methods, and Spring will provide the implementation automatically.</p>
+<p><a href="https://spring.io/projects/spring-data-jpa">https://spring.io/projects/spring-data-jpa</a></p>
+<h2 id="query-methods">Query Methods</h2>
+<p>Spring Data Jpa 名词: Query Creation  &lt;==&gt; Query Methods</p>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#jpa.query-methods.query-creation">Spring Data Jpa Query Creation</a></p>
+<p>这一部分主要是 Jpa 通过对查询方法的解析-&gt;转换成sql语句进行查询,避免了编写sql的过程.</p>
+<p>example:</p>
+<pre><code>interface PersonRepository extends Repository&lt;Person, Long&gt; {
+    // select person from person whre lastname=?1
+  List&lt;Person&gt; findByLastname(String lastname);
+}
+</code></pre>
+<h2 id="modifying-queries">Modifying Queries</h2>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.4.RELEASE/reference/html/#jpa.modifying-queries">Spring Data Jpa Modifying Queries</a></p>
+<p>修改数据</p>
+<pre><code class="language-java">@Modifying
+@Query(&quot;update User u set u.firstname = ?1 where u.lastname = ?2&quot;)
+int setFixedFirstnameFor(String firstname, String lastname);
+</code></pre>
+<p>删除数据</p>
+<pre><code class="language-java">interface UserRepository extends Repository&lt;User, Long&gt; {
+
+  void deleteByRoleId(long roleId);
+
+  @Modifying
+  @Query(&quot;delete from User u where user.role.id = ?1&quot;)
+  void deleteInBulkByRoleId(long roleId);
+}
+</code></pre>
+<p><strong>注意事项</strong> Jpa中除了查询都需要加@Transactional 事务</p>
+<h2 id="using-jpa-named-queries">Using JPA Named Queries</h2>
+<p>使用JpaName查询</p>
+<p>Example</p>
+<pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+
+  List&lt;User&gt; findByLastname(String lastname);
+
+  User findByEmailAddress(String emailAddress);
+}
+</code></pre>
+<h2 id="using-query">Using @Query</h2>
+<p>Using named queries to declare queries for entities is a valid approach and works fine for a small number of queries. As the queries themselves are tied to the Java method that executes them, you can actually bind them directly by using the Spring Data JPA @Query annotation rather than annotating them to the domain class. This frees the domain class from persistence specific information and co-locates the query to the repository interface.</p>
+<p>Example:</p>
+<pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+
+  @Query(&quot;select u from User u where u.emailAddress = ?1&quot;)
+  User findByEmailAddress(String emailAddress);
+}
+</code></pre>
+<p>NativeQuery=true</p>
+<pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
+
+  @Query(value = &quot;SELECT * FROM USERS WHERE LASTNAME = ?1&quot;,
+    countQuery = &quot;SELECT count(*) FROM USERS WHERE LASTNAME = ?1&quot;,
+    nativeQuery = true)
+  Page&lt;User&gt; findByLastname(String lastname, Pageable pageable);
+}
+</code></pre>
+<h2 id="applying-query-hints">Applying Query Hints</h2>
+<p>To apply JPA query hints to the queries declared in your repository interface, you can use the @QueryHints annotation. It takes an array of JPA @QueryHint annotations plus a boolean flag to potentially disable the hints applied to the additional count query triggered when applying pagination, as shown in the following example:</p>
+<p>Example</p>
+<pre><code>public interface UserRepository extends Repository&lt;User, Long&gt; {
+
+  @QueryHints(value = { @QueryHint(name = &quot;name&quot;, value = &quot;value&quot;)},
+              forCounting = false)
+  Page&lt;User&gt; findByLastname(String lastname, Pageable pageable);
+}
+</code></pre>
+<h2 id="query-to-dto">Query To Dto</h2>
+<p>Example:</p>
+<pre><code>@Query(value = &quot;select new com.park.carTrace.pojo.CarTraceResult(a.plateNo, a.plateColor, a.typeName, a.parkName, max(a.time), count(a.id)) &quot; +
+            &quot; from CarTraceRecordEntity a where a.plateNo = ?1 and a.plateColor = ?2 &quot; +
+            &quot;and a.type = ?3 group by a.parkNo order by time desc &quot;)
+    List&lt;CarTraceResult&gt; queryCarTraceRecord(String plateNo, Integer plateColor, Integer type);
+</code></pre>
+<p><a href="https://www.cnblogs.com/jpfss/p/11162135.html">from cnblog</a></p>
+<h2 id="specifications">Specifications</h2>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#specifications">Spring Data Jpa Using Specifications</a></p>
+<ul>
+<li>
+<p>关于一些使用Specification的技巧</p>
+<p>如何 使用 and or 操作</p>
+<pre><code>   private Predicate orPredicate(CriteriaBuilder criteriaBuilder, Predicate p1, Predicate p2) {
+     if (p1 == null || p2 == null) {
+         return p1 == null ? p2 : p1;
+     }
+     return criteriaBuilder.or(p1, p2);
+ }
+</code></pre>
+</li>
+<li>
+<p>Jpa 关联查询Specification</p>
+</li>
+</ul>
+<p><a href="https://blog.csdn.net/qq587492/article/details/81629689">Spring Data Jpa Specifications Join</a></p>
+<h2 id="query-by-example">Query By Example</h2>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#query-by-example">Spring Data Jap Query By Example </a></p>
+<h2 id="简单理解-transactional">简单理解 @Transactional</h2>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#transactions">Spring Data Jpa Transactional </a></p>
+<h2 id="query-查询能够返回stream-是不是很爽">Query 查询能够返回Stream ? 是不是很爽?</h2>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#repository-query-return-types">Spring Data Jpa Return Types</a></p>
+<h2 id="other">Other</h2>
+<ul>
+<li>Using Sort</li>
+</ul>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#jpa.query-methods.sorting">Spring Data Jpa Using Sort</a></p>
+<ul>
+<li>Using SpEL Expressions</li>
+</ul>
+<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#jpa.query.spel-expressions">Spring Data Jpa Using SpEl Expressions</a></p>
+<h2 id="jpa-关联查询onetomany-manytoone">Jpa 关联查询OneToMany ManyToOne</h2>
+<h2 id="jpa-关联查询注意事项">Jpa 关联查询注意事项</h2>
+<h2 id="优雅使用关联查询">优雅使用关联查询</h2>
+<h2 id="使用注意事项">使用注意事项</h2>
+<p>主键id不能为 int类型 进行save操作时,id为0</p>
+<p>OneToMany中的 updateable insertable注意事项</p>
+<ul>
+<li>Jpa查询 Native 和 非 Native区别</li>
+</ul>
+<p>nativeQuery = true时，是可以执行原生sql语句的。<br>
+nativeQuery = false时, 关联的是Table的表和字段</p>
+<ul>
+<li>Jpa 返回某些字段</li>
+</ul>
+<p>定义Dto 定义构造方法,查询返回即可.</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/Spring/" class="tag">
+                    Spring
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/proejct-date/">
+                  <h3 class="post-title">
+                    项目中使用 JDK8 时间的多种姿势
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

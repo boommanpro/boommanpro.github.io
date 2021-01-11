@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>项目Maven使用总结 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">项目Maven使用总结</h2>
+            <div class="post-date">2020-04-22</div>
+            
+            <div class="post-content">
+              <h1 id="maven">Maven</h1>
+<h2 id="基础信息-常见配置">基础信息 &amp; 常见配置</h2>
+<ol>
+<li>Maven(百度百科)</li>
+</ol>
+<p>Maven项目对象模型(POM)，可以通过一小段描述信息来管理项目的构建，报告和文档的项目管理工具软件。</p>
+<ol start="2">
+<li>Maven依赖查询</li>
+</ol>
+<p>Maven依赖库:<a href="http://mvnrepository.com/">mvnrepository</a></p>
+<ol start="3">
+<li>Maven 国内源站加速</li>
+</ol>
+<p><a href="https://maven.aliyun.com/mvn/view">Aliyun Maven</a></p>
+<ol start="4">
+<li>IDEA maven 依赖冲突解决</li>
+</ol>
+<p>Plugins : <a href="https://plugins.jetbrains.com/plugin/7179-maven-helper">Maven Helper</a></p>
+<ol start="5">
+<li>IDEA 搜索maven依赖</li>
+</ol>
+<p>Plugins: <a href="https://plugins.jetbrains.com/plugin/12507-package-search">Package Search</a></p>
+<h2 id="maven-使用">Maven 使用</h2>
+<h3 id="项目在构建时你可能需要注意的">项目在构建时你可能需要注意的</h3>
+<ol>
+<li>
+<p>项目构建<br>
+如果项目不确定是否有子模块或者相关模块依赖关系,在创建项目时,最好构建父模块进行管理,但是父模块不要配置parent.</p>
+</li>
+<li>
+<p>父子模块打包<br>
+项目在打包时,在父模块进行package,如果在子模块进行package可能会出现子模块不是最新的情况或者不存在的情况 (因为只有在父模块package的时候,他会处理依赖关系,不需要其他模块install)</p>
+</li>
+<li>
+<p>mvn compile与mvn install、mvn deploy的区别<br>
+mvn compile，编译类文件<br>
+mvn install，包含mvn compile，mvn package，然后上传到本地仓库<br>
+mvn deploy,包含mvn install,然后，上传到私服</p>
+</li>
+<li>
+<p>如果没有maven 如何把java项目打包成jar包<br>
+方法一: 我记得在大学中的第一个jar包是 Eclipse中的Export jar file<br>
+方法二: 在IDEA 中的 Project Structure -&gt; Artifacts 新建jar 并添加相关依赖</p>
+</li>
+<li>
+<p>详解一个fat-jar(spring-boot-jar)包</p>
+<ol>
+<li>为什么有这块呢?可能你在使用打包工具 上述两种 or maven package后 找不到main class 时,可以通过jar包的目录结构及相关文件进行分析定位。</li>
+<li>BOOT-INF 包含lib和classes 一个是依赖,另一个是源码.(但是有些项目会把lib提取出来,打包的时候减少fat-jar体积，可能会没有classes)</li>
+<li>META-INF 包括MAINFEST.MF 和maven (启动信息 和 maven)</li>
+<li>最主要的是Main-Class</li>
+</ol>
+</li>
+<li>
+<p>spring boot plugin 插件配置项详解  它的configuration可以配置哪些参数</p>
+</li>
+</ol>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/maven-plugin/usage.html">spring boot maven plugin Guide</a></p>
+<pre><code class="language-xml">&lt;plugin&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+&lt;/plugin&gt;
+</code></pre>
+<ol start="7">
+<li>maven profile 如何优雅使用</li>
+</ol>
+<p>可以通过maven profile 区分配置,可以区分jdk版本,仓库地址等功能</p>
+<ol start="8">
+<li>spring boot maven wrapper 是什么? 如何使用</li>
+</ol>
+<blockquote>
+<p>mvnw文件适用于Linux（bash），mvnw.cmd适用于Windows 环境。</p>
+</blockquote>
+<p>作用：Maven Wrapper更简单确保Maven构建的用户拥有运行Maven构建所需的一切。Maven对于用户来说非常稳定，但是随着Maven变化，用户将更容易拥有项目提供的完全封装的构建设置。Maven Wrapper更容易做到，这是从Gradle借来的好主意。</p>
+<ol start="9">
+<li>maven常见插件 具体如何使用 resouces copy 打包本地依赖 grpc编译插件</li>
+</ol>
+<p>link  文章末尾 grpc配置</p>
+<ol start="10">
+<li>子模块有systemPath,其他模块进行package时 依赖不进去子模块的systemPath 那他的流程是什么 root模块打包时可以的。</li>
+</ol>
+<p>在spring boot maven plugin中配置</p>
+<pre><code class="language-xml">        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;includeSystemScope&gt;true&lt;/includeSystemScope&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+</code></pre>
+<ol start="11">
+<li>spring boot 项目 使用外部化classpath 抽离固定依赖包<br>
+<code>mvn dependency:copy-dependencies -DoutputDirectory=lib</code><br>
+-Dloader.path=dependency</li>
+</ol>
+<pre><code class="language-xml">            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;includes&gt;
+                        &lt;include&gt;
+                            &lt;groupId&gt;nothing&lt;/groupId&gt;
+                            &lt;artifactId&gt;nothing&lt;/artifactId&gt;
+                        &lt;/include&gt;
+                    &lt;/includes&gt;
+                    &lt;layout&gt;ZIP&lt;/layout&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+</code></pre>
+<ol start="12">
+<li>spring boot 项目 linux下以服务启动</li>
+</ol>
+<p><a href="https://www.toutiao.com/a6610667666392744455/">将SpringBoot 打包可执行Jar 并配置成Linux 系统服务</a></p>
+<ol start="13">
+<li>spring boot 项目 windows服务</li>
+</ol>
+<p><a href="https://www.jianshu.com/p/af90db4b54e3">如何将Spring Boot项目部署为Windows服务，并设置开机启动</a></p>
+<ol start="14">
+<li>Idea maven 无法下载源码</li>
+</ol>
+<p>使用 maven 3.5.4 试下,一直在用哦</p>
+<h4 id="grpc配置">grpc配置</h4>
+<pre><code class="language-xml">
+ &lt;properties&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+        &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+        &lt;java.version&gt;1.8&lt;/java.version&gt;
+        &lt;grpc.version&gt;1.22.1&lt;/grpc.version&gt;
+        &lt;protobuf.version&gt;3.7.1&lt;/protobuf.version&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.grpc&lt;/groupId&gt;
+            &lt;artifactId&gt;grpc-netty&lt;/artifactId&gt;
+            &lt;version&gt;${grpc.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.grpc&lt;/groupId&gt;
+            &lt;artifactId&gt;grpc-protobuf&lt;/artifactId&gt;
+            &lt;version&gt;${grpc.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.grpc&lt;/groupId&gt;
+            &lt;artifactId&gt;grpc-stub&lt;/artifactId&gt;
+            &lt;version&gt;${grpc.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.google.protobuf&lt;/groupId&gt;
+            &lt;artifactId&gt;protobuf-java&lt;/artifactId&gt;
+            &lt;version&gt;${protobuf.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;extensions&gt;
+            &lt;extension&gt;
+                &lt;groupId&gt;kr.motd.maven&lt;/groupId&gt;
+                &lt;artifactId&gt;os-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;1.5.0.Final&lt;/version&gt;
+            &lt;/extension&gt;
+        &lt;/extensions&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.xolstice.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;protobuf-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;0.5.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;protocArtifact&gt;com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}
+                    &lt;/protocArtifact&gt;
+                    &lt;pluginId&gt;grpc-java&lt;/pluginId&gt;
+                    &lt;pluginArtifact&gt;io.grpc:protoc-gen-grpc-java:${grpc.version}:exe:${os.detected.classifier}
+                    &lt;/pluginArtifact&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;compile&lt;/goal&gt;
+                            &lt;goal&gt;compile-custom&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/YtisD-ZVS/" class="tag">
+                    开发工具
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/spring-cahce/">
+                  <h3 class="post-title">
+                    Spring 多级缓存
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

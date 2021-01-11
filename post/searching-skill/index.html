@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>搜索引擎使用技巧 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">搜索引擎使用技巧</h2>
+            <div class="post-date">2020-05-04</div>
+            
+            <div class="post-content">
+              <h2 id="背景">背景</h2>
+<p>在李自然说的视频中看到分享自我学习的方法,其中一部分是搜索引擎的技巧,如何高效搜索。</p>
+<h2 id="google-baidu">Google  &amp;&amp; Baidu</h2>
+<h3 id="精准信息匹配">精准信息匹配</h3>
+<ol>
+<li>精准信息匹配  <code>&quot;keywords&quot;</code></li>
+<li>排除字词 <code>&quot;keywords -exclude&quot;</code></li>
+<li>包含字词 <code>&quot;keywords -include&quot;</code></li>
+<li>模糊字词 <code>&quot;have a * idea&quot;</code></li>
+<li>选择性匹配 <code>&quot;化石 OR 可再生能源&quot;</code></li>
+</ol>
+<h3 id="精准链接资源">精准链接资源</h3>
+<ol>
+<li>特定网页标题 <code>&quot;natural resources intitle:coal&quot;</code></li>
+<li>网页标题同时包含 <code>&quot;natural resources allintitle:coal petroleum&quot;</code></li>
+<li>特定域名查找 <code>&quot;水资源 site:un.org&quot;</code></li>
+<li>特定文件类型查找 <code>&quot;自然资源分类 filetype:PDF&quot;</code></li>
+<li>二级域名 <code>&quot;site:*.qq.com&quot;</code></li>
+</ol>
+<p><a href="http://www.google.com.hk/advanced_search">google advance search</a></p>
+<h3 id="google-image-辨别词意">Google image 辨别词意</h3>
+<p><a href="https://www.google.com/imghp?hl=en">google image</a></p>
+<h2 id="github">Github</h2>
+<h3 id="基本搜索">基本搜索</h3>
+<ul>
+<li>
+<p>查找stars数超过100的cat仓库：<code>cat stars:&gt;100</code></p>
+</li>
+<li>
+<p>搜索用户名为fengbingchun的所有仓库：<code>user:fengbingchun</code></p>
+</li>
+<li>
+<p>搜索不包含”cat”的所有仓库：<code>NOT cat</code></p>
+</li>
+</ul>
+<h3 id="代码搜索">代码搜索</h3>
+<ul>
+<li>
+<p>搜索用户名为fengbingchun并且文件中含有”cv::Mat”的所有文件：<code>cv::Mat user:fengbingchun</code></p>
+</li>
+<li>
+<p>搜索文件大小大于1000KB并文件中包含”system”的所有文件：<code>system size:&gt;1000</code></p>
+</li>
+<li>
+<p>搜索在/docs/路径下文件中含有”examples”的所有文件：<code>examples path:/docs/</code></p>
+</li>
+</ul>
+<h3 id="问题搜索">问题搜索</h3>
+<ul>
+<li>
+<p>搜索用户名为fengbingchun并issue中含有”opencv”字段的所有issues：<code>opencv user:fengbingchun</code></p>
+</li>
+<li>
+<p>搜索issue是open状态并且issue中含有”fengbingchun”字段的所有issues：<code>fengbingchun is:open</code></p>
+</li>
+<li>
+<p>搜素issue中comments数大于4次且含有”fengbingchun”字段的所有issues：<code>fengbingchun comments:&gt;4</code></p>
+</li>
+<li>
+<p>搜索issue创建者是fengbingchun的所有issues：<code>author:fengbingchun</code></p>
+</li>
+<li>
+<p>搜索issue在2019年2月15日后创建的且含有”opencv”字段的所有issues：<code>opencv created:&gt;2019-03-15</code></p>
+</li>
+</ul>
+<h3 id="用户名搜索user-search">用户名搜索(User search)：</h3>
+<ul>
+<li>
+<p>搜索用户全名为”Bingchun Feng”的用户：<code>fullname:&quot;Bingchun Feng&quot;</code></p>
+</li>
+<li>
+<p>搜索地址在” San Francisco, CA”的用户名包含tom的所有仓库：<code>tom location:&quot;San Francisco, CA&quot;</code></p>
+</li>
+</ul>
+<h3 id="页面高级搜索">页面高级搜索</h3>
+<p><a href="https://github.com/search/advanced">github advanced search</a></p>
+<h3 id="link">Link</h3>
+<p>[GitHub搜索技巧整理)[https://blog.csdn.net/fengbingchun/article/details/88625374)</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/xCmoJMFET/" class="tag">
+                    生活总结
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/spring-enum-strategy-pattern/">
+                  <h3 class="post-title">
+                    Spring Enum Strategy Pattern
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

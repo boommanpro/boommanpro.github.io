@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>浏览器同源策略及JSONP | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">浏览器同源策略及JSONP</h2>
+            <div class="post-date">2020-01-06</div>
+            
+            <div class="post-content">
+              <h2 id="同源策略">同源策略</h2>
+<blockquote>
+<p>同源策略（Same origin policy）是一种约定，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，则浏览器的正常功能可能都会受到影响。</p>
+</blockquote>
+<blockquote>
+<p>可以说Web是构建在同源策略基础之上的，浏览器只是针对同源策略的一种实现。</p>
+</blockquote>
+<p>同源策略，它是由<strong>Netscape</strong>提出的一个著名的安全策略。现在所有支持JavaScript 的浏览器都会使用这个策略。所谓同源是指，<strong>域名，协议，端口相同</strong>。</p>
+<p>当一个浏览器的两个tab页中分别打开来 百度和谷歌的页面当浏览器的百度tab页执行一个脚本的时候会检查这个脚本是属于哪个页面的，即检查是否同源，只有和百度同源的脚本才会被执行。</p>
+<p>如果非同源，那么在请求数据时，浏览器会在控制台中报一个异常，提示拒绝访问。</p>
+<h4 id="同源">同源</h4>
+<p>域名、协议、端口相同，也就是在同一个域里。</p>
+<h4 id="非同源受到的限制">非同源受到的限制</h4>
+<ul>
+<li>
+<p>cookie不能读取 （如我在自己的站点无法读取博客园用户的cookie）</p>
+</li>
+<li>
+<p>dom无法获得</p>
+</li>
+<li>
+<p>ajax请求不能发送</p>
+</li>
+</ul>
+<h2 id="什么是浏览器跨域">什么是浏览器跨域</h2>
+<p>例如：</p>
+<p>一个域的页面去请求另一个域的资源；</p>
+<p>A域的页面去请求B域的资源。</p>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1578281955053.png" alt="" loading="lazy"></figure>
+<h2 id="jsonp实现跨域">😀 Jsonp实现跨域</h2>
+<h3 id="jsonp的基本原理">JSONP的基本原理</h3>
+<p><strong>动态添加一个标签，而script标签的src属性是没有跨域的限制的。</strong></p>
+<p>这样一来,这种跨域方式就与<strong>ajax XmlHttpRequest</strong>协议无关了。</p>
+<p><strong>JSONP即JSON with Padding</strong></p>
+<p>由于同源策略的限制，XmlHttpRequest只允许请求当前源（域名、协议、端口）的资源。</p>
+<p>如果要进行跨域请求， 我们可以通过使用html的script标记来进行跨域请求，并<strong>在响应中返回要执行的script代码</strong>，其中可以直接<strong>使用JSON传递javascript对象</strong>，这种跨域的通讯方式称为JSONP。</p>
+<blockquote>
+<p><strong>JSON 是一种数据格式</strong></p>
+<p><strong>JSONP 是一种数据调用的方式</strong></p>
+</blockquote>
+<h3 id="jsonp的执行过程">Jsonp的执行过程</h3>
+<p>首先在客户端注册一个callback (如:<strong>'TestJsonpCallback'</strong>), 然后把callback的名字(如:testjsonpcallback)传给服务器。</p>
+<p>注意：</p>
+<p>服务端得到callback的数值后，要用TestJsonpCallback(......)把将要输出的json内容包括起来，此时，服务器生成 json 数据才能被客户端正确接收。<br>
+然后以 javascript 语法的方式，生成一个function， function 名字就是传递上来的参数 'callback'的值 <strong>TestJsonpCallback.</strong></p>
+<p>最后将 <strong>json</strong> 数据直接以入参的方式，放置到 function 中，这样就生成了一段 js 语法的文档，返回给客户端。<br>
+客户端浏览器，解析script标签，并执行返回的 javascript 文档，此时javascript文档数据，作为参数， 传入到了客户端预先定义好的 callback 函数.</p>
+<h3 id="try-one-test">Try one test</h3>
+<h4 id="indexhtml">index.html</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+    &lt;script src=&quot;/static/jquery-3.4.1.js&quot;&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;index&lt;/h1&gt;
+
+
+&lt;p&gt;
+    &lt;input type=&quot;button&quot; onclick=&quot;Jsonp1();&quot; value='jsonp1'/&gt;
+&lt;/p&gt;
+
+&lt;script&gt;
+
+
+    function Jsonp1() {
+        let url = 'http://127.0.0.1:8088/jsonp/success';
+        $.ajax({
+            type: 'get',
+            dataType: 'jsonp',
+            url: url,
+            //这个是后台接受的参数
+            jsonp: &quot;jsonpCallback&quot;,
+            success: function (res) {
+               console.log(res)
+            },
+            error (err) {
+                console.error(err)
+            }
+        })
+    }
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h4 id="spring-boot-web">Spring boot web</h4>
+<pre><code class="language-java">package cn.boommanpro.jsonp.controller;
+
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * @author wangqimeng
+ * @date 2020/1/6 11:16
+ */
+@RestController
+@CrossOrigin(&quot;*&quot;)
+@RequestMapping(&quot;jsonp&quot;)
+public class JsonpController {
+
+    @GetMapping(&quot;success&quot;)
+    public String listByName(@RequestParam String jsonpCallback) {
+        return jsonpCallback + &quot;(&quot; + &quot;{\&quot;data\&quot;:\&quot;SUCCESS\&quot;}&quot; + &quot;)&quot;;
+    }
+}
+
+
+</code></pre>
+<h4 id="yapi测试编写">Yapi测试编写</h4>
+<pre><code>var cb = params.jsonpCallback;
+if (!cb){
+    cb = 'callback';
+}
+
+var json = {
+  &quot;result&quot;: [
+    {
+      &quot;lng&quot;: &quot;121.542306&quot;,
+      &quot;lat&quot;: &quot;29.865646&quot;
+    }
+  ]
+}
+
+var res = JSON.stringify(json);
+mockJson = cb + '(' + res + ')';
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/gridea-reference/">
+                  <h3 class="post-title">
+                    Gridea 个人搭建教程
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>spring-boot-devtools 使用引发的一系列问题 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">spring-boot-devtools 使用引发的一系列问题</h2>
+            <div class="post-date">2021-01-03</div>
+            
+            <div class="post-content">
+              <h2 id="背景">背景</h2>
+<p>在看 gitee的一个开源项目 =&gt; <a href="https://gitee.com/huanzi-qch/base-admin.git">gitee-base-admin</a> 的时候,发现其中的项目日志通过websocket推送到客户端挺有意义的.个人项目可以加上这个小功能。</p>
+<p>但是 其实现是每个用户都新建线程去推日志, 线程数和用户数 1:1. 并且无法对集群日志监听.遂想实现更通用(优雅)的方法实现</p>
+<h2 id="改写思路">改写思路</h2>
+<ol>
+<li>将原本的读取本地日志文件 =&gt; logging的append机制 =&gt; append 多份 =&gt; 追加一份到自定义的 Appender</li>
+<li>Appender将消息写入到Dispatcher中进行分发处理</li>
+<li>将Dispatcher抽象为接口,做多份实现 以满足 单机基于内存的,集群基于mq中间件的情况</li>
+<li>将用户的websocket上下线推送 =&gt; 缓存n行(CircularFifoQueue)做首次推送,其他的消息做轮询用户推送,可以异步化防止单条消息阻塞时间长的问题。 新用户推送需要注意防止消息丢失问题</li>
+<li>coding</li>
+</ol>
+<h2 id="坑点出现了">坑点出现了</h2>
+<p>在项目启动的时候,启动没有报错，就是没有新消息过来，但是append也写入消息，但是就是取不到消息可以进行消费,后发现两个Dispatcher不是一个实例，饿汉式的单例失效了? 竟然不是一个类加载器?</p>
+<p>原因如下:</p>
+<p><code>spring-boot-devtools</code> 对项目的代码是 RestartClassLoader,jar包的代码则是App,又因为我们是通过logback构造的append,所以就算是项目的代码，构造方式，或者流程不一，导致类加载器不一样，最终体现在单例不是单例了。</p>
+<p>怎么解决呢? 不用devtools即可 !!! 或者百度dev-tools 配置 or jrebl不香吗</p>
+<h2 id="编写过程中的注意点">编写过程中的注意点</h2>
+<p>因为logging的优先级问题,所以不能采用bean的方式构造,我采用的是java spi机制实现多环境切换</p>
+<h2 id="classloader">ClassLoader</h2>
+<ol>
+<li>jar包隔离</li>
+<li>动态debug</li>
+</ol>
+<p>加载类实例的几种方式 ?</p>
+<ol>
+<li>Class.forName</li>
+<li>new</li>
+<li>ClassLoader.loadClass</li>
+<li>other 一些序列化什么的</li>
+<li>spi =&gt; ServiceLoader</li>
+</ol>
+<h2 id="classloader-一些点">ClassLoader 一些点</h2>
+<ol>
+<li>ClassLoader.loadClass 类加载器和当前加载的Class不一致时 会导致</li>
+</ol>
+<pre><code class="language-java">com.boommanpro.Parent cannot be cast to com.boommanpro.Parent
+</code></pre>
+<ol>
+<li>
+<p>new 方式使用的是当前代码所在类加载器加载，而不是调用当前代码的代码所在类加载器加载</p>
+</li>
+<li>
+<p>Class.forName运作时，通过Reflection.getCallerClass()，能够获取是谁调用了Class.forName，最终还是和new 一致性</p>
+</li>
+<li>
+<p>代码 Class有类加载器,线程有类加载器 ServiceLoader用线程的</p>
+</li>
+</ol>
+<h2 id="什么时候类会被加载">什么时候类会被加载</h2>
+<p>参照 <a href="https://www.cnblogs.com/zhixie/p/11766080.html">java类在何时被加载</a></p>
+<p>说明了以下几种方式</p>
+<ol>
+<li>main类</li>
+<li>创建类的实例 new创建子类的实例</li>
+<li>访问类的静态方法</li>
+<li>访问类的静态变量</li>
+<li>反射</li>
+</ol>
+<p>补充两点:</p>
+<ol start="6">
+<li>cast -&gt;       Object o = new Object(); Parent o2 = (Parent) o; 本质是 Parent.class.cast(o);</li>
+<li>instanceof   =&gt;  <code>java.lang.Class#isInstance</code></li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/tinyid/">
+                  <h3 class="post-title">
+                    分布式id服务 tinyId源码学习
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

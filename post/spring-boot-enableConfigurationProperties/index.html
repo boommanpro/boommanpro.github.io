@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>让@EnableConfigurationProperties的值注入到@Value中 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">让@EnableConfigurationProperties的值注入到@Value中</h2>
+            <div class="post-date">2020-03-03</div>
+            
+            <div class="post-content">
+              <h1 id="需求背景">需求背景</h1>
+<p>定义了一个<code>@ConfigurationProperties</code>的配置类,然后在其中定义了一些定时任务的配置,如cron表达式,因为项目会有默认配置,遂配置中有默认值,大体如下:</p>
+<pre><code class="language-java">@Data
+@Validated
+@ConfigurationProperties(value = &quot;task&quot;)
+public class TaskConfigProperties {
+    /**
+     * 任务A在每天的0点5分0秒进行执行
+     */
+     @NotBlank
+    private String taskA = &quot;0 5 0 * * ? &quot;;
+
+}
+
+</code></pre>
+<p>定时任务配置:</p>
+<pre><code class="language-java">    @Scheduled(cron = &quot;${task.task-a}&quot;)
+    public void finalCaseReportGenerate(){
+        log.info(&quot;taskA定时任务开始执行&quot;);
+        //具体的任务
+        log.info(&quot;taskA定时任务完成执行&quot;);
+    }
+</code></pre>
+<p>但是如上直接使用是有问题的<code>${task.taskA}</code>是没有值的,必须要在外部化配置中再写一遍，这样我们相当于默认值就没有用了，这怎么行呢，我们来搞定他。</p>
+<h2 id="探究其原理">探究其原理</h2>
+<p><code>@ConfigurationProperties</code>、<code>@Value</code> 、<code>SpringEl</code> 他们之间的关系和区别及我认为的正确使用方式。</p>
+<p>首先<code>@ConfigurationProperties</code> 是Spring Boot引入的,遂查询官方文档的讲解</p>
+<p><a href="https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/htmlsingle/#boot-features-external-config">Spring Boot -&gt; Externalized Configuration</a></p>
+<ol>
+<li>我们发现外部化配置中没有值的话,报错是在<br>
+<code>org.springframework.util.PropertyPlaceholderHelper#parseStringValue</code></li>
+<li>其中<code>org.springframework.util.PropertyPlaceholderHelper.PlaceholderResolver</code>是解析的关键</li>
+<li>我们只要把默认值装载到系统中,让<code>org.springframework.util.PropertyPlaceholderHelper.PlaceholderResolver#resolvePlaceholder</code>可以解析到就可以了</li>
+<li>遂我们可以把<br>
+值装载到Environment中</li>
+</ol>
+<pre><code class="language-java">/**
+ * @author wangqimeng
+ * @date 2020/3/4 0:04
+ */
+@Data
+@Slf4j
+@Validated
+@ConfigurationProperties(prefix = &quot;task&quot;)
+public class TaskConfigProperties implements InitializingBean , EnvironmentPostProcessor {
+
+    /**
+     * 任务A在每天的0点5分0秒进行执行
+     */
+    @NotBlank
+    private String taskA = &quot;0 5 0 * * ? &quot;;
+
+    @Value(&quot;${task.task-a}&quot;)
+    public String taskAValue;
+
+    @Autowired
+    private Environment environment;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        log.info(&quot;taskAValue:{}&quot;,taskAValue);
+    }
+
+    @Override
+    public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        log.info(&quot;TaskConfigProperties-&gt; postProcessEnvironment 开始执行&quot;);
+        //取到当前配置类上的信息
+        MutablePropertySources propertySources = environment.getPropertySources();
+        Properties properties = new Properties();
+        if (taskA != null) {
+            properties.put(&quot;task.task-a&quot;, this.taskA);
+        }
+        PropertySource propertySource = new PropertiesPropertySource(&quot;task&quot;, properties);
+        //即优先级低
+        propertySources.addLast(propertySource);
+    }
+}
+</code></pre>
+<p>需要在<code>META-INF -&gt; spring.factories</code>中配置</p>
+<pre><code class="language-properties">org.springframework.boot.env.EnvironmentPostProcessor=\
+cn.boommanpro.config.TaskConfigProperties
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1583254295303.png" alt="" loading="lazy"></figure>
+<p>所以addLast是优先级最低的，让我们新加入的配置优先级最低。</p>
+<p>以上就简单的完成了我们的需求。</p>
+<h2 id="最终实现">最终实现</h2>
+<ol>
+<li>配置类中的有默认值的不需要在External Configuration中再度配置</li>
+<li>通过一个注解<code>@EnableBindEnvironmentProperties</code>，绑定含有<code>@ConfigurationProperties</code>Class的默认值到Environment</li>
+</ol>
+<p>@EnableBindEnvironmentProperties</p>
+<pre><code class="language-java">/**
+ * @author wangqimeng
+ * @date 2020/3/4 1:21
+ */
+@Target({ ElementType.TYPE, ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface EnableBindEnvironmentProperties {
+
+
+    Class&lt;?&gt;[] value() default {};
+}
+
+</code></pre>
+<p>@EnableBindEnvironmentPropertiesRegister</p>
+<pre><code class="language-java">import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.env.EnvironmentPostProcessor;
+import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.core.env.MutablePropertySources;
+import org.springframework.core.env.PropertiesPropertySource;
+import org.springframework.core.env.PropertySource;
+
+/**
+ * @author wangqimeng
+ * @date 2020/3/4 15:11
+ */
+@Slf4j
+public class EnableBindEnvironmentPropertiesRegister implements EnvironmentPostProcessor {
+
+    @Override
+    public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
+        MutablePropertySources propertySources = environment.getPropertySources();
+        EnableBindEnvironmentProperties annotation = application.getMainApplicationClass().getAnnotation(EnableBindEnvironmentProperties.class);
+        Arrays.stream(annotation.value())
+                .forEach(aClass -&gt; registerToEnvironment(propertySources, aClass));
+    }
+
+    public void registerToEnvironment(MutablePropertySources propertySources, Class&lt;?&gt; clazz) {
+        ConfigurationProperties annotation = clazz.getAnnotation(ConfigurationProperties.class);
+        if (annotation == null) {
+            return;
+        }
+        String prefix = annotation.prefix();
+        String name = String.format(&quot;%s-%s&quot;, prefix, clazz.getName());
+        try {
+            Properties properties = toProperties(prefix, clazz.newInstance());
+            PropertySource propertySource = new PropertiesPropertySource(name, properties);
+            propertySources.addLast(propertySource);
+        } catch (Exception e) {
+            log.error(&quot;Exception:&quot;, e);
+            throw new RuntimeException();
+        }
+
+    }
+
+    public Properties toProperties(String prefix, Object o) throws Exception {
+        Properties properties = new Properties();
+        Map&lt;String, Object&gt; map = objectToMap(o);
+        map.forEach((s, o1) -&gt; {
+            properties.put(String.format(&quot;%s.%s&quot;, prefix, camelToUnderline(s)), o1);
+        });
+
+        return properties;
+    }
+
+    public static String camelToUnderline(String param) {
+        if (param == null || &quot;&quot;.equals(param.trim())) {
+            return &quot;&quot;;
+        }
+        int len = param.length();
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i &lt; len; i++) {
+            char c = param.charAt(i);
+            if (Character.isUpperCase(c)) {
+                sb.append(&quot;-&quot;);
+                sb.append(Character.toLowerCase(c));
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+    public static Map&lt;String, Object&gt; objectToMap(Object obj) throws Exception {
+        if (obj == null) {
+            return null;
+        }
+        Map&lt;String, Object&gt; map = new HashMap&lt;&gt;(10);
+        BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+        PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+        for (PropertyDescriptor property : propertyDescriptors) {
+            String key = property.getName();
+            if (key.compareToIgnoreCase(&quot;class&quot;) == 0) {
+                continue;
+            }
+            Method getter = property.getReadMethod();
+            Object value = getter != null ? getter.invoke(obj) : null;
+            if (value == null) {
+                continue;
+            }
+            map.put(key, value);
+        }
+
+        return map;
+    }
+}
+
+</code></pre>
+<p>配置到<code>META-INF/spring.factories</code></p>
+<pre><code class="language-properties"># Application Listeners
+org.springframework.boot.env.EnvironmentPostProcessor=\
+cn.boommanpro.annotation.EnableBindEnvironmentPropertiesRegister
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/Spring/" class="tag">
+                    Spring
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/linux-command-summary/">
+                  <h3 class="post-title">
+                    linux 常用命令 - for BoomMan
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

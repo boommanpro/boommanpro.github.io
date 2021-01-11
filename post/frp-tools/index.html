@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>FRP配置部署 基于最新版本 v0.22.0 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">FRP配置部署 基于最新版本 v0.22.0</h2>
+            <div class="post-date">2020-01-10</div>
+            
+            <div class="post-content">
+              <p>作者的项目更新很快，看到我这篇博客看的人也蛮多的，我是搞java web 开发的，为什么这个看的多!!!</p>
+<p>遂跟新client server 配置至 v0.22.0</p>
+<p>作者<a href="https://github.com/fatedier/frp">github地址</a></p>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20190114170110393.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jvb21fbWFu,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
+<hr>
+<h3 id="下面是-v0220的配置">下面是 v0.22.0的配置</h3>
+<h2 id="frpsini">frps.ini</h2>
+<pre><code>[common]
+
+bind_port = 8080
+dashboard_addr = 0.0.0.0
+dashboard_port = 8081
+</code></pre>
+<h2 id="frpcini">frpc.ini</h2>
+<pre><code>[common]
+server_addr = 远程服务地址 域名或者 ip地址都行 就是frps运行的地址  
+server_port = 8080
+
+[ssh]
+type = tcp
+local_ip = 127.0.0.1
+local_port = 3389
+remote_port = 3389
+
+</code></pre>
+<hr>
+<h3 id="下面是093的配置">下面是0.93的配置</h3>
+<p>我的配置文件基于0.93</p>
+<h2 id="frpsini-2">frps.ini</h2>
+<pre><code># [common] is integral section
+
+[common]
+
+# A literal address or host name for IPv6 must be enclosed
+
+# in square brackets, as in &quot;[::1]:80&quot;, &quot;[ipv6-host]:http&quot; or &quot;[ipv6-host%zone]:80&quot;
+
+bind_addr = 0.0.0.0
+# 绑定服务器端口,会被占用
+bind_port = 8089
+
+# if you want to support virtual host, you must set the http port for listening (optional)
+
+vhost_http_port = 80
+
+vhost_https_port = 433
+
+# if you want to configure or reload frps by dashboard, dashboard_port must be set
+# 仪表盘显示地址
+dashboard_port = 7000
+
+# dashboard assets directory(only for debug mode)
+
+# assets_dir = ./static
+
+# console or real logFile path like ./frps.log
+
+log_file = ./frps.log
+
+# debug, info, warn, error
+
+log_level = info
+
+log_max_days = 3
+
+# if you enable privilege mode, frpc can create a proxy without pre-configure in frps when privilege_token is correct
+
+privilege_mode = true
+
+privilege_token = 12345678
+
+# only allow frpc to bind ports you list, if you set nothing, there won't be any limit
+
+privilege_allow_ports = 2000-3000,3001,3003,4000-50000,78,79
+
+# pool_count in each proxy will change to max_pool_count if they exceed the maximum value
+
+max_pool_count = 100
+
+ 
+
+# ssh is the proxy name, client will use this name and auth_token to connect to server
+
+[ssh]
+
+type = tcp
+
+auth_token = 123
+
+bind_addr = 0.0.0.0
+
+listen_port = 6000
+
+ 
+
+[web01]
+
+# if type equals http, vhost_http_port must be set
+
+type = http
+
+auth_token = 123
+
+# if proxy type equals http, custom_domains must be set separated by commas
+
+#custom_domains = web01.yourdomain.com,web01.yourdomain2.com
+
+custom_domains = 127.0.0.1
+
+[web02]
+
+# if type equals https, vhost_https_port must be set
+
+type = https
+
+auth_token = 123
+
+custom_domains = web02.yourdomain.com
+</code></pre>
+<h2 id="frpcini-2">frpc.ini</h2>
+<pre><code>[common] 
+server_addr = 服务器ip地址 
+privilege_token = 12345678 
+server_port = 8089 
+log_file = frpc.log 
+log_level = info 
+log_max_days = 7 
+
+[tcp_29168] 
+type = tcp 
+remote_port = 29168 
+local_ip = 192.168.1.104 
+local_port = 8080 
+privilege_mode = true 
+authentication_timeout = 0 
+use_encryption = true 
+use_gzip = true 
+
+</code></pre>
+<p>写在最后,frp用了很久了,非常好用,作者在一直更新，相信作者会更好！</p>
+<p>tips:在需要用到服务器时,不需要频繁在服务器上搭建项目,本地通过反向代理,即可在手机端展示.<br>
+尤其是微信小程序！</p>
+<h3 id="windos启动脚本">Windos启动脚本</h3>
+<p>startup.bat</p>
+<pre><code class="language-bat">echo run frp client
+
+frpc.exe -c frpc.ini
+
+pause
+</code></pre>
+<h3 id="linux启动脚本">Linux启动脚本</h3>
+<p>下面是Linux Server 的相关脚本</p>
+<h3 id="startupsh"><code>startup.sh</code></h3>
+<pre><code>#!/bin/bash
+
+nohup ./frps -c ./frps.ini &gt;frps.log 2&gt;&amp;1 &amp;
+</code></pre>
+<h3 id="shutdownsh"><code>shutdown.sh</code></h3>
+<p>注意:<code>需要修改port的值</code></p>
+<pre><code>#!/bin/bash
+## 需要修改port的值
+port=8080
+#根据端口号查询对应的pid
+pid=$(netstat -nlp | grep :$port | awk '{print $7}' | awk -F&quot;/&quot; '{ print $1 }');
+
+#杀掉对应的进程，如果pid不存在，则不执行
+if [  -n  &quot;$pid&quot;  ];  then
+    kill  -9  $pid;
+fi 
+
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/YtisD-ZVS/" class="tag">
+                    开发工具
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/yapi-tools/">
+                  <h3 class="post-title">
+                    Yapi环境搭建及使用
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

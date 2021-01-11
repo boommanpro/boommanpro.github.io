@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>项目中使用 JDK8 时间的多种姿势 | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">项目中使用 JDK8 时间的多种姿势</h2>
+            <div class="post-date">2020-01-12</div>
+            
+            <div class="post-content">
+              <h1 id="为什么使用jdk8的时间">为什么使用JDK8的时间</h1>
+<p>好用!<br>
+好用!<br>
+好用!</p>
+<p>高大上,线程安全,计算方便等一些列的好处,你什么不使用它</p>
+<h2 id="jdk8时间">JDK8时间</h2>
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>类的名称</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Instant</td>
+<td>时间戳</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Duration</td>
+<td>持续时间，时间差</td>
+</tr>
+<tr>
+<td>3</td>
+<td>LocalDate</td>
+<td>只包含日期，比如：2018-02-05</td>
+</tr>
+<tr>
+<td>4</td>
+<td>LocalTime</td>
+<td>只包含时间，比如：23：12：10</td>
+</tr>
+<tr>
+<td>5</td>
+<td>LocalDateTime</td>
+<td>包含日期和时间，比如：2018-02-05 23:14:21</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Period</td>
+<td>时间段</td>
+</tr>
+<tr>
+<td>7</td>
+<td>ZoneOffset</td>
+<td>时区偏移量，比如：+8:00</td>
+</tr>
+<tr>
+<td>8</td>
+<td>ZonedDateTime</td>
+<td>带时区的时间</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Clock</td>
+<td>时钟，比如获取目前美国纽约的时间</td>
+</tr>
+<tr>
+<td>10</td>
+<td>java.time.format.DateTimeformaer</td>
+<td>时间格式化</td>
+</tr>
+</tbody>
+</table>
+<h3 id="eg-1-java-8中处理特定日期">e.g. 1. Java 8中处理特定日期</h3>
+<p>我们通过静态工厂方法now()非常容易地创建了当天日期，你还可以调用另一个有用的工厂方法LocalDate.of()创建任意日期， 该方法需要传入年、月、日做参数，返回对应的LocalDate实例。这个方法的好处是没再犯老API的设计错误，比如年度起始于1900，月份是从0开 始等等。</p>
+<pre><code class="language-java">
+import java.time.LocalDate;
+
+public class Demo03 {
+    public static void main(String[] args) {
+        LocalDate date = LocalDate.of(2018,2,6);
+        System.out.println(&quot;自定义日期:&quot;+date);
+    }
+}
+</code></pre>
+<h3 id="eg-2-java-8中检查像生日这种周期性事件">e.g. 2. Java 8中检查像生日这种周期性事件</h3>
+<pre><code>
+import java.time.LocalDate;
+import java.time.MonthDay;
+
+public class Demo05 {
+    public static void main(String[] args) {
+        LocalDate date1 = LocalDate.now();
+
+        LocalDate date2 = LocalDate.of(2018,2,6);
+        MonthDay birthday = MonthDay.of(date2.getMonth(),date2.getDayOfMonth());
+        MonthDay currentMonthDay = MonthDay.from(date1);
+
+        if(currentMonthDay.equals(birthday)){
+            System.out.println(&quot;是你的生日&quot;);
+        }else{
+            System.out.println(&quot;你的生日还没有到&quot;);
+        }
+
+    }
+}
+</code></pre>
+<p>只要当天的日期和生日匹配，无论是哪一年都会打印出祝贺信息。你可以把程序整合进系统时钟，看看生日时是否会受到提醒，或者写一个单元测试来检测代码是否运行正确。</p>
+<h3 id="eg-3-java-8的clock时钟类">e.g. 3. Java 8的Clock时钟类</h3>
+<p>Java 8增加了一个Clock时钟类用于获取当时的时间戳，或当前时区下的日期时间信息。以前用到System.currentTimeInMillis()和TimeZone.getDefault()的地方都可用Clock替换。</p>
+<pre><code class="language-java">
+import java.time.Clock;
+
+public class Demo10 {
+    public static void main(String[] args) {
+        // Returns the current time based on your system clock and set to UTC.
+        Clock clock = Clock.systemUTC();
+        System.out.println(&quot;Clock : &quot; + clock.millis());
+
+        // Returns time based on system clock zone
+        Clock defaultClock = Clock.systemDefaultZone();
+        System.out.println(&quot;Clock : &quot; + defaultClock.millis());
+
+    }
+}
+</code></pre>
+<h3 id="eg-4-java-8中处理时区">e.g. 4. Java 8中处理时区</h3>
+<p>Java 8不仅分离了日期和时间，也把时区分离出来了。现在有一系列单独的类如ZoneId来处理特定时区，ZoneDateTime类来表示某时区下的时间。这在Java 8以前都是 GregorianCalendar类来做的。下面这个例子展示了如何把本时区的时间转换成另一个时区的时间。</p>
+<pre><code>
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
+public class Demo12 {
+    public static void main(String[] args) {
+        // Date and time with timezone in Java 8
+        ZoneId america = ZoneId.of(&quot;America/New_York&quot;);
+        LocalDateTime localtDateAndTime = LocalDateTime.now();
+        ZonedDateTime dateAndTimeInNewYork  = ZonedDateTime.of(localtDateAndTime, america );
+        System.out.println(&quot;Current date and time in a particular timezone : &quot; + dateAndTimeInNewYork);
+    }
+}
+</code></pre>
+<h3 id="eg-5-如何表示信用卡到期这类固定日期答案就在yearmonth">e.g. 5. 如何表示信用卡到期这类固定日期，答案就在YearMonth</h3>
+<p>与 MonthDay检查重复事件的例子相似，YearMonth是另一个组合类，用于表示信用卡到期日、FD到期日、期货期权到期日等。还可以用这个类得到 当月共有多少天，YearMonth实例的lengthOfMonth()方法可以返回当月的天数，在判断2月有28天还是29天时非常有用。</p>
+<pre><code>
+import java.time.*;
+
+public class Demo13 {
+    public static void main(String[] args) {
+        YearMonth currentYearMonth = YearMonth.now();
+        System.out.printf(&quot;Days in month year %s: %d%n&quot;, currentYearMonth, currentYearMonth.lengthOfMonth());
+        YearMonth creditCardExpiry = YearMonth.of(2019, Month.FEBRUARY);
+        System.out.printf(&quot;Your credit card expires on %s %n&quot;, creditCardExpiry);
+    }
+}
+</code></pre>
+<h3 id="eg-6-如何在java-8中检查闰年">e.g. 6.  如何在Java 8中检查闰年</h3>
+<pre><code>
+import java.time.LocalDate;
+
+public class Demo14 {
+    public static void main(String[] args) {
+        LocalDate today = LocalDate.now();
+        if(today.isLeapYear()){
+            System.out.println(&quot;This year is Leap year&quot;);
+        }else {
+            System.out.println(&quot;2018 is not a Leap year&quot;);
+        }
+
+    }
+}
+</code></pre>
+<h3 id="eg-7-计算两个日期之间的天数和月数">e.g. 7.  计算两个日期之间的天数和月数</h3>
+<p>有一个常见日期操作是计算两个日期之间的天数、周数或月数。在Java 8中可以用java.time.Period类来做计算。</p>
+<p>下面这个例子中，我们计算了当天和将来某一天之间的月数。</p>
+<pre><code class="language-java">
+import java.time.LocalDate;
+import java.time.Period;
+
+public class Demo15 {
+    public static void main(String[] args) {
+        LocalDate today = LocalDate.now();
+
+        LocalDate java8Release = LocalDate.of(2018, 12, 14);
+
+        Period periodToNextJavaRelease = Period.between(today, java8Release);
+        System.out.println(&quot;Months left between today and Java 8 release : &quot;
+                + periodToNextJavaRelease.getMonths() );
+
+
+    }
+}
+</code></pre>
+<h3 id="eg-8-在java-8中获取当前的时间戳">e.g. 8. 在Java 8中获取当前的时间戳</h3>
+<p>Instant类有一个静态工厂方法now()会返回当前的时间戳，如下所示：</p>
+<pre><code class="language-java">
+import java.time.Instant;
+
+public class Demo16 {
+    public static void main(String[] args) {
+        Instant timestamp = Instant.now();
+        System.out.println(&quot;What is value of this instant &quot; + timestamp.toEpochMilli());
+    }
+}
+</code></pre>
+<p>时间戳信息里同时包含了日期和时间，这和java.util.Date很像。实际上Instant类确实等同于 Java 8之前的Date类，你可以使用Date类和Instant类各自的转换方法互相转换，例如：Date.from(Instant) 将Instant转换成java.util.Date，Date.toInstant()则是将Date类转换成Instant类。</p>
+<h3 id="eg-9-java-8中如何使用预定义的格式化工具去解析或格式化日期">e.g. 9.  Java 8中如何使用预定义的格式化工具去解析或格式化日期</h3>
+<pre><code class="language-java">
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public class Demo17 {
+    public static void main(String[] args) {
+        String dayAfterTommorrow = &quot;20180205&quot;;
+        LocalDate formatted = LocalDate.parse(dayAfterTommorrow,
+                DateTimeFormatter.BASIC_ISO_DATE);
+        System.out.println(dayAfterTommorrow+&quot;  格式化后的日期为:  &quot;+formatted);
+    }
+}
+</code></pre>
+<h3 id="eg-10-字符串互转日期类型">e.g. 10.  字符串互转日期类型</h3>
+<pre><code class="language-java">
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class Demo18 {
+    public static void main(String[] args) {
+        LocalDateTime date = LocalDateTime.now();
+
+        DateTimeFormatter format1 = DateTimeFormatter.ofPattern(&quot;yyyy/MM/dd HH:mm:ss&quot;);
+        //日期转字符串
+        String str = date.format(format1);
+
+        System.out.println(&quot;日期转换为字符串:&quot;+str);
+
+        DateTimeFormatter format2 = DateTimeFormatter.ofPattern(&quot;yyyy/MM/dd HH:mm:ss&quot;);
+        //字符串转日期
+        LocalDate date2 = LocalDate.parse(str,format2);
+        System.out.println(&quot;日期类型:&quot;+date2);
+
+    }
+}
+</code></pre>
+<h1 id="localdatetime基础">LocalDateTime基础</h1>
+<h2 id="时间类">时间类</h2>
+<p>LocalDate       yyyy-MM-dd<br>
+LocalTime       HH:mm:ss<br>
+LocalDateTime   yyyy-MM-dd HH:mm:ss</p>
+<h2 id="时间格式">时间格式</h2>
+<p>常见的格式是:</p>
+<blockquote>
+<p>yyyy-MM-dd HH:mm:ss<br>
+对应结果<br>
+2018-01-23 15:02:43</p>
+</blockquote>
+<p>一般情况如上,那么有些特殊的地方用到特殊的用法,记不住备用以后查看</p>
+<pre><code>/**
+日期格式化类（必须掌握）
+API:
+G  Era 标志符  Text  AD  
+y  年  Year  1996; 96  
+M  年中的月份  Month  July; Jul; 07  
+w  年中的周数  Number  27  
+W  月份中的周数  Number  2  
+D  年中的天数  Number  189  
+d  月份中的天数  Number  10  
+F  月份中的星期  Number  2  
+E  星期中的天数  Text  Tuesday; Tue  
+a  Am/pm 标记  Text  PM  
+H  一天中的小时数（0-23）  Number  0  
+k  一天中的小时数（1-24）  Number  24  
+K  am/pm 中的小时数（0-11）  Number  0  
+h  am/pm 中的小时数（1-12）  Number  12  
+m  小时中的分钟数  Number  30  
+s  分钟中的秒数  Number  55  
+S  毫秒数  Number  978  
+z  时区  General time zone  Pacific Standard Time; PST; GMT-08:00  
+Z  时区  RFC 822 time zone  -0800  
+*/
+
+yyyy-MM-dd E a HH:mm:ss
+
+2018-01-23 星期二 下午 15:05:27
+</code></pre>
+<h2 id="localdatetime时间转换">LocalDateTime时间转换</h2>
+<h1 id="spring-mvc">Spring MVC</h1>
+<h2 id="form表单请求-格式化时间">Form表单请求 格式化时间</h2>
+<p>Form表单请求指的是,以QueryString方式传递参数或者Form-Data传递时的请求</p>
+<ol>
+<li>字符串转LocalDateTime</li>
+</ol>
+<pre><code>@DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1578898114859.png" alt="LocalDateTime Form Request" loading="lazy"></figure>
+<ol>
+<li>Long转LocalDateTime</li>
+</ol>
+<p>增加一个Converter</p>
+<pre><code>import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+import org.apache.commons.lang3.math.NumberUtils;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
+
+/**
+ * @author wangqimeng
+ * @date 2020/1/13 14:52
+ */
+@Component
+public class LocalDateTimeConverter implements Converter&lt;String, LocalDateTime&gt; {
+    @Override
+    public LocalDateTime convert(String source) {
+        if (!NumberUtils.isDigits(source)) {
+            return null;
+        }
+        Long milli = NumberUtils.createLong(source);
+        return LocalDateTime.ofEpochSecond(milli, 0, ZoneOffset.UTC);
+    }
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1578898797683.png" alt="Long2LocalDateTime" loading="lazy"></figure>
+<p><strong>注意</strong> 上下两种方式不能兼容使用 Convert级别高</p>
+<h2 id="json-格式化时间">Json  格式化时间</h2>
+<h3 id="json解析前提">Json解析前提</h3>
+<p>maven</p>
+<pre><code>        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-json&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<p>or 已经有jackson 缺少</p>
+<pre><code>
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.fasterxml.jackson.datatype&lt;/groupId&gt;
+            &lt;artifactId&gt;jackson-datatype-jsr310&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+</code></pre>
+<h3 id="相关基础注解">相关基础注解</h3>
+<p>基础注解</p>
+<pre><code>    @DateTimeFormat(pattern = &quot;yyyy-MM-dd\'T\'HH:mm:ss.SSS&quot;)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = &quot;yyyy-MM-dd\'T\'HH:mm:ss.SSS&quot;)
+</code></pre>
+<p>描述:</p>
+<h3 id="关于long与localdatetime相互转换">关于Long与LocalDateTime相互转换</h3>
+<ol>
+<li>Long转LocalDateTime</li>
+</ol>
+<pre><code>import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+
+import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
+/**
+ * @author &lt;a href=&quot;mailto:boommanpro@gmail.com&quot;&gt;boommanpro&lt;/a&gt;
+ * @date 2019/7/19 14:20
+ */
+public class Long2LocalDateTimeDeserializer extends JsonDeserializer&lt;LocalDateTime&gt; {
+    @Override
+    public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+
+        String time=jsonParser.getText();
+        Instant instant = Instant.ofEpochMilli(Long.parseLong(time));
+        ZoneId zone = ZoneId.systemDefault();
+        return LocalDateTime.ofInstant(instant, zone);
+    }
+}
+
+</code></pre>
+<ol start="2">
+<li>LocalDateTime2Long</li>
+</ol>
+<pre><code>import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
+import com.fasterxml.jackson.databind.SerializerProvider;
+
+/**
+ * @author &lt;a href=&quot;mailto:boommanpro@gmail.com&quot;&gt;boommanpro&lt;/a&gt;
+ * @date 2019/7/19 14:20
+ */
+public class LocalDateTime2LongSerializer extends JsonSerializer&lt;LocalDateTime&gt; {
+
+    @Override
+    public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+        gen.writeNumber(String.valueOf(value.toInstant(ZoneOffset.of(&quot;+8&quot;)).toEpochMilli()));
+    }
+}
+</code></pre>
+<h1 id="spring-date-jpa">Spring Date Jpa</h1>
+<h2 id="jpa语法查询">Jpa语法查询</h2>
+<p>JPA可以根据你写的一个函数名来生成对应的SQL语句，当然函数名是要符合特定规则的。</p>
+<p>这里介绍between和in的用法</p>
+<pre><code>    @Query(nativeQuery = true,
+           value = &quot;select * from z_cashier_data&quot; +
+                   &quot;where abstract_code = ?1 &quot; +
+                   &quot;and time BETWEEN ?2 and ?3&quot;)
+    Page&lt;CashierData&gt; findAllabcd(String code, LocalDateTime start, LocalDateTime end, Pageable pageable);//函数名随意
+
+</code></pre>
+<p>相当于下面这条</p>
+<pre><code>    Page&lt;CashierData&gt; findAllByAbstractCodeAndTimeBetween(String code, LocalDateTime start, LocalDateTime end, Pageable pageable);
+
+</code></pre>
+<h2 id="specification语法">Specification语法</h2>
+<pre><code>LocalDateTime start, LocalDateTime end
+criteriaBuilder.between(root.get(&quot;workDay&quot;),start,end)
+</code></pre>
+<h2 id="es-localdatetime-相关注解">Es LocalDateTime 相关注解</h2>
+<pre><code>@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+@JsonSerialize(using = LocalDateTimeSerializer.class)
+@Field(index = false, type = FieldType.Date, format = DateFormat.custom, pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/Spring/" class="tag">
+                    Spring
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/nginx-config/">
+                  <h3 class="post-title">
+                    Nginx 常见配置
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>

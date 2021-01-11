@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Spring State Machine Practice | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1610350360913">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1610350360913" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Spring State Machine Practice</h2>
+            <div class="post-date">2020-02-14</div>
+            
+            <div class="post-content">
+              <h2 id="guide">Guide</h2>
+<p><a href="https://spring.io/projects/spring-statemachine">spring-statemachine</a></p>
+<h2 id="concept">Concept</h2>
+<ul>
+<li>State Machine<br>
+状态机，将状态结合、转移、事件整合到一起的机器</li>
+<li>State<br>
+一个不变的状态模型<br>
+主要由一个事件修改实体的状态</li>
+<li>Extended State<br>
+扩展状态是一组特殊的变量保存在一个状态机中，可以保存业务数据。</li>
+<li>Transition<br>
+源状态和目标状态之间的关系，它可能是复合过度的一部分，它规定在一个特定的事件发生时某个状态转移的情况。</li>
+<li>Event<br>
+事件，驱动状态转移的实体。</li>
+<li>Initial State<br>
+初始状态</li>
+<li>End State<br>
+终态</li>
+<li>History State<br>
+记录状态机最后的活动状态，存在两种模式</li>
+<li>Choice State<br>
+状态转移选择，相当于if/else</li>
+<li>Fork State<br>
+状态分支</li>
+<li>Join State<br>
+状态合并</li>
+<li>Region<br>
+区域，一个父状态与数个子状态组成的状态区</li>
+<li>guard<br>
+状态保护机制，对一个状态转移进行评估，评估值为true允许状态转移，评估值为false禁止转移</li>
+<li>Action<br>
+状态转移动作，在转移进行的时候触发的动作</li>
+</ul>
+<h3 id="适用情况">适用情况</h3>
+<p>下列情况适合使用状态机：</p>
+<ul>
+<li>应用或者其一部分可以用状态表示。</li>
+<li>希望将复杂的逻辑拆分，获得更清晰更简单的逻辑。</li>
+<li>应用遇到并发问题，即异步导致的问题。</li>
+</ul>
+<p>初步尝试适用状态机：</p>
+<ul>
+<li>使用布尔标志和枚举建立状态模型</li>
+<li>仅使用在应用生命周期内具有意义的状态。</li>
+<li>使用有限的状态，每种状态或状态的组合都有意义和相应的处理方法。</li>
+</ul>
+<h2 id="example">Example</h2>
+<h2 id="statemachineconfigurer">StateMachineConfigurer</h2>
+<ol>
+<li>
+<p>StateMachineModel</p>
+</li>
+<li>
+<p>StateMachineConfiguration</p>
+</li>
+<li>
+<p>StateMachineState</p>
+</li>
+<li>
+<p>StateMachineTransition</p>
+</li>
+</ol>
+<h3 id="statemachine-statemachinefactory">StateMachine &amp;&amp; StateMachineFactory</h3>
+<p>区别</p>
+<h3 id="statemachine-persit-or-set-state">StateMachine Persit Or Set State</h3>
+<h3 id="statemachine-repository">StateMachine Repository</h3>
+<p>状态机持久化</p>
+<h3 id="statemachinetransitionconfigurer">StateMachineTransitionConfigurer</h3>
+<p>在初始化配置状态机时,我们必须配置此配置,此配置从表面来看就是状态机进行转换过滤时的配置。</p>
+<p>配置时的方向是:</p>
+<ol>
+<li>External</li>
+<li>Internal</li>
+<li>Local</li>
+<li>Choice</li>
+<li>Junction</li>
+<li>Fork</li>
+<li>Join</li>
+<li>Entry</li>
+<li>Exit</li>
+<li>History</li>
+</ol>
+<pre><code class="language-java">/**
+ * Configurer interface exposing different type of transitions.
+ *
+ * @author Janne Valkealahti
+ *
+ * @param &lt;S&gt; the type of state
+ * @param &lt;E&gt; the type of event
+ */
+public interface StateMachineTransitionConfigurer&lt;S, E&gt; {
+
+   /**
+    * Gets a configurer for external transition.
+    *
+    * @return {@link ExternalTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    * @see #withLocal()
+    */
+   ExternalTransitionConfigurer&lt;S, E&gt; withExternal() throws Exception;
+
+   /**
+    * Gets a configurer for internal transition. Internal transition is used
+    * when action needs to be executed without causing a state transition. With
+    * internal transition source and target state is always a same and it is
+    * identical with self-transition in the absence of state entry and exit
+    * actions.
+    *
+    * @return {@link InternalTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   InternalTransitionConfigurer&lt;S, E&gt; withInternal() throws Exception;
+
+   /**
+    * Gets a configurer for local transition. Local transition doesn’t cause
+    * exit and entry to source state if target state is a substate of a source
+    * state. Other way around, local transition doesn’t cause exit and entry to
+    * target state if target is a superstate of a source state.
+    *
+    * @return {@link LocalTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   LocalTransitionConfigurer&lt;S, E&gt; withLocal() throws Exception;
+
+   /**
+    * Gets a configurer for transition from a choice pseudostate.
+    *
+    * @return {@link ChoiceTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   ChoiceTransitionConfigurer&lt;S, E&gt; withChoice() throws Exception;
+
+   /**
+    * Gets a configurer for transition from a junction pseudostate.
+    *
+    * @return {@link JunctionTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   JunctionTransitionConfigurer&lt;S, E&gt; withJunction() throws Exception;
+
+   /**
+    * Gets a configurer for transition from a fork pseudostate.
+    *
+    * @return {@link ForkTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   ForkTransitionConfigurer&lt;S, E&gt; withFork() throws Exception;
+
+   /**
+    * Gets a configurer for transition from a join pseudostate.
+    *
+    * @return {@link JoinTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   JoinTransitionConfigurer&lt;S, E&gt; withJoin() throws Exception;
+
+   /**
+    * Gets a configurer for transition from an entrypoint pseudostate.
+    *
+    * @return {@link EntryTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   EntryTransitionConfigurer&lt;S, E&gt; withEntry() throws Exception;
+
+   /**
+    * Gets a configurer for transition from an exitpoint pseudostate.
+    *
+    * @return {@link ExitTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   ExitTransitionConfigurer&lt;S, E&gt; withExit() throws Exception;
+
+   /**
+    * Gets a configurer for default history transition.
+    *
+    * @return {@link HistoryTransitionConfigurer} for chaining
+    * @throws Exception if configuration error happens
+    */
+   HistoryTransitionConfigurer&lt;S, E&gt; withHistory() throws Exception;
+}
+</code></pre>
+<h3 id="using-statemachineruntimepersister">Using <code>StateMachineRuntimePersister</code></h3>
+<h2 id="link">Link</h2>
+<p>关于订单的github项目 https://github.com/otrosien/spring-statemachine-jpa-and-rest.git</p>
+<p>例子: https://github.com/cjqCN/spring-statemachine-learning.git</p>
+<p>二级审批流:https://github.com/kmyhy/statemachine</p>
+<h3 id="spring-statemachine-persit">Spring StateMachine Persit</h3>
+<h3 id="statemachine-create-by-state">StateMachine Create By State</h3>
+<pre><code class="language-java">   public synchronized boolean handleEventWithState(Message&lt;E&gt; event, S state) {
+        stateMachine.stop();
+        List&lt;StateMachineAccess&lt;S, E&gt;&gt; withAllRegions = stateMachine.getStateMachineAccessor()
+                .withAllRegions();
+        for (StateMachineAccess&lt;S, E&gt; a : withAllRegions) {
+            a.resetStateMachine(new DefaultStateMachineContext&lt;&gt;(state, null, null, null));
+        }
+
+        stateMachine.start();
+        return stateMachine.sendEvent(event);
+    }
+
+</code></pre>
+<h3 id="statemachine-可以存储那些信息">StateMachine 可以存储那些信息</h3>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/Spring/" class="tag">
+                    Spring
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
+                    后端技术栈
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/okhttpclient-retry/">
+                  <h3 class="post-title">
+                    OkHttpClient 重试处理
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
+}
+
+
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
+
+
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
