@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>架构师之路 | BoomMan</title>
+<title>2021年1月生活小结 | BoomMan</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -104,43 +110,53 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: 架构师之路</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/concurrent-crawler/">
-                  <h2 class="post-title">高并发数据爬取实战</h2>
-                </a>
-                <div class="post-date">
-                  2020-12-01
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/nginx-load-balance/">
-                  <h2 class="post-title">记录 一个客户需要双节点服务的解决方案</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-28
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">2021年1月生活小结</h2>
+            <div class="post-date">2021-01-23</div>
+            
+            <div class="post-content">
+              <h2 id="简单小结">简单小结</h2>
+<p><img src="https://boommanpro.cn//post-images/1611395077323.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1611394733635.jpg" alt="" loading="lazy"></p>
+<p>在1月中旬结束了长时间的出差，暂时撤场回到北京，与我的宝宝一起上下班，好开心😀.</p>
+<h2 id="技术小结">技术小结</h2>
+<p>编写技术博客 3篇，并且对2021年做了flag，希望2021年好好努力</p>
+<p><a href="/post/spring-boot-devtools-error/">spring-boot-devtools 使用引发的一系列问题</a><br>
+<a href="/post/spring-boot-external-config/">Spring Boot 2.4 外部化配置的改变</a><br>
+<a href="/post/window-tcp-update/">Window Tcp 数据篡改</a><br>
+<a href="/post/2021-flag/">2021-flag</a></p>
+<p>对golang项目中的frp和goreplay源码的第1-3次提交进行了学习，学习了cobra命令行框架</p>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/xCmoJMFET/" class="tag">
+                    生活总结
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/window-tcp-update/">
+                  <h3 class="post-title">
+                    Window Tcp 数据篡改
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -269,6 +285,29 @@ setTimeout(function () {
         createImgEventFullScreen();
 }, 1000)
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 

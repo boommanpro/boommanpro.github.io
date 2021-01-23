@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-01-20T03:41:35.544Z</updated>
+    <updated>2021-01-23T09:45:06.946Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,25 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2021, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[2021年1月生活小结]]></title>
+        <id>https://boommanpro.cn/post/2021-01-log/</id>
+        <link href="https://boommanpro.cn/post/2021-01-log/">
+        </link>
+        <updated>2021-01-23T09:36:30.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="简单小结">简单小结</h2>
+<p><img src="https://boommanpro.cn//post-images/1611395077323.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1611394733635.jpg" alt="" loading="lazy"></p>
+<p>在1月中旬结束了长时间的出差，暂时撤场回到北京，与我的宝宝一起上下班，好开心😀.</p>
+<h2 id="技术小结">技术小结</h2>
+<p>编写技术博客 3篇，并且对2021年做了flag，希望2021年好好努力</p>
+<p><a href="/post/spring-boot-devtools-error/">spring-boot-devtools 使用引发的一系列问题</a><br>
+<a href="/post/spring-boot-external-config/">Spring Boot 2.4 外部化配置的改变</a><br>
+<a href="/post/window-tcp-update/">Window Tcp 数据篡改</a><br>
+<a href="/post/2021-flag/">2021-flag</a></p>
+<p>对golang项目中的frp和goreplay源码的第1-3次提交进行了学习，学习了cobra命令行框架</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Window Tcp 数据篡改]]></title>
         <id>https://boommanpro.cn/post/window-tcp-update/</id>
@@ -579,54 +598,6 @@ adfa-20932-ada-dafa2,http://xxxxx
 <li>单生产者 消费者 毒丸问题 <a href="https://blog.csdn.net/hnhygkx/article/details/105144615">消费者停止问题</a></li>
 <li>HttpURLConnection 连接复用问题 =&gt;<a href="https://blog.csdn.net/u012216753/article/details/78084327">KeepAlive</a></li>
 </ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java类注释解析]]></title>
-        <id>https://boommanpro.cn/post/java-parser/</id>
-        <link href="https://boommanpro.cn/post/java-parser/">
-        </link>
-        <updated>2020-11-19T09:31:20.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="需求背景">需求背景</h2>
-<p>在项目中有一些数据转换工具方法如下</p>
-<ul>
-<li>ip整形转字符串</li>
-<li>时间戳转换</li>
-<li>字典转换<br>
-大约有30-40种<br>
-这些都维护在java代码中，之前是共同维护文档。但随着代码升级和更新，人员变动等原因，文档会存在维护不及时，文档和代码版本 tag对应不上的情况。</li>
-</ul>
-<p>遂思考采用java代码 =&gt; 文档的形式进行维护，方便其他人员去查看和使用。</p>
-<h2 id="开源工具">开源工具</h2>
-<p><a href="https://github.com/geningxiang/javadoc-help">javadoc-help</a></p>
-<p>方法 =&gt;</p>
-<ol>
-<li>git clone https://github.com/geningxiang/javadoc-help.git</li>
-<li>修改如下文件的如下信息<br>
-<img src="https://boommanpro.cn//post-images/1605779488382.png" alt="" loading="lazy"></li>
-<li>进行相关扩展</li>
-</ol>
-<p>如 =&gt; 将读取到的信息存储在excel中或者mysql中<br>
-4. 通过maven 命令将插件install 到本地<br>
-5. 在项目中导入maven插件<br>
-6. 执行命令</p>
-<pre><code>mvn clean package -Dmaven.test.skip=true
-
-mvn javadoc-mvn:javaDoc
-</code></pre>
-<h2 id="other">Other</h2>
-<p>利用开源的 <code>com.github.javaparser</code> 解析更为简单</p>
-<p>maven</p>
-<pre><code class="language-pom.xml">        &lt;dependency&gt;
-            &lt;groupId&gt;com.github.javaparser&lt;/groupId&gt;
-            &lt;artifactId&gt;javaparser-core&lt;/artifactId&gt;
-            &lt;version&gt;3.6.16&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-</code></pre>
-<pre><code class="language-java">        CompilationUnit parse = JavaParser.parse(new File(&quot;XXX.java&quot;));
-        // 然后对parse对象获取自己想要的信息
-</code></pre>
 ]]></content>
     </entry>
 </feed>
