@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1611395081228">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1616753696688">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://boommanpro.cn/">
-        <img src="https://boommanpro.cn//images/avatar.png?v=1611395081228" class="site-logo">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1616753696688" class="site-logo">
         <h1 class="site-title">BoomMan</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -142,6 +142,60 @@
 <p>像java,tomcat 应安装在 <code>/usr/local/</code> 目录下<br>
 像日志文件应该存放在 <code>/var/log</code>目录下<br>
 软件程序安装在 <code>opt</code>目录下</p>
+<h2 id="个人shell实战场景汇总">个人Shell实战场景汇总</h2>
+<ol>
+<li>unzip 文件内容提取</li>
+</ol>
+<pre><code class="language-shell">unzip -l mysql.zip |sed -n '4-5p' |awk '{print $3}'
+a=unzip -l mysql.zip | wc -l
+b=$[a-3]
+
+sort | uniq -c |sort -n
+</code></pre>
+<ol start="2">
+<li>jps 进程目录获取</li>
+</ol>
+<pre><code class="language-shell">#!/bin/bash
+
+all=`jps |grep -v 'Jps'|awk '{print $1}'`
+
+for o in $all
+do
+  echo $o &quot;-&gt;&quot; `ls -l /proc/$o |grep 'cwd' |awk '{print $11}'`
+done
+</code></pre>
+<ol start="3">
+<li>grep -Inr 搜索</li>
+</ol>
+<p><code>grep -Inr 'bash'</code></p>
+<ol start="4">
+<li>批量创建文件夹</li>
+</ol>
+<p>mkdir /opt/bash/{a,b,c}</p>
+<ol start="5">
+<li>tcpdump 使用</li>
+</ol>
+<pre><code>tcpdump -A -s0 -i lo -w a.cap
+
+tcpdump -A -s0 'port 8080'
+
+</code></pre>
+<ol start="6">
+<li>判断命令内容是否为空</li>
+</ol>
+<pre><code class="language-shell">if test !-z &quot;$(rpm -qa | grep -i openJDK)&quot;; then
+	rpm -qa | grep -i openJDK
+    echo &quot;卸载系统自带 openJDK中... 请稍后&quot;
+    rpm -e --nodeps `rpm -qa | grep -i openJDK`
+fi
+</code></pre>
+<ol start="8">
+<li>判断是否存在某个命令</li>
+</ol>
+<pre><code class="language-shell">if $(command -v virsh  &gt;/dev/null 2&gt;&amp;1); then
+  virsh net-destroy default
+fi
+</code></pre>
 <h2 id="网抑云小工具">网抑云小工具</h2>
 <pre><code class="language-shell">#! /bin/bash
 
@@ -156,6 +210,22 @@ echo &quot;$(curl -s $API_URL)&quot; &gt; /etc/motd
 <blockquote>
 <p>分、时、日、月、周  以上命令一小时执行一次</p>
 </blockquote>
+<h2 id="企业微信定时推送">企业微信定时推送</h2>
+<p>周一至周五 每天下午6.30机器人推送日报提醒</p>
+<p>crontab -e <code>30 18 * * 1,2,3,4,5 /opt/push_msg/webhook.sh &gt;/dev/null 2&gt;&amp;1 &amp;</code></p>
+<pre><code class="language-shell">#!/bin/sh
+
+curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxxxx' \
+   -H 'Content-Type: application/json' \
+   -d '{
+    &quot;msgtype&quot;: &quot;text&quot;,
+    &quot;text&quot;: {
+        &quot;mentioned_list&quot;:[&quot;@all&quot;],
+        &quot;content&quot;: &quot;兄弟们，记得提交今天的日报[抱拳] &quot;
+    }
+}
+' 
+</code></pre>
 
             </div>
             
