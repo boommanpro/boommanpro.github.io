@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-04-01T06:03:41.391Z</updated>
+    <updated>2021-04-09T08:54:03.444Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -85,41 +85,6 @@
 </code></pre>
 <p>假设tcp中的消息都是明文，且单个消息小于等于128，这样修改逻辑就完成的。当然具体需要和实际结合。</p>
 <p>消息修改，并且没有问题，需要严格遵守服务端消息格式，加密解密，盐值，序号等。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年 Flag]]></title>
-        <id>https://boommanpro.cn/post/2021-flag/</id>
-        <link href="https://boommanpro.cn/post/2021-flag/">
-        </link>
-        <updated>2021-01-04T06:26:23.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="技术学习">技术学习</h1>
-<h2 id="golang">Golang</h2>
-<p>学习golang项目源码,并进行源码分享</p>
-<p><a href="https://github.com/fatedier/frp">fatedier/frp</a><br>
-<a href="https://github.com/minio/minio">minio/minio</a><br>
-<a href="https://github.com/buger/goreplay">buger/goreplay</a></p>
-<h2 id="java">Java</h2>
-<p>学习java项目源码,并进行源码分享<br>
-<a href="https://github.com/netty/netty">netty/netty</a><br>
-<a href="https://github.com/alibaba/nacos">nacos</a><br>
-<a href="https://github.com/alibaba/arthas">alibaba/arthas</a><br>
-<a href="https://github.com/apache/kafka">apache/kafka</a><br>
-<a href="https://github.com/elastic/elasticsearch">elastic/elasticsearch</a><br>
-<a href="https://github.com/apache/commons-lang">apache/commons-lang</a></p>
-<h2 id="spring">Spring</h2>
-<p>IOC 使用,hook<br>
-AOP 使用</p>
-<h2 id="存储层">存储层</h2>
-<p>针对存储层技术选型有对应解决方案<br>
-MySQL、MongoDb、ElasticSearch、Hbase。</p>
-<h2 id="算法层">算法层</h2>
-<p>LeetCode 目标1000题，现在474.</p>
-<h1 id="生活类">生活类</h1>
-<h2 id="生活分享">生活分享</h2>
-<p>按月定期进行生活分享，对每月做总结。</p>
-<h2 id="健身计划">健身计划</h2>
-<p>维持体重在125-130左右</p>
 ]]></content>
     </entry>
     <entry>
@@ -598,6 +563,54 @@ adfa-20932-ada-dafa2,http://xxxxx
 <li>单生产者 消费者 毒丸问题 <a href="https://blog.csdn.net/hnhygkx/article/details/105144615">消费者停止问题</a></li>
 <li>HttpURLConnection 连接复用问题 =&gt;<a href="https://blog.csdn.net/u012216753/article/details/78084327">KeepAlive</a></li>
 </ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Java类注释解析]]></title>
+        <id>https://boommanpro.cn/post/java-parser/</id>
+        <link href="https://boommanpro.cn/post/java-parser/">
+        </link>
+        <updated>2020-11-19T09:31:20.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="需求背景">需求背景</h2>
+<p>在项目中有一些数据转换工具方法如下</p>
+<ul>
+<li>ip整形转字符串</li>
+<li>时间戳转换</li>
+<li>字典转换<br>
+大约有30-40种<br>
+这些都维护在java代码中，之前是共同维护文档。但随着代码升级和更新，人员变动等原因，文档会存在维护不及时，文档和代码版本 tag对应不上的情况。</li>
+</ul>
+<p>遂思考采用java代码 =&gt; 文档的形式进行维护，方便其他人员去查看和使用。</p>
+<h2 id="开源工具">开源工具</h2>
+<p><a href="https://github.com/geningxiang/javadoc-help">javadoc-help</a></p>
+<p>方法 =&gt;</p>
+<ol>
+<li>git clone https://github.com/geningxiang/javadoc-help.git</li>
+<li>修改如下文件的如下信息<br>
+<img src="https://boommanpro.cn//post-images/1605779488382.png" alt="" loading="lazy"></li>
+<li>进行相关扩展</li>
+</ol>
+<p>如 =&gt; 将读取到的信息存储在excel中或者mysql中<br>
+4. 通过maven 命令将插件install 到本地<br>
+5. 在项目中导入maven插件<br>
+6. 执行命令</p>
+<pre><code>mvn clean package -Dmaven.test.skip=true
+
+mvn javadoc-mvn:javaDoc
+</code></pre>
+<h2 id="other">Other</h2>
+<p>利用开源的 <code>com.github.javaparser</code> 解析更为简单</p>
+<p>maven</p>
+<pre><code class="language-pom.xml">        &lt;dependency&gt;
+            &lt;groupId&gt;com.github.javaparser&lt;/groupId&gt;
+            &lt;artifactId&gt;javaparser-core&lt;/artifactId&gt;
+            &lt;version&gt;3.6.16&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<pre><code class="language-java">        CompilationUnit parse = JavaParser.parse(new File(&quot;XXX.java&quot;));
+        // 然后对parse对象获取自己想要的信息
+</code></pre>
 ]]></content>
     </entry>
 </feed>
