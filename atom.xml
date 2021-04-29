@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-04-24T14:35:23.322Z</updated>
+    <updated>2021-04-29T03:48:00.013Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,37 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2021, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[2021年4月生活小结]]></title>
+        <id>https://boommanpro.cn/post/2021-04-log/</id>
+        <link href="https://boommanpro.cn/post/2021-04-log/">
+        </link>
+        <updated>2021-04-29T03:41:14.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="生活小结">生活小结</h2>
+<p>本次屋子里又新增了智能开关，用于声控(小度音箱)控制卧室和客厅的灯，客服小哥哥nice，电路拍照就行，贼专业。</p>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1619667786274.jpg" alt="" loading="lazy"></figure>
+<p>我的电脑桌上增添饮水机，淘宝买怡宝大桶水就行了。终于可以在家方便喝热水了。后悔系列，没有早买。</p>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1619667946227.jpg" alt="" loading="lazy"></figure>
+<h2 id="工作小结">工作小结</h2>
+<p>本次换工作成功，下个月就去新公司了，干就完事了。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[2021年3月生活小结]]></title>
+        <id>https://boommanpro.cn/post/2021-03-log/</id>
+        <link href="https://boommanpro.cn/post/2021-03-log/">
+        </link>
+        <updated>2021-04-29T03:32:07.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="简单小结">简单小结</h2>
+<p>简单记录下3月的有趣事,背景三月去成都转悠了一圈，去熊猫基地看熊猫。晚上在酒店点冷吃兔外卖。</p>
+<p>成都的酒店现在都是机器人送餐，然后下单冷吃兔后等待外卖送达，在超时了10分钟后，外卖小哥联系到我，说外卖送达，酒店机器人会送到，随即点了送达。又等了10分钟后，外卖还未到，我便打电话问前台情况，又上楼找外卖，在寻找中又问外卖小哥是否送了，他说机器人可能忙，一会就到。就在这时。。我在电梯口碰上了外卖小哥，拿着我的外卖，尴尬一笑。</p>
+<p>程序是不会骗人的，程序员是会骗人的。</p>
+<p>外卖机器人背锅。</p>
+<p><img src="https://boommanpro.cn//post-images/1619667630508.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1619667633265.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1619667635927.jpg" alt="" loading="lazy"></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[关于一些编程书籍推荐]]></title>
         <id>https://boommanpro.cn/post/book/</id>
@@ -524,78 +555,6 @@ ${myPropertyKey}
 @myBean.instanceMethod(1, 2)
 T(String).CASE_INSENSITIVE_ORDER
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[VSCode - Alibaba Cloud Toolkit]]></title>
-        <id>https://boommanpro.cn/post/vscode-alibaba-cloud-toolkit/</id>
-        <link href="https://boommanpro.cn/post/vscode-alibaba-cloud-toolkit/">
-        </link>
-        <updated>2020-12-09T11:04:00.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>前端在内网开发部署测试环境很慢,或者说很繁琐。之前在互联网环境,我们都是使用Jenkins做打包部署工作的。这一次介绍 <code>Alibaba Cloud Toolkit</code> 简化部署流程，或者一键部署项目。</p>
-<h2 id="插件地址">插件地址</h2>
-<p><a href="https://marketplace.visualstudio.com/items?itemName=alibabacloud-cloudtoolkit.toolkit-vscode">Alibaba Cloud Toolkit</a></p>
-<h2 id="下载安装extension">下载安装Extension</h2>
-<p>互联网直接在vscode左侧搜索下载就行。下图为在线下载</p>
-<ol>
-<li>
-<p>下载过程<br>
-<img src="https://boommanpro.cn//post-images/1607512179792.png" alt="" loading="lazy"></p>
-</li>
-<li>
-<p>安装</p>
-</li>
-</ol>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1607512218202.png" alt="" loading="lazy"></figure>
-<h2 id="使用教程-部署到私有服务器上">使用教程 部署到私有服务器上</h2>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1607512315392.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="https://boommanpro.cn//post-images/1607512518138.png" alt="" loading="lazy"></figure>
-<h2 id="写在最后">写在最后</h2>
-<p>VSCode - Alibaba Cloud Toolkit 和 IDEA 的plugins 大同小异，使用起来都是一样的。如果上述不满足你的要求，可以对build的前后做aop,增加相关脚本，如备份等等。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[高并发数据爬取实战]]></title>
-        <id>https://boommanpro.cn/post/concurrent-crawler/</id>
-        <link href="https://boommanpro.cn/post/concurrent-crawler/">
-        </link>
-        <updated>2020-12-01T07:39:39.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>有一个1300w的<code>record.csv</code>文件,其内容示例如下，文件大小2G。csv文件用逗号分隔,第一部分是唯一id,第二部分是爬取地址。</p>
-<pre><code class="language-csv">recordid,entranceimage
-adfa-20932-ada-daf1a,http://xxxxx
-adfa-20932-ada-dafa2,http://xxxxx
-</code></pre>
-<p>需求:</p>
-<ol>
-<li>单机爬取文件，具有容灾机制</li>
-<li>性能要高，具有稳定性</li>
-<li>部署使用起来要简单，遂不依赖mysql,mongodb等记录，纯文件</li>
-</ol>
-<h2 id="需求分解">需求分解</h2>
-<ol>
-<li>要有容灾机制，遂使用status.txt记录上一次执行到record.csv文件多少行。方便服务重启后能继续上一次的记录跑。</li>
-<li>要具有稳定性，不能跑不起来吧。单文件2G不能一次加载到内存中，遂采用nio按行(readLine)读取 <code>record.csv</code>文件</li>
-<li>性能要高 =&gt; 采用多线程工作。又因为容灾需要从上一次跑，遂不能丢失。采用生产者将Task放到线程池里，消费者 <code>LinkedBlockingQueue&lt;Future&lt;T&gt;&gt;</code>用队列有序消费。记录日志和status.txt文件行。</li>
-<li>稳定性高，减少项目GC次数，对于频繁创建对象，情况允许创建对象池。</li>
-<li>爬取数据的结果是图片，直接存储到本地文件，遂采用<code>零拷贝</code></li>
-</ol>
-<pre><code class="language-java">     InputStream is2 = httpUrlConn.getInputStream();
-     Path target = Paths.get(&quot;&quot;,imageData.getPath());
-     Files.createDirectories(target.getParent());
-     Files.copy(is2, target, StandardCopyOption.REPLACE_EXISTING);
-</code></pre>
-<h2 id="相关资料总结">相关资料总结</h2>
-<p>优化方案</p>
-<ol>
-<li>Files 去readLine <code>BufferedReader reader = Files.newBufferedReader(Paths.get(DATA_FILE_NAME), StandardCharsets.UTF_8);</code></li>
-<li>status.txt只记录总行数 log.txt记录日志 分开记录</li>
-<li>对象池 在代码中减少对象的创建 减少jvm gc</li>
-<li>基于zero-copy进行拷贝文件<a href="https://blog.csdn.net/weixin_43513980/article/details/105835427">zero-copy</a></li>
-<li>单生产者 消费者 毒丸问题 <a href="https://blog.csdn.net/hnhygkx/article/details/105144615">消费者停止问题</a></li>
-<li>HttpURLConnection 连接复用问题 =&gt;<a href="https://blog.csdn.net/u012216753/article/details/78084327">KeepAlive</a></li>
-</ol>
 ]]></content>
     </entry>
 </feed>

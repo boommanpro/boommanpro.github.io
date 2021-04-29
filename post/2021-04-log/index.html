@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Spring Data Jpa 使用姿势 | BoomMan</title>
+<title>2021年4月生活小结 | BoomMan</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,158 +111,26 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Spring Data Jpa 使用姿势</h2>
-            <div class="post-date">2020-01-14</div>
+            <h2 class="post-title">2021年4月生活小结</h2>
+            <div class="post-date">2021-04-29</div>
             
             <div class="post-content">
-              <h2 id="spring-data-jpa-guide">Spring Data Jpa Guide</h2>
-<p>Spring Data JPA, part of the larger Spring Data family, makes it easy to easily implement JPA based repositories. This module deals with enhanced support for JPA based data access layers. It makes it easier to build Spring-powered applications that use data access technologies.</p>
-<p>Implementing a data access layer of an application has been cumbersome for quite a while. Too much boilerplate code has to be written to execute simple queries as well as perform pagination, and auditing. Spring Data JPA aims to significantly improve the implementation of data access layers by reducing the effort to the amount that’s actually needed. As a developer you write your repository interfaces, including custom finder methods, and Spring will provide the implementation automatically.</p>
-<p><a href="https://spring.io/projects/spring-data-jpa">https://spring.io/projects/spring-data-jpa</a></p>
-<h2 id="query-methods">Query Methods</h2>
-<p>Spring Data Jpa 名词: Query Creation  &lt;==&gt; Query Methods</p>
-<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#jpa.query-methods.query-creation">Spring Data Jpa Query Creation</a></p>
-<p>这一部分主要是 Jpa 通过对查询方法的解析-&gt;转换成sql语句进行查询,避免了编写sql的过程.</p>
-<p>example:</p>
-<pre><code>interface PersonRepository extends Repository&lt;Person, Long&gt; {
-    // select person from person whre lastname=?1
-  List&lt;Person&gt; findByLastname(String lastname);
-}
-</code></pre>
-<h2 id="modifying-queries">Modifying Queries</h2>
-<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.4.RELEASE/reference/html/#jpa.modifying-queries">Spring Data Jpa Modifying Queries</a></p>
-<p>修改数据</p>
-<pre><code class="language-java">@Modifying
-@Query(&quot;update User u set u.firstname = ?1 where u.lastname = ?2&quot;)
-int setFixedFirstnameFor(String firstname, String lastname);
-</code></pre>
-<p>删除数据</p>
-<pre><code class="language-java">interface UserRepository extends Repository&lt;User, Long&gt; {
-
-  void deleteByRoleId(long roleId);
-
-  @Modifying
-  @Query(&quot;delete from User u where user.role.id = ?1&quot;)
-  void deleteInBulkByRoleId(long roleId);
-}
-</code></pre>
-<p><strong>注意事项</strong> Jpa中除了查询都需要加@Transactional 事务</p>
-<h2 id="using-jpa-named-queries">Using JPA Named Queries</h2>
-<p>使用JpaName查询</p>
-<p>Example</p>
-<pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
-
-  List&lt;User&gt; findByLastname(String lastname);
-
-  User findByEmailAddress(String emailAddress);
-}
-</code></pre>
-<h2 id="using-query">Using @Query</h2>
-<p>Using named queries to declare queries for entities is a valid approach and works fine for a small number of queries. As the queries themselves are tied to the Java method that executes them, you can actually bind them directly by using the Spring Data JPA @Query annotation rather than annotating them to the domain class. This frees the domain class from persistence specific information and co-locates the query to the repository interface.</p>
-<p>Example:</p>
-<pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
-
-  @Query(&quot;select u from User u where u.emailAddress = ?1&quot;)
-  User findByEmailAddress(String emailAddress);
-}
-</code></pre>
-<p>NativeQuery=true</p>
-<pre><code>public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
-
-  @Query(value = &quot;SELECT * FROM USERS WHERE LASTNAME = ?1&quot;,
-    countQuery = &quot;SELECT count(*) FROM USERS WHERE LASTNAME = ?1&quot;,
-    nativeQuery = true)
-  Page&lt;User&gt; findByLastname(String lastname, Pageable pageable);
-}
-</code></pre>
-<h2 id="applying-query-hints">Applying Query Hints</h2>
-<p>To apply JPA query hints to the queries declared in your repository interface, you can use the @QueryHints annotation. It takes an array of JPA @QueryHint annotations plus a boolean flag to potentially disable the hints applied to the additional count query triggered when applying pagination, as shown in the following example:</p>
-<p>Example</p>
-<pre><code>public interface UserRepository extends Repository&lt;User, Long&gt; {
-
-  @QueryHints(value = { @QueryHint(name = &quot;name&quot;, value = &quot;value&quot;)},
-              forCounting = false)
-  Page&lt;User&gt; findByLastname(String lastname, Pageable pageable);
-}
-</code></pre>
-<h2 id="query-to-dto">Query To Dto</h2>
-<p>Example:</p>
-<pre><code>@Query(value = &quot;select new com.park.carTrace.pojo.CarTraceResult(a.plateNo, a.plateColor, a.typeName, a.parkName, max(a.time), count(a.id)) &quot; +
-            &quot; from CarTraceRecordEntity a where a.plateNo = ?1 and a.plateColor = ?2 &quot; +
-            &quot;and a.type = ?3 group by a.parkNo order by time desc &quot;)
-    List&lt;CarTraceResult&gt; queryCarTraceRecord(String plateNo, Integer plateColor, Integer type);
-</code></pre>
-<p><a href="https://www.cnblogs.com/jpfss/p/11162135.html">from cnblog</a></p>
-<h2 id="specifications">Specifications</h2>
-<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#specifications">Spring Data Jpa Using Specifications</a></p>
-<ul>
-<li>
-<p>关于一些使用Specification的技巧</p>
-<p>如何 使用 and or 操作</p>
-<pre><code>   private Predicate orPredicate(CriteriaBuilder criteriaBuilder, Predicate p1, Predicate p2) {
-     if (p1 == null || p2 == null) {
-         return p1 == null ? p2 : p1;
-     }
-     return criteriaBuilder.or(p1, p2);
- }
-</code></pre>
-</li>
-<li>
-<p>Jpa 关联查询Specification</p>
-</li>
-</ul>
-<p><a href="https://blog.csdn.net/qq587492/article/details/81629689">Spring Data Jpa Specifications Join</a></p>
-<h2 id="query-by-example">Query By Example</h2>
-<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#query-by-example">Spring Data Jap Query By Example </a></p>
-<h2 id="简单理解-transactional">简单理解 @Transactional</h2>
-<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#transactions">Spring Data Jpa Transactional </a></p>
-<h2 id="query-查询能够返回stream-是不是很爽">Query 查询能够返回Stream ? 是不是很爽?</h2>
-<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#repository-query-return-types">Spring Data Jpa Return Types</a></p>
-<h2 id="other">Other</h2>
-<ul>
-<li>Using Sort</li>
-</ul>
-<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#jpa.query-methods.sorting">Spring Data Jpa Using Sort</a></p>
-<ul>
-<li>Using SpEL Expressions</li>
-</ul>
-<p><a href="https://docs.spring.io/spring-data/jpa/docs/2.2.3.RELEASE/reference/html/#jpa.query.spel-expressions">Spring Data Jpa Using SpEl Expressions</a></p>
-<h2 id="jpa-关联查询onetomany-manytoone">Jpa 关联查询OneToMany ManyToOne</h2>
-<h2 id="jpa-关联查询注意事项">Jpa 关联查询注意事项</h2>
-<h2 id="优雅使用关联查询">优雅使用关联查询</h2>
-<h2 id="使用注意事项">使用注意事项</h2>
-<p>主键id不能为 int类型 进行save操作时,id为0</p>
-<p>OneToMany中的 updateable insertable注意事项</p>
-<ul>
-<li>Jpa查询 Native 和 非 Native区别</li>
-</ul>
-<p>nativeQuery = true时，是可以执行原生sql语句的。<br>
-nativeQuery = false时, 关联的是Table的表和字段</p>
-<ul>
-<li>Jpa 返回某些字段</li>
-</ul>
-<p>定义Dto 定义构造方法,查询返回即可.</p>
+              <h2 id="生活小结">生活小结</h2>
+<p>本次屋子里又新增了智能开关，用于声控(小度音箱)控制卧室和客厅的灯，客服小哥哥nice，电路拍照就行，贼专业。</p>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1619667786274.jpg" alt="" loading="lazy"></figure>
+<p>我的电脑桌上增添饮水机，淘宝买怡宝大桶水就行了。终于可以在家方便喝热水了。后悔系列，没有早买。</p>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1619667946227.jpg" alt="" loading="lazy"></figure>
+<h2 id="工作小结">工作小结</h2>
+<p>本次换工作成功，下个月就去新公司了，干就完事了。</p>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://boommanpro.cn/tag/Spring/" class="tag">
-                    Spring
-                  </a>
-                
-                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
-                    后端技术栈
-                  </a>
-                
-              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://boommanpro.cn/post/proejct-date/">
+                <a href="https://boommanpro.cn/post/2021-03-log/">
                   <h3 class="post-title">
-                    项目中使用 JDK8 时间的多种姿势
+                    2021年3月生活小结
                   </h3>
                 </a>
               </div>
