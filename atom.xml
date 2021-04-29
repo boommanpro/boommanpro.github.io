@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-04-29T03:48:00.013Z</updated>
+    <updated>2021-04-29T03:51:21.476Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -23,22 +23,6 @@
 <figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1619667946227.jpg" alt="" loading="lazy"></figure>
 <h2 id="工作小结">工作小结</h2>
 <p>本次换工作成功，下个月就去新公司了，干就完事了。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年3月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-03-log/</id>
-        <link href="https://boommanpro.cn/post/2021-03-log/">
-        </link>
-        <updated>2021-04-29T03:32:07.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="简单小结">简单小结</h2>
-<p>简单记录下3月的有趣事,背景三月去成都转悠了一圈，去熊猫基地看熊猫。晚上在酒店点冷吃兔外卖。</p>
-<p>成都的酒店现在都是机器人送餐，然后下单冷吃兔后等待外卖送达，在超时了10分钟后，外卖小哥联系到我，说外卖送达，酒店机器人会送到，随即点了送达。又等了10分钟后，外卖还未到，我便打电话问前台情况，又上楼找外卖，在寻找中又问外卖小哥是否送了，他说机器人可能忙，一会就到。就在这时。。我在电梯口碰上了外卖小哥，拿着我的外卖，尴尬一笑。</p>
-<p>程序是不会骗人的，程序员是会骗人的。</p>
-<p>外卖机器人背锅。</p>
-<p><img src="https://boommanpro.cn//post-images/1619667630508.jpg" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1619667633265.jpg" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1619667635927.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
@@ -72,6 +56,22 @@
 <p>Jenkins2 权威指南</p>
 <h2 id="码出高效">码出高效</h2>
 <p>码出高效 Java开发手册</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[2021年3月生活小结]]></title>
+        <id>https://boommanpro.cn/post/2021-03-log/</id>
+        <link href="https://boommanpro.cn/post/2021-03-log/">
+        </link>
+        <updated>2021-03-28T03:32:07.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="简单小结">简单小结</h2>
+<p>简单记录下3月的有趣事,背景三月去成都转悠了一圈，去熊猫基地看熊猫。晚上在酒店点冷吃兔外卖。</p>
+<p>成都的酒店现在都是机器人送餐，然后下单冷吃兔后等待外卖送达，在超时了10分钟后，外卖小哥联系到我，说外卖送达，酒店机器人会送到，随即点了送达。又等了10分钟后，外卖还未到，我便打电话问前台情况，又上楼找外卖，在寻找中又问外卖小哥是否送了，他说机器人可能忙，一会就到。就在这时。。我在电梯口碰上了外卖小哥，拿着我的外卖，尴尬一笑。</p>
+<p>程序是不会骗人的，程序员是会骗人的。</p>
+<p>外卖机器人背锅。</p>
+<p><img src="https://boommanpro.cn//post-images/1619667630508.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1619667633265.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1619667635927.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
