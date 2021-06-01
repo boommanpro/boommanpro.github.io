@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-04-29T06:19:41.572Z</updated>
+    <updated>2021-06-01T13:05:51.894Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,25 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2021, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[2021年5月生活小结]]></title>
+        <id>https://boommanpro.cn/post/2021-05-log/</id>
+        <link href="https://boommanpro.cn/post/2021-05-log/">
+        </link>
+        <updated>2021-06-01T12:58:06.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="生活小结">生活小结</h2>
+<p>本月完成了离职，入职，感慨时间过的真快 !</p>
+<p>记录下一些换工作的注意事项吧！</p>
+<ol>
+<li>换工作还是要早做打算(比如提前2-3月复习，1个月找)，避免想走走不了，走时不是黄金期，无法battle的情况。</li>
+<li>离职后的离职证明自己要保存一份电子版(因为证明在入职新单位就会交，但是之后的一些证明又需要，比如工作居住证转移)</li>
+<li>社保公积金等转移(尽量在本单位15号后离职，下个单位15号前入职)，这样就可以完成无缝衔接。</li>
+<li><a href="http://www.bjrcgz.gov.cn/">北京工作居住证</a>转移需要注意目标单位可以接收，并且在入职后尽快(1-2天)办理相关事项，因为中间还需要再次审批，防止出现差错。</li>
+</ol>
+<h2 id="工作小结">工作小结</h2>
+<p>开水团的生活还是不错的，有兴趣可以找我内推哈。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[2021年4月生活小结]]></title>
         <id>https://boommanpro.cn/post/2021-04-log/</id>
@@ -465,96 +484,6 @@ Caused by: org.springframework.data.jdbc.repository.config.DialectResolver$NoDia
 
 </code></pre>
 <p><a href="https://github.com/taosdata/TDengine/issues/3678">2.3.4.RELEASE 版本会有问题</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[SpringElUtil 工具类]]></title>
-        <id>https://boommanpro.cn/post/springelutil-code/</id>
-        <link href="https://boommanpro.cn/post/springelutil-code/">
-        </link>
-        <updated>2020-12-17T11:05:16.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="springelutil-工具类">SpringElUtil 工具类</h1>
-<p>在项目中频繁使用SpringEL表达式进行数据解析,过滤等操作. 遂抽取工具类使用</p>
-<h2 id="show-me-code">Show me code</h2>
-<pre><code class="language-java">
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationContextException;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.expression.*;
-import org.springframework.expression.Expression;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
-import org.springframework.expression.spel.support.StandardTypeLocator;
-import org.springframework.stereotype.Component;
-
-/**
- * @author boommanpro
- * @date 2020/12/17 17:51
- */
-@Component
-public class SpringElUtil implements ApplicationContextAware {
-
-    private static StandardEvaluationContext context;
-
-    private static ExpressionParser expressionParser;
-
-    private static final ConcurrentHashMap&lt;String, Expression&gt; EXPRESSION_MAP = new ConcurrentHashMap&lt;&gt;();
-
-    public static &lt;T&gt; T getValue(String expressionString) {
-        return getValue(expressionString, null);
-    }
-
-    @SuppressWarnings(&quot;all&quot;)
-    public static &lt;T&gt; T getValue(String expressionString, Object rootObject) {
-        Expression expression = getExpression(expressionString);
-        return ((T) expression.getValue(context, rootObject));
-    }
-
-
-    private static Expression getExpression(String expressionString) {
-        return EXPRESSION_MAP.computeIfAbsent(expressionString, s -&gt; expressionParser.parseExpression(s));
-    }
-
-
-    @Override
-    @SuppressWarnings(&quot;all&quot;)
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        if (applicationContext instanceof ConfigurableApplicationContext) {
-            ConfigurableApplicationContext ac = (ConfigurableApplicationContext) applicationContext;
-            context = new StandardEvaluationContext();
-            context.addPropertyAccessor(new BeanExpressionContextAccessor());
-            context.addPropertyAccessor(new BeanFactoryAccessor());
-            context.addPropertyAccessor(new MapAccessor());
-            context.addPropertyAccessor(new EnvironmentAccessor());
-            context.setBeanResolver(new BeanFactoryResolver(ac.getBeanFactory()));
-            context.setTypeLocator(new StandardTypeLocator(ac.getBeanFactory().getBeanClassLoader()));
-            //初始化上下文
-            expressionParser = new SpelExpressionParser();
-        } else {
-            throw new ApplicationContextException(&quot;can't cast ConfigurableApplicationContext&quot;);
-        }
-    }
-}
-
-</code></pre>
-<h2 id="example">Example</h2>
-<pre><code>#result = 1 + 2
-#{6.0221415E+23D instanceof T(Double)}
-intArray[idx]-- le 0xFF
-{1, 2, 3}
-(true and false) || variable not null ? 1.0f : 0.0f
-Members.?[Nationality == 'Serbian']
-'5.00' matches '\^-?\\d+(\\.\\d{2})?$'
-new java.lang.String('stringLiteral')
-${myPropertyKey}
-@myBean.instanceMethod(1, 2)
-T(String).CASE_INSENSITIVE_ORDER
-</code></pre>
 ]]></content>
     </entry>
 </feed>
