@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Yapi环境搭建及使用 | BoomMan</title>
+<title>2021年6月生活小结 | BoomMan</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,139 +111,23 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Yapi环境搭建及使用</h2>
-            <div class="post-date">2020-01-09</div>
+            <h2 class="post-title">2021年6月生活小结</h2>
+            <div class="post-date">2021-07-02</div>
             
             <div class="post-content">
-              <h2 id="前提准备">前提准备</h2>
-<p>1.<code>Docker</code>&amp;&amp; <code>Docker Compose</code><br>
-2.<code>git clone https://github.com/fjc0k/docker-YApi.git</code></p>
-<h2 id="详细搭建教程">详细搭建教程</h2>
-<p><a href="https://github.com/fjc0k/docker-YApi">docker for Yapi Link</a></p>
-<h2 id="使用教程">使用教程</h2>
-<p>官方文档: <a href="https://hellosean1025.github.io/yapi/">https://hellosean1025.github.io/yapi/</a></p>
-<p>Link: <a href="https://hellosean1025.github.io/yapi/documents/project.html#%e9%a1%b9%e7%9b%ae%e8%bf%81%e7%a7%bb">项目迁移</a>  <a href="https://hellosean1025.github.io/yapi/documents/project.html#%e9%a1%b9%e7%9b%ae%e6%8b%b7%e8%b4%9d">项目拷贝</a>  <a href="https://hellosean1025.github.io/yapi/documents/mock.html">数据Mock</a></p>
-<h2 id="mongodb启动失败">mongoDB启动失败</h2>
-<p>使用 setenforce 0 解决</p>
-<h2 id="spring-mvc-项目单模块结合yapi使用实例">Spring MVC 项目单模块结合Yapi使用实例</h2>
-<p>IDEA Plugin Github: <a href="https://github.com/diwand/YapiIdeaUploadPlugin">YapiIdeaUploadPlugin</a></p>
-<p>官方教程 <a href="https://github.com/diwand/YapiIdeaUploadPlugin/wiki/%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8">github Wiki</a></p>
-<p>1.<code>.idea</code> 文件夹下，找到<code>misc.xml</code></p>
-<pre><code class="language-xml">&lt;component name=&quot;yapi&quot;&gt;
-  &lt;option name=&quot;projectToken&quot;&gt;yapi 中项目token&lt;/option&gt;
-  &lt;option name=&quot;projectId&quot;&gt;yapi 中项目id&lt;/option&gt;
-  &lt;option name=&quot;yapiUrl&quot;&gt;http://127.0.0.1:3000&lt;/option&gt;
-  &lt;option name=&quot;projectType&quot;&gt;api&lt;/option&gt;
-  &lt;option name=&quot;attachUploadUrl&quot;&gt;http://localhost/fileupload&lt;/option&gt;
-  &lt;option name=&quot;returnClass&quot;&gt;com.project.Response(1.7.4 及之后才支持,按需配置)&lt;/option&gt;
-&lt;/component&gt;
-</code></pre>
-<p>2.根据java doc tag 规范代码</p>
-<p>①YAPI分类: Controller 添加 <code>@menu</code></p>
-<p>Example:<br>
-<img src="https://img-blog.csdnimg.cn/20191217170148181.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jvb21fbWFu,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<p>对应Yapi项目中:<br>
-<img src="https://img-blog.csdnimg.cn/20191217170132306.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jvb21fbWFu,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></p>
-<p>②接口名称</p>
-<p>Link <a href="https://github.com/diwand/YapiIdeaUploadPlugin/wiki/%E5%BF%AB%E9%80%9F%E4%BD%BF%E7%94%A8#2%E6%8F%92%E4%BB%B6%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90%E6%8E%A5%E5%8F%A3%E5%90%8D%E7%A7%B0%E9%80%9A%E8%BF%87%E6%8E%A5%E5%8F%A3%E4%B8%8A%E7%9A%84%E6%B3%A8%E9%87%8A%E6%88%96%E8%80%85%E5%BC%95%E7%94%A8%E4%B8%8A%E7%9A%84-%E6%B3%A8%E9%87%8A">Github Wiki</a></p>
-<h3 id="maven-other-tag">Maven Other Tag</h3>
-<pre><code class="language-xml">            &lt;plugin&gt;
-                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-                &lt;configuration&gt;
-                    &lt;source&gt;1.8&lt;/source&gt;
-                    &lt;target&gt;1.8&lt;/target&gt;
-                &lt;/configuration&gt;
-            &lt;/plugin&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-                &lt;artifactId&gt;maven-jar-plugin&lt;/artifactId&gt;
-                &lt;configuration&gt;
-                    &lt;archive&gt;
-                        &lt;addMavenDescriptor&gt;false&lt;/addMavenDescriptor&gt;
-                    &lt;/archive&gt;
-                &lt;/configuration&gt;
-            &lt;/plugin&gt;
-            &lt;!-- 必须配置 source--&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-                &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;
-                &lt;version&gt;2.2.1&lt;/version&gt;
-                &lt;executions&gt;
-                    &lt;execution&gt;
-                        &lt;id&gt;attach-sources&lt;/id&gt;
-                        &lt;goals&gt;
-                            &lt;goal&gt;jar-no-fork&lt;/goal&gt;
-                        &lt;/goals&gt;
-                    &lt;/execution&gt;
-                &lt;/executions&gt;
-            &lt;/plugin&gt;
-            &lt;!--  必须配置 javadoc  from: http://maven.apache.org/plugins/maven-javadoc-plugin/examples/tag-configuration.html --&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-                &lt;artifactId&gt;maven-javadoc-plugin&lt;/artifactId&gt;
-                &lt;version&gt;3.1.0&lt;/version&gt;
-                &lt;configuration&gt;
-                    &lt;tags&gt;
-                        &lt;tag&gt;
-                            &lt;name&gt;menu&lt;/name&gt;
-                            &lt;placement&gt;a&lt;/placement&gt;
-                            &lt;head&gt;所属菜单 -&gt; Yapi Upload Plugin中对应着分类&lt;/head&gt;
-                        &lt;/tag&gt;
-                        &lt;tag&gt;
-                            &lt;name&gt;description&lt;/name&gt;
-                            &lt;placement&gt;a&lt;/placement&gt;
-                            &lt;head&gt;描述 -&gt; Yapi Upload Plugin中对应着标题&lt;/head&gt;
-                        &lt;/tag&gt;
-                        &lt;tag&gt;
-                            &lt;name&gt;other&lt;/name&gt;
-                            &lt;placement&gt;a&lt;/placement&gt;
-                            &lt;head&gt;除了description外的描述&lt;/head&gt;
-                        &lt;/tag&gt;
-                        &lt;tag&gt;
-                            &lt;name&gt;date&lt;/name&gt;
-                            &lt;placement&gt;a&lt;/placement&gt;
-                            &lt;head&gt;日期 2019/12/16 19:18&lt;/head&gt;
-                        &lt;/tag&gt;
-                        &lt;tag&gt;
-                            &lt;name&gt;created&lt;/name&gt;
-                            &lt;placement&gt;a&lt;/placement&gt;
-                            &lt;head&gt;创建人&lt;/head&gt;
-                        &lt;/tag&gt;
-                        &lt;tag&gt;
-                            &lt;name&gt;return&lt;/name&gt;
-                            &lt;placement&gt;a&lt;/placement&gt;
-                            &lt;head&gt;函数返回值&lt;/head&gt;
-                        &lt;/tag&gt;
-                    &lt;/tags&gt;
-                &lt;/configuration&gt;
-                &lt;executions&gt;
-                    &lt;execution&gt;
-                        &lt;id&gt;attach-javadocs&lt;/id&gt;
-                        &lt;goals&gt;
-                            &lt;goal&gt;jar&lt;/goal&gt;
-                        &lt;/goals&gt;
-                    &lt;/execution&gt;
-                &lt;/executions&gt;
-            &lt;/plugin&gt;
-</code></pre>
+              <h2 id="工作小结">工作小结</h2>
+<p>参加公司的萌芽计划，收获多多。<br>
+进一步了解公司项目。</p>
+<p>继续努力吧！！！</p>
 
             </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://boommanpro.cn/tag/YtisD-ZVS/" class="tag">
-                    开发工具
-                  </a>
-                
-              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://boommanpro.cn/post/boomman-for-windows/">
+                <a href="https://boommanpro.cn/post/2021-05-log/">
                   <h3 class="post-title">
-                    BoomMan For Windows
+                    2021年5月生活小结
                   </h3>
                 </a>
               </div>

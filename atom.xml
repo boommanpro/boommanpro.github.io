@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-06-09T14:39:24.895Z</updated>
+    <updated>2021-07-02T14:03:43.455Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,18 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2021, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[2021年6月生活小结]]></title>
+        <id>https://boommanpro.cn/post/2021-06-log/</id>
+        <link href="https://boommanpro.cn/post/2021-06-log/">
+        </link>
+        <updated>2021-07-02T13:54:55.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="工作小结">工作小结</h2>
+<p>参加公司的萌芽计划，收获多多。<br>
+进一步了解公司项目。</p>
+<p>继续努力吧！！！</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[2021年5月生活小结]]></title>
         <id>https://boommanpro.cn/post/2021-05-log/</id>
@@ -424,66 +436,6 @@ remainder 从0按顺序递增
 
 </code></pre>
 <p>不过貌似一般不这么用<sub>V</sub></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[嵌入式数据库 Sqlite]]></title>
-        <id>https://boommanpro.cn/post/sqlite/</id>
-        <link href="https://boommanpro.cn/post/sqlite/">
-        </link>
-        <updated>2020-12-21T07:51:58.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="嵌入式数据库">嵌入式数据库</h2>
-<p>技术选型 Sqlite和h2</p>
-<p>h2建表完字段名称是大写,和原本设计思路有偏差，放弃，遂采用Sqllite</p>
-<p>并且navicat可以编辑Sqlite，而不能编辑h2</p>
-<h2 id="use-in-spring-boot">Use in Spring Boot</h2>
-<p>整合Spring data jpa  jdbcTemplate</p>
-<pre><code>
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.xerial&lt;/groupId&gt;
-            &lt;artifactId&gt;sqlite-jdbc&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.zsoltfabok&lt;/groupId&gt;
-            &lt;artifactId&gt;sqlite-dialect&lt;/artifactId&gt;
-            &lt;version&gt;1.0&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-jdbc&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-data-jpa&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-</code></pre>
-<pre><code class="language-properties">spring.datasource.url=jdbc:sqlite::resource:db/sqlite/db_freyr_test.db
-spring.datasource.username=
-spring.datasource.password=
-spring.datasource.driver-class-name=org.sqlite.JDBC
-spring.datasource.platform=org.hibernate.dialect.SQLiteDialect
-</code></pre>
-<p>到此 jpa和jdbcTemplate 整合完毕</p>
-<h2 id="遇到问题总结">遇到问题总结</h2>
-<pre><code>Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.springframework.data.relational.core.dialect.Dialect]: Factory method 'jdbcDialect' threw exception; nested exception is org.springframework.data.jdbc.repository.config.DialectResolver$NoDialectException: Cannot determine a dialect for org.springframework.jdbc.core.JdbcTemplate@51eb0e84. Please provide a Dialect.
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:185)
-	at org.springframework.beans.factory.support.ConstructorResolver.instantiate(ConstructorResolver.java:650)
-	... 34 common frames omitted
-Caused by: org.springframework.data.jdbc.repository.config.DialectResolver$NoDialectException: Cannot determine a dialect for org.springframework.jdbc.core.JdbcTemplate@51eb0e84. Please provide a Dialect.
-	at org.springframework.data.jdbc.repository.config.DialectResolver.lambda$getDialect$2(DialectResolver.java:80)
-	at java.util.Optional.orElseThrow(Optional.java:290)
-	at org.springframework.data.jdbc.repository.config.DialectResolver.getDialect(DialectResolver.java:79)
-	at org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration.jdbcDialect(AbstractJdbcConfiguration.java:144)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:498)
-	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:154)
-	... 35 common frames omitted
-
-</code></pre>
-<p><a href="https://github.com/taosdata/TDengine/issues/3678">2.3.4.RELEASE 版本会有问题</a></p>
 ]]></content>
     </entry>
 </feed>
