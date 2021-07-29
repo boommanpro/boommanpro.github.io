@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-07-02T14:03:43.455Z</updated>
+    <updated>2021-07-29T14:24:08.656Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,45 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2021, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[javaparser-mvn-plugin开发]]></title>
+        <id>https://boommanpro.cn/post/javaparser-mvn-plugin/</id>
+        <link href="https://boommanpro.cn/post/javaparser-mvn-plugin/">
+        </link>
+        <updated>2021-07-29T14:20:27.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>之前有些过 <a href="https://boommanpro.cn/post/java-parser/">Java类注释解析</a>说明了类注释解析的需求、那么将其开发为mvn-plugin就顺利成章，分享给大家。</p>
+<p>cool-demo是一个maven插件的入门教程、利用javaparser-core的parse能力及maven的生命周期能力。</p>
+<ol>
+<li>读取.java文件的注释内容、并处理。</li>
+<li>在maven-initialize阶段将内容写入到项目的resource目录下。</li>
+</ol>
+<p>这样就可以将代码中的注释通过项目能力做自己想要的事，并且和maven的构建结合起来，有效的和CI/CD结合。</p>
+<p>开源地址: <a href="https://github.com/BoomManPro/cool-demo">https://github.com/BoomManPro/cool-demo</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Windows 《塞尔达传说:旷野之息》 + 良值手柄]]></title>
+        <id>https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/</id>
+        <link href="https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/">
+        </link>
+        <updated>2021-07-04T14:08:22.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="准备工作">准备工作</h2>
+<ol>
+<li>Window电脑 配置要求 3.0主频以上+16G内存 750Ti以上显卡</li>
+<li>游戏手柄 良值二代 switch手柄即可 PDD 120+  (房子键+Y键)</li>
+<li>《塞尔达传说:旷野之息》 Cemu下载  吾爱上搜索全集即可</li>
+<li>蓝牙连接手柄  + 陀螺仪驱动 <a href="https://github.com/Davidobot/BetterJoy">BetterJoyForCemu</a></li>
+</ol>
+<h2 id="相关坑点">相关坑点</h2>
+<ol>
+<li>蓝牙连接部分。连接后又迅速断开，说明驱动安装失败，需要卸载，清空缓存重装。</li>
+<li>BetterJoyForCemu需要安装相关驱动，每次游戏启动都要启动。</li>
+<li>如果出现陀螺仪飘动，需要校准，可能每次玩都需要校准。</li>
+</ol>
+<p>Happy Time !!!</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[2021年6月生活小结]]></title>
         <id>https://boommanpro.cn/post/2021-06-log/</id>
@@ -19,7 +58,9 @@
         <content type="html"><![CDATA[<h2 id="工作小结">工作小结</h2>
 <p>参加公司的萌芽计划，收获多多。<br>
 进一步了解公司项目。</p>
-<p>继续努力吧！！！</p>
+<p>貌似这个月过得太快了，一直在努力工作，不会的可太多了啊</p>
+<h2 id="其他">其他</h2>
+<p>准备写一篇 Windows Cemu的塞尔达教程</p>
 ]]></content>
     </entry>
     <entry>
@@ -208,234 +249,6 @@
 <h2 id="本质上代码是怎么改的">本质上代码是怎么改的 ?</h2>
 <p>原本的配置文件加载类 <code>ConfigFileApplicationListener</code>标记了@Deprecated  favor of =&gt; <code>org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor</code> =&gt; <code>org.springframework.boot.context.config.ConfigDataEnvironment</code></p>
 <p>这样就改变了加载策略，从而减少使用困惑(明明配置了外部化文件，为什么会不生效呢?)</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[spring-boot-devtools 使用引发的一系列问题]]></title>
-        <id>https://boommanpro.cn/post/spring-boot-devtools-error/</id>
-        <link href="https://boommanpro.cn/post/spring-boot-devtools-error/">
-        </link>
-        <updated>2021-01-03T09:02:08.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>在看 gitee的一个开源项目 =&gt; <a href="https://gitee.com/huanzi-qch/base-admin.git">gitee-base-admin</a> 的时候,发现其中的项目日志通过websocket推送到客户端挺有意义的.个人项目可以加上这个小功能。</p>
-<p>但是 其实现是每个用户都新建线程去推日志, 线程数和用户数 1:1. 并且无法对集群日志监听.遂想实现更通用(优雅)的方法实现</p>
-<h2 id="改写思路">改写思路</h2>
-<ol>
-<li>将原本的读取本地日志文件 =&gt; logging的append机制 =&gt; append 多份 =&gt; 追加一份到自定义的 Appender</li>
-<li>Appender将消息写入到Dispatcher中进行分发处理</li>
-<li>将Dispatcher抽象为接口,做多份实现 以满足 单机基于内存的,集群基于mq中间件的情况</li>
-<li>将用户的websocket上下线推送 =&gt; 缓存n行(CircularFifoQueue)做首次推送,其他的消息做轮询用户推送,可以异步化防止单条消息阻塞时间长的问题。 新用户推送需要注意防止消息丢失问题</li>
-<li>coding</li>
-</ol>
-<h2 id="坑点出现了">坑点出现了</h2>
-<p>在项目启动的时候,启动没有报错，就是没有新消息过来，但是append也写入消息，但是就是取不到消息可以进行消费,后发现两个Dispatcher不是一个实例，饿汉式的单例失效了? 竟然不是一个类加载器?</p>
-<p>原因如下:</p>
-<p><code>spring-boot-devtools</code> 对项目的代码是 RestartClassLoader,jar包的代码则是App,又因为我们是通过logback构造的append,所以就算是项目的代码，构造方式，或者流程不一，导致类加载器不一样，最终体现在单例不是单例了。</p>
-<p>怎么解决呢? 不用devtools即可 !!! 或者百度dev-tools 配置 or jrebl不香吗</p>
-<h2 id="编写过程中的注意点">编写过程中的注意点</h2>
-<p>因为logging的优先级问题,所以不能采用bean的方式构造,我采用的是java spi机制实现多环境切换</p>
-<h2 id="classloader">ClassLoader</h2>
-<ol>
-<li>jar包隔离</li>
-<li>动态debug</li>
-</ol>
-<p>加载类实例的几种方式 ?</p>
-<ol>
-<li>Class.forName</li>
-<li>new</li>
-<li>ClassLoader.loadClass</li>
-<li>other 一些序列化什么的</li>
-<li>spi =&gt; ServiceLoader</li>
-</ol>
-<h2 id="classloader-一些点">ClassLoader 一些点</h2>
-<ol>
-<li>ClassLoader.loadClass 类加载器和当前加载的Class不一致时 会导致</li>
-</ol>
-<pre><code class="language-java">com.boommanpro.Parent cannot be cast to com.boommanpro.Parent
-</code></pre>
-<ol>
-<li>
-<p>new 方式使用的是当前代码所在类加载器加载，而不是调用当前代码的代码所在类加载器加载</p>
-</li>
-<li>
-<p>Class.forName运作时，通过Reflection.getCallerClass()，能够获取是谁调用了Class.forName，最终还是和new 一致性</p>
-</li>
-<li>
-<p>代码 Class有类加载器,线程有类加载器 ServiceLoader用线程的</p>
-</li>
-</ol>
-<h2 id="什么时候类会被加载">什么时候类会被加载</h2>
-<p>参照 <a href="https://www.cnblogs.com/zhixie/p/11766080.html">java类在何时被加载</a></p>
-<p>说明了以下几种方式</p>
-<ol>
-<li>main类</li>
-<li>创建类的实例 new创建子类的实例</li>
-<li>访问类的静态方法</li>
-<li>访问类的静态变量</li>
-<li>反射</li>
-</ol>
-<p>补充两点:</p>
-<ol start="6">
-<li>cast -&gt;       Object o = new Object(); Parent o2 = (Parent) o; 本质是 Parent.class.cast(o);</li>
-<li>instanceof   =&gt;  <code>java.lang.Class#isInstance</code></li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[分布式id服务 tinyId源码学习]]></title>
-        <id>https://boommanpro.cn/post/tinyid/</id>
-        <link href="https://boommanpro.cn/post/tinyid/">
-        </link>
-        <updated>2020-12-28T06:26:59.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>我们大致了解常见分布式id有9种解决方案如下:</p>
-<ol>
-<li>Redis自增id</li>
-<li>UUID</li>
-<li>数据库id</li>
-<li>多主数据库id</li>
-<li>分段id</li>
-<li>snowflake</li>
-<li>基于snowflake的百度 uid-generator</li>
-<li>基于snowflake的美团 leaf</li>
-<li>滴滴的分段 tinyId</li>
-</ol>
-<p>基于高可用,高性能,简单易用性,使用tinyId和学习tinyId源码.<br>
-<code>关于tinyid，并不是滴滴官方产品，只是滴滴拥有的代码。</code></p>
-<p><a href="https://github.com/didi/tinyid/wiki">tinyId-官方wiki</a></p>
-<p><img src="https://boommanpro.cn//post-images/1609137839166.png" alt="" loading="lazy"><br>
-代码行数统计<br>
-<img src="https://boommanpro.cn//post-images/1609137842127.png" alt="" loading="lazy"></p>
-<h2 id="简单使用">简单使用</h2>
-<pre><code class="language-shell">
-## git原版
-git clone https://github.com/didi/tinyid.git
-
-## cnpmjs 加速版本
-git clone https://github.com.cnpmjs.org/didi/tinyid.git
-
-</code></pre>
-<h2 id="源码分析点">源码分析点</h2>
-<ol>
-<li>项目模块 <code>tinyid-base</code>  <code>tinyid-client</code> <code>tinyid-server</code> 之间的关系</li>
-</ol>
-<pre><code>tinyid-base 
-1. SegmentId 中定义了号段核心实体，用于获取nextId()
-2. 定义公用的 IdGeneratorFactory,IdGenerator,SegmentIdService 接口，让client和server实现其各自方法。
-
-tinyid-server 是部署分布式id服务的
-
-tinyid-server是java client,需要自己install到本地,官方没有发布到maven仓库
-</code></pre>
-<ol start="2">
-<li>client IdGenerator 是如何保证高性能,高可用的</li>
-</ol>
-<pre><code>1. 高性能,不论调用的是nextId还是batch方法,本质是在本地生成的,如果超出了本地生成策略。去服务器获取Segment段的长度. 不必每次发送http请求获取。
-2. 高可用,客户端在resource配置 tinyid_client.properties文件,其参数 tinyid.server =&gt;
-#(tinyid.server=localhost:9999/gateway,ip2:port2/prefix,...)  用逗号分隔,达到负载均衡的效果。
-详情可看源码 com.xiaoju.uemc.tinyid.client.factory.impl.IdGeneratorFactoryClient#init
-当获取新的segment时会choose,算法是 random
-
-</code></pre>
-<ol start="3">
-<li>服务器如何搭建集群</li>
-</ol>
-<pre><code>为了防止服务端挂掉产生的单点问题。导致服务不可用,遂需要搭建集群，直接搭建多节点就行。
-
-关于mysql的多主数据源问题=&gt; com.xiaoju.uemc.tinyid.base.entity.SegmentId#init
-
-如果你有多个数据源达到数据库的高可用,需要配置数据库 delta=数据库个数
-remainder 从0按顺序递增
-
-</code></pre>
-<pre><code class="language-java">
-    /**
-     * 这个方法主要为了1,4,7,10...这种序列准备的
-     * 设置好初始值之后，会以delta的方式递增，保证无论开始id是多少都能生成正确的序列
-     * 如当前是号段是(1000,2000]，delta=3, remainder=0，则经过这个方法后，currentId会先递增到1002,之后每次增加delta
-     * 因为currentId会先递增，所以会浪费一个id，所以做了一次减delta的操作，实际currentId会从999开始增，第一个id还是1002
-     */
-    public void init() {
-        if (isInit) {
-            return;
-        }
-        synchronized (this) {
-            if (isInit) {
-                return;
-            }
-            long id = currentId.get();
-            if (id % delta == remainder) {
-                isInit = true;
-                return;
-            }
-            for (int i = 0; i &lt;= delta; i++) {
-                id = currentId.incrementAndGet();
-                if (id % delta == remainder) {
-                    // 避免浪费 减掉系统自己占用的一个id
-                    currentId.addAndGet(0 - delta);
-                    isInit = true;
-                    return;
-                }
-            }
-        }
-    }
-</code></pre>
-<ol start="4">
-<li><code>tinyid-server</code>  中是如何建立多数据源的</li>
-</ol>
-<pre><code>核心是 =&gt; org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource
-
-在读取envionment配置时,没见过的一个用法是 RelaxedPropertyResolver,可以根据前缀获取信息
-</code></pre>
-<ol start="5">
-<li><code>tinyid-server</code>的maven profiles配置学习</li>
-</ol>
-<pre><code>    &lt;profiles&gt;
-        &lt;profile&gt;
-            &lt;id&gt;online&lt;/id&gt;
-            &lt;properties&gt;
-                &lt;package.environment&gt;online&lt;/package.environment&gt;
-            &lt;/properties&gt;
-        &lt;/profile&gt;
-        &lt;profile&gt;
-            &lt;id&gt;offline&lt;/id&gt;
-            &lt;activation&gt;
-                &lt;activeByDefault&gt;true&lt;/activeByDefault&gt;
-            &lt;/activation&gt;
-            &lt;properties&gt;
-                &lt;package.environment&gt;offline&lt;/package.environment&gt;
-            &lt;/properties&gt;
-        &lt;/profile&gt;
-    &lt;/profiles&gt;
-
-    
-    &lt;build&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-                &lt;version&gt;${spring.version}&lt;/version&gt;
-                &lt;executions&gt;
-                    &lt;execution&gt;
-                        &lt;goals&gt;
-                            &lt;goal&gt;repackage&lt;/goal&gt;
-                        &lt;/goals&gt;
-                    &lt;/execution&gt;
-                &lt;/executions&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-        &lt;resources&gt;
-            &lt;resource&gt;
-                &lt;directory&gt;src/main/resources/${package.environment}&lt;/directory&gt;
-            &lt;/resource&gt;
-            &lt;resource&gt;
-                &lt;directory&gt;src/main/resources/base&lt;/directory&gt;
-            &lt;/resource&gt;
-        &lt;/resources&gt;
-    &lt;/build&gt;
-
-</code></pre>
-<p>不过貌似一般不这么用<sub>V</sub></p>
 ]]></content>
     </entry>
 </feed>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>数据结构与算法 | BoomMan</title>
+<title>Windows 《塞尔达传说:旷野之息》 + 良值手柄 | BoomMan</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -104,28 +110,48 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: 数据结构与算法</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/arithmetic-ramdom-add/">
-                  <h2 class="post-title">算法: 随机生成大数 并且相加</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-06
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">Windows 《塞尔达传说:旷野之息》 + 良值手柄</h2>
+            <div class="post-date">2021-07-04</div>
+            
+            <div class="post-content">
+              <h2 id="准备工作">准备工作</h2>
+<ol>
+<li>Window电脑 配置要求 3.0主频以上+16G内存 750Ti以上显卡</li>
+<li>游戏手柄 良值二代 switch手柄即可 PDD 120+  (房子键+Y键)</li>
+<li>《塞尔达传说:旷野之息》 Cemu下载  吾爱上搜索全集即可</li>
+<li>蓝牙连接手柄  + 陀螺仪驱动 <a href="https://github.com/Davidobot/BetterJoy">BetterJoyForCemu</a></li>
+</ol>
+<h2 id="相关坑点">相关坑点</h2>
+<ol>
+<li>蓝牙连接部分。连接后又迅速断开，说明驱动安装失败，需要卸载，清空缓存重装。</li>
+<li>BetterJoyForCemu需要安装相关驱动，每次游戏启动都要启动。</li>
+<li>如果出现陀螺仪飘动，需要校准，可能每次玩都需要校准。</li>
+</ol>
+<p>Happy Time !!!</p>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/2021-06-log/">
+                  <h3 class="post-title">
+                    2021年6月生活小结
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -254,6 +280,29 @@ setTimeout(function () {
         createImgEventFullScreen();
 }, 1000)
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 

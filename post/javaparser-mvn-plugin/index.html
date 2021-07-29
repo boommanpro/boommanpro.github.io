@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>数据结构与算法 | BoomMan</title>
+<title>javaparser-mvn-plugin开发 | BoomMan</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -104,28 +110,51 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: 数据结构与算法</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/arithmetic-ramdom-add/">
-                  <h2 class="post-title">算法: 随机生成大数 并且相加</h2>
-                </a>
-                <div class="post-date">
-                  2020-09-06
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">javaparser-mvn-plugin开发</h2>
+            <div class="post-date">2021-07-29</div>
+            
+            <div class="post-content">
+              <h2 id="背景">背景</h2>
+<p>之前有些过 <a href="https://boommanpro.cn/post/java-parser/">Java类注释解析</a>说明了类注释解析的需求、那么将其开发为mvn-plugin就顺利成章，分享给大家。</p>
+<p>cool-demo是一个maven插件的入门教程、利用javaparser-core的parse能力及maven的生命周期能力。</p>
+<ol>
+<li>读取.java文件的注释内容、并处理。</li>
+<li>在maven-initialize阶段将内容写入到项目的resource目录下。</li>
+</ol>
+<p>这样就可以将代码中的注释通过项目能力做自己想要的事，并且和maven的构建结合起来，有效的和CI/CD结合。</p>
+<p>开源地址: <a href="https://github.com/BoomManPro/cool-demo">https://github.com/BoomManPro/cool-demo</a></p>
 
-          <div class="pagination-container">
-  
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/YtisD-ZVS/" class="tag">
+                    开发工具
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/">
+                  <h3 class="post-title">
+                    Windows 《塞尔达传说:旷野之息》 + 良值手柄
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -254,6 +283,29 @@ setTimeout(function () {
         createImgEventFullScreen();
 }, 1000)
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
