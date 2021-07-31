@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-07-29T14:31:19.062Z</updated>
+    <updated>2021-07-31T14:49:46.955Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,19 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2021, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[分布式任务调度-Quartz]]></title>
+        <id>https://boommanpro.cn/post/distributed-quartz/</id>
+        <link href="https://boommanpro.cn/post/distributed-quartz/">
+        </link>
+        <updated>2021-07-31T14:44:38.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<ol>
+<li>之前写过一个分布式任务调度的demo<a href="https://github.com/BoomManPro/spring-distributed-quartz">spring-distributed-quartz</a></li>
+<li>公司也有自己的分布式任务调度、所以认真研究、好好学习。</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[javaparser-mvn-plugin开发]]></title>
         <id>https://boommanpro.cn/post/javaparser-mvn-plugin/</id>
@@ -222,34 +235,6 @@
 </code></pre>
 <p>假设tcp中的消息都是明文，且单个消息小于等于128，这样修改逻辑就完成的。当然具体需要和实际结合。</p>
 <p>消息修改，并且没有问题，需要严格遵守服务端消息格式，加密解密，盐值，序号等。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Spring Boot 2.4 外部化配置的改变]]></title>
-        <id>https://boommanpro.cn/post/spring-boot-external-config/</id>
-        <link href="https://boommanpro.cn/post/spring-boot-external-config/">
-        </link>
-        <updated>2021-01-04T03:15:15.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="official-guide">Official Guide</h2>
-<p><a href="https://github.com/spring-projects/spring-boot/wiki/Spring-Boot-Config-Data-Migration-Guide">官方升级指南</a></p>
-<p>熟悉外部化配置的同学应该知道，我们获取属性都是从 Bean =&gt; Environment中获取的，所以我们打印 Standard的getPropertySources()即可知道</p>
-<h2 id="同样是外部化配置-springprofilesactivedev">同样是外部化配置 spring.profiles.active=dev</h2>
-<p>2.3.5.RELEASE</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1609730299381.png" alt="" loading="lazy"></figure>
-<p>2.4.1</p>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1609730341477.png" alt="" loading="lazy"></figure>
-<h2 id="为什么做了如此改变">为什么做了如此改变</h2>
-<p>官方issue : <a href="https://github.com/spring-projects/spring-boot/issues/2404">#2404</a> =&gt;<a href="https://github.com/spring-projects/spring-boot/issues/3845">#3845</a></p>
-<p>即可了解到 =&gt;<br>
-2.4之前 =&gt; 即时我们采用外部化配置，也会有困惑,貌似外部化配置不生效的问题，因为他是按照外部化 dev =&gt; 内部 dev ,外部default,内部 default 这样加载</p>
-<p>2.4之后 =&gt; 按照之前顺序 先加载外部化 file,再加载内部的classpath文件. 这样只要外面配置了文件就一定会覆盖内部的，会生效。</p>
-<h2 id="24的外部化配置还有哪些">2.4的外部化配置还有哪些 ?</h2>
-<p>增加了组概念<br>
-增加了对容器化等支持<br>
-增加了方便的import 导入其他配置文件到environment 之间我们做过类似的事情 =&gt; <a href="https://boommanpro.cn/post/spring-boot-enableConfigurationProperties/">让@EnableConfigurationProperties的值注入到@Value中</a></p>
-<h2 id="本质上代码是怎么改的">本质上代码是怎么改的 ?</h2>
-<p>原本的配置文件加载类 <code>ConfigFileApplicationListener</code>标记了@Deprecated  favor of =&gt; <code>org.springframework.boot.context.config.ConfigDataEnvironmentPostProcessor</code> =&gt; <code>org.springframework.boot.context.config.ConfigDataEnvironment</code></p>
-<p>这样就改变了加载策略，从而减少使用困惑(明明配置了外部化文件，为什么会不生效呢?)</p>
 ]]></content>
     </entry>
 </feed>
