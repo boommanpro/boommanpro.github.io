@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-07-31T14:51:56.936Z</updated>
+    <updated>2021-10-01T00:28:56.713Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -18,9 +18,49 @@
         <updated>2021-07-31T14:44:38.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
 <ol>
-<li>之前写过一个分布式任务调度的demo<a href="https://github.com/BoomManPro/spring-distributed-quartz">spring-distributed-quartz</a></li>
+<li>之前写过一个分布式任务调度的demo: <a href="https://github.com/BoomManPro/spring-distributed-quartz">spring-distributed-quartz</a></li>
 <li>公司也有自己的分布式任务调度、所以认真研究、好好学习。</li>
 </ol>
+<h2 id="quartz优缺点">Quartz优缺点</h2>
+<p>首先说Quartz+MySQL持久化优点</p>
+<ol>
+<li>实现了分布式情况下的任务调度、并且与spring-boot(即使不引入starter也是可以的、starter里面只有一个META-INF文件)结合，易于开发。</li>
+<li>quartz开源早，博客使用示例多，出现问题易于解决。</li>
+</ol>
+<p>Quartz缺点</p>
+<ol>
+<li>需要把任务信息持久化到业务数据库、和业务有耦合、并且表比较多。</li>
+<li>调度逻辑和执行逻辑存在同一个项目中、在机器性能固定的情况下、业务和调度之间不可避免会相互影响。</li>
+<li>quartz+mysql集群模式下、是通过mysql的独占锁来唯一获取任务、任务执行并没有实现完善的负载均衡。</li>
+</ol>
+<h2 id="quartz相关问题">Quartz相关问题</h2>
+<p>1.调度器(Scheduler)和执行器(Job)</p>
+<ol>
+<li>具体执行流程是怎样的</li>
+<li>调度器是如何推送的  任务分为一次性和cron定时性的(如果在调度过程中调度器挂了会怎么样)</li>
+<li>调度器是如何保证只执行一次的</li>
+<li>Quartz的mysql有很多数据库表、都是什么含义。</li>
+</ol>
+<h2 id="从quartz中我们能学到什么">从Quartz中我们能学到什么?</h2>
+<ol>
+<li>集群环境下一种防止并发的实现。
+<ol>
+<li>创建锁 TB_LOCKS表</li>
+<li>创建记录表 记录所表示的PREV_FIRE_TIME时间</li>
+<li>通过select for update 竞争锁、竞争到后查看执行时间是否满足。 类似java代码的 sychronized然后再check一下。</li>
+</ol>
+</li>
+<li>Quartz Scheduler单例模式</li>
+<li>Quartz的job重复执行问题</li>
+</ol>
+<pre><code>triggers = qsRsrcs.getJobStore().acquireNextTriggers(now + idleWaitTime,  Math.min(availThreadCount, qsRsrcs.getMaxBatchSize()),
+qsRsrcs.getBatchTimeWindow());
+</code></pre>
+<ol start="4">
+<li>SchedulerFactoryBean =&gt; FactoryBean<T></li>
+</ol>
+<h2 id="相关资料">相关资料</h2>
+<p>Quartz使用和详细流程 https://www.cnblogs.com/wuzhenzhao/p/11751504.html</p>
 ]]></content>
     </entry>
     <entry>
