@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-10-01T17:01:53.620Z</updated>
+    <updated>2021-11-14T10:14:44.976Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -98,6 +98,9 @@ qsRsrcs.getBatchTimeWindow());
 <li>蓝牙连接部分。连接后又迅速断开，说明驱动安装失败，需要卸载，清空缓存重装。</li>
 <li>BetterJoyForCemu需要安装相关驱动，每次游戏启动都要启动。</li>
 <li>如果出现陀螺仪飘动，需要校准，可能每次玩都需要校准。</li>
+<li>如果陀螺仪不可用、未出现下列菜单项。需要根据cemu的版本进行更新替换。<br>
+<a href="https://cemuhook.sshnuke.net/">Cemu hook官网</a><br>
+<img src="https://boommanpro.cn//post-images/1636884818307.png" alt="" loading="lazy"></li>
 </ol>
 <p>Happy Time !!!</p>
 ]]></content>
