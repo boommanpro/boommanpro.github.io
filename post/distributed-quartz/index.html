@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1636884881417">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1640948684671">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://boommanpro.cn/">
-        <img src="https://boommanpro.cn//images/avatar.png?v=1636884881417" class="site-logo">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1640948684671" class="site-logo">
         <h1 class="site-title">BoomMan</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -133,8 +133,8 @@
 <li>quartz+mysql集群模式下、是通过mysql的独占锁来唯一获取任务、任务执行并没有实现完善的负载均衡。</li>
 </ol>
 <h2 id="quartz相关问题">Quartz相关问题</h2>
-<p>1.调度器(Scheduler)和执行器(Job)</p>
 <ol>
+<li>调度器(Scheduler)和执行器(Job)</li>
 <li>具体执行流程是怎样的</li>
 <li>调度器是如何推送的  任务分为一次性和cron定时性的(如果在调度过程中调度器挂了会怎么样)</li>
 <li>调度器是如何保证只执行一次的</li>
@@ -157,6 +157,14 @@ qsRsrcs.getBatchTimeWindow());
 </code></pre>
 <ol start="4">
 <li>SchedulerFactoryBean =&gt; FactoryBean<T></li>
+</ol>
+<h2 id="如何提升类似像xxl-job等性能">如何提升类似像XXL-Job等性能</h2>
+<p>首先关于开源的分布式任务调度系统，其核心调度模块比如Quartz或者自身的自实现Quartz本质还是强依赖数据库性能，虽然可以通过集群部署应用达到高可用，但是存在着明显的性能瓶颈。</p>
+<p>那么如何提升呢? 核心就是拆、从BG、集群、任务组等拆分，从执行的读库到读内存的DelayQueue、再到线程池，快慢线程池等。</p>
+<ol>
+<li>如果是企业级的分布式调度平台，不要把鸡蛋放到一个篮子，或者在内部不要放在一个篮子，即通过一定方式进行分区，比如按照BG等拆分到不同集群(不同集群间是隔离的，比如数据库等)</li>
+<li>在BG下再拆分到不同机器上，做主从高可用。任务本身不要强依赖数据库，只加载，异步存储保证性能。</li>
+<li>任务拆分可以依赖分片思想拆分。</li>
 </ol>
 <h2 id="相关资料">相关资料</h2>
 <p>Quartz使用和详细流程 https://www.cnblogs.com/wuzhenzhao/p/11751504.html</p>

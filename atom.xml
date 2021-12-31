@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2021-11-14T10:14:44.976Z</updated>
+    <updated>2021-12-31T11:04:48.234Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,46 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2021, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[2021-年终总结]]></title>
+        <id>https://boommanpro.cn/post/2021-nian-zhong-zong-jie/</id>
+        <link href="https://boommanpro.cn/post/2021-nian-zhong-zong-jie/">
+        </link>
+        <updated>2021-12-31T11:01:32.000Z</updated>
+        <content type="html"><![CDATA[<p>加入开水团234天了，一年在换工作，熟悉新工作环境和内容中快速度过。</p>
+<p>回头看今天年初的falg，貌似没完成几个，明年加油！</p>
+<p>抛出两个问题<br>
+1.你的工作方向是什么?<br>
+2.你的核心价值是什么(为什么这个工作只有你可以干)?</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[关于p2p打洞的实现]]></title>
+        <id>https://boommanpro.cn/post/guan-yu-p2p-da-dong-de-shi-xian/</id>
+        <link href="https://boommanpro.cn/post/guan-yu-p2p-da-dong-de-shi-xian/">
+        </link>
+        <updated>2021-11-14T10:22:14.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>研究p2p的原理，以及看是否可以通过p2p提升远程桌面速度，毕竟自己的服务器是小水管。</p>
+<p>p2p的话就不需要使用服务器的带宽，取决于本地的上下行情况。<br>
+需要明确的是p2p的两台主机都是内网主机，所以需要通过服务端建立联系。</p>
+<h3 id="frp-传输逻辑">frp 传输逻辑</h3>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1636886986079.png" alt="" loading="lazy"></figure>
+<p>frps增加日志、印证思路<br>
+在frp的init配置文件中设置log_level = trace 即可。<br>
+关联代码:<br>
+client/proxy/proxy.go:294<br>
+client/visitor.go:203</p>
+<ol>
+<li>visitor为了访问远程内网主机，需要绑定本地端口8080、然后与服务端交互获取远程内网的 外网 ip:port.</li>
+<li>server在接收到请求后会与proxy建立连接，发送需要连接的visitor信息，此时proxy和visitor发消息，并不是建立连接，因为nat原因，建立不了。</li>
+<li>此时visitor再与proxy建立tcp连接，此时是可以的，因为proxy给它发过消息了。</li>
+<li>此时再通过一遍遍代理，形成 本地8080 =&gt; 外部内网主机的联系了。</li>
+</ol>
+<h2 id="关联资料">关联资料</h2>
+<p>https://blog.csdn.net/deng_xj/article/details/89187944</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[分布式任务调度-Quartz]]></title>
         <id>https://boommanpro.cn/post/distributed-quartz/</id>
@@ -34,8 +74,8 @@
 <li>quartz+mysql集群模式下、是通过mysql的独占锁来唯一获取任务、任务执行并没有实现完善的负载均衡。</li>
 </ol>
 <h2 id="quartz相关问题">Quartz相关问题</h2>
-<p>1.调度器(Scheduler)和执行器(Job)</p>
 <ol>
+<li>调度器(Scheduler)和执行器(Job)</li>
 <li>具体执行流程是怎样的</li>
 <li>调度器是如何推送的  任务分为一次性和cron定时性的(如果在调度过程中调度器挂了会怎么样)</li>
 <li>调度器是如何保证只执行一次的</li>
@@ -58,6 +98,14 @@ qsRsrcs.getBatchTimeWindow());
 </code></pre>
 <ol start="4">
 <li>SchedulerFactoryBean =&gt; FactoryBean<T></li>
+</ol>
+<h2 id="如何提升类似像xxl-job等性能">如何提升类似像XXL-Job等性能</h2>
+<p>首先关于开源的分布式任务调度系统，其核心调度模块比如Quartz或者自身的自实现Quartz本质还是强依赖数据库性能，虽然可以通过集群部署应用达到高可用，但是存在着明显的性能瓶颈。</p>
+<p>那么如何提升呢? 核心就是拆、从BG、集群、任务组等拆分，从执行的读库到读内存的DelayQueue、再到线程池，快慢线程池等。</p>
+<ol>
+<li>如果是企业级的分布式调度平台，不要把鸡蛋放到一个篮子，或者在内部不要放在一个篮子，即通过一定方式进行分区，比如按照BG等拆分到不同集群(不同集群间是隔离的，比如数据库等)</li>
+<li>在BG下再拆分到不同机器上，做主从高可用。任务本身不要强依赖数据库，只加载，异步存储保证性能。</li>
+<li>任务拆分可以依赖分片思想拆分。</li>
 </ol>
 <h2 id="相关资料">相关资料</h2>
 <p>Quartz使用和详细流程 https://www.cnblogs.com/wuzhenzhao/p/11751504.html</p>
@@ -201,83 +249,6 @@ qsRsrcs.getBatchTimeWindow());
 <p><img src="https://boommanpro.cn//post-images/1619667630508.jpg" alt="" loading="lazy"><br>
 <img src="https://boommanpro.cn//post-images/1619667633265.jpg" alt="" loading="lazy"><br>
 <img src="https://boommanpro.cn//post-images/1619667635927.jpg" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年1月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-01-log/</id>
-        <link href="https://boommanpro.cn/post/2021-01-log/">
-        </link>
-        <updated>2021-01-23T09:36:30.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="简单小结">简单小结</h2>
-<p><img src="https://boommanpro.cn//post-images/1611395077323.jpg" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1611394733635.jpg" alt="" loading="lazy"></p>
-<p>在1月中旬结束了长时间的出差，暂时撤场回到北京，与我的宝宝一起上下班，好开心😀.</p>
-<h2 id="技术小结">技术小结</h2>
-<p>编写技术博客 3篇，并且对2021年做了flag，希望2021年好好努力</p>
-<p><a href="/post/spring-boot-devtools-error/">spring-boot-devtools 使用引发的一系列问题</a><br>
-<a href="/post/spring-boot-external-config/">Spring Boot 2.4 外部化配置的改变</a><br>
-<a href="/post/window-tcp-update/">Window Tcp 数据篡改</a><br>
-<a href="/post/2021-flag/">2021-flag</a></p>
-<p>对golang项目中的frp和goreplay源码的第1-3次提交进行了学习，学习了cobra命令行框架</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Window Tcp 数据篡改]]></title>
-        <id>https://boommanpro.cn/post/window-tcp-update/</id>
-        <link href="https://boommanpro.cn/post/window-tcp-update/">
-        </link>
-        <updated>2021-01-07T09:53:28.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="背景">背景</h1>
-<p>什么时候需要修改TCP传输的数据 ? 如果我们知道TCP中的数据,并且可以修改,可以做什么 ?</p>
-<p>TCP数据修改思路:</p>
-<ol>
-<li>Windows平台 Winsock api 替换本机ddl</li>
-<li>Linux平台 netfilter 库</li>
-<li>通用 代理中间人攻击</li>
-</ol>
-<p>常见工具:</p>
-<ol>
-<li>WPE三剑客</li>
-<li>HookMe</li>
-<li>基于winsock的一系列工具</li>
-</ol>
-<p>因个人对dll等不熟悉,netfilter尝试失败等原因,遂采用代理中间人方式。</p>
-<p>但是了解tcp的都应该知道,tcp和http传输消息不同的是，tcp的包中只有源信息和目的信息,而http的应用层中包含了目的服务的信息。那么如果修改目的信息为中间人服务，那么原本的目的信息去哪里了?</p>
-<p>这里可以采用别人开发好的socks5代理服务，它基于dll代理，与中间人服务器建立连接，建立连接成功后，并且发送一个tcp包，里面包含了原始信息包。这样socks5服务器就有了中间人的条件。</p>
-<p>客户端主机 &lt;=&gt; 代理服务器  &lt;=&gt; 目标服务器</p>
-<h2 id="修改逻辑">修改逻辑</h2>
-<p>以golang代码为例</p>
-<pre><code>func proxy(dst io.Writer, src io.Reader, lead bool, errCh chan error) {
-	//这块使用的copy
-	var err error
-	//发送的规则
-	if lead {
-		//src是请求信息
-		// 问题是如何解密封包中的含义是什么,然后就可以编码修改发送和返回
-		bufReq := bufio.NewReader(src)
-		for ; ; {
-			//需要将发送指令接收到，然后重写 发送到服务端
-			var buf [128]byte
-			n ,_:=bufReq.Read(buf[:])
-			fmt.Printf(&quot;接收到实际客户端消息%s&quot;,string(buf[:n]))
-
-			dst.Write(([]byte)(string(buf[:n])+&quot;1&quot;))
-		}
-	} else {
-		//接受的规则
-		_, err = io.Copy(dst, src)
-	}
-
-	if tcpConn, ok := dst.(closeWriter); ok {
-		tcpConn.CloseWrite()
-	}
-	errCh &lt;- err
-}
-
-</code></pre>
-<p>假设tcp中的消息都是明文，且单个消息小于等于128，这样修改逻辑就完成的。当然具体需要和实际结合。</p>
-<p>消息修改，并且没有问题，需要严格遵守服务端消息格式，加密解密，盐值，序号等。</p>
 ]]></content>
     </entry>
 </feed>
