@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>2021年3月生活小结 | BoomMan</title>
+<title>Spring Boot Mybatis Plus配置记录 | BoomMan</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,27 +111,82 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">2021年3月生活小结</h2>
-            <div class="post-date">2021-03-28</div>
+            <h2 class="post-title">Spring Boot Mybatis Plus配置记录</h2>
+            <div class="post-date">2020-02-11</div>
             
             <div class="post-content">
-              <h2 id="简单小结">简单小结</h2>
-<p>简单记录下3月的有趣事,背景三月去成都转悠了一圈，去熊猫基地看熊猫。晚上在酒店点冷吃兔外卖。</p>
-<p>成都的酒店现在都是机器人送餐，然后下单冷吃兔后等待外卖送达，在超时了10分钟后，外卖小哥联系到我，说外卖送达，酒店机器人会送到，随即点了送达。又等了10分钟后，外卖还未到，我便打电话问前台情况，又上楼找外卖，在寻找中又问外卖小哥是否送了，他说机器人可能忙，一会就到。就在这时。。我在电梯口碰上了外卖小哥，拿着我的外卖，尴尬一笑。</p>
-<p>程序是不会骗人的，程序员是会骗人的。</p>
-<p>外卖机器人背锅。</p>
-<p><img src="https://boommanpro.cn//post-images/1619667630508.jpg" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1619667633265.jpg" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1619667635927.jpg" alt="" loading="lazy"></p>
+              <h2 id="1-maven依赖">1. maven依赖</h2>
+<pre><code class="language-xml">  &lt;dependency&gt;
+            &lt;groupId&gt;com.baomidou&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-plus-boot-starter&lt;/artifactId&gt;
+            &lt;version&gt;3.3.0&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;scope&gt;runtime&lt;/scope&gt;
+        &lt;/dependency&gt;
+</code></pre>
+<h2 id="2-build-配置">2. build 配置</h2>
+<pre><code class="language-xml"> &lt;build&gt;
+        &lt;resources&gt;
+            &lt;!-- 编译之后包含xml   --&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/java&lt;/directory&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/*.xml&lt;/include&gt;
+                &lt;/includes&gt;
+                &lt;filtering&gt;false&lt;/filtering&gt;
+            &lt;/resource&gt;
+            &lt;resource&gt;
+                &lt;directory&gt;src/main/resources&lt;/directory&gt;
+            &lt;/resource&gt;
+        &lt;/resources&gt;
+        &lt;testResources&gt;
+            &lt;testResource&gt;
+                &lt;directory&gt;src/test/resources&lt;/directory&gt;
+            &lt;/testResource&gt;
+        &lt;/testResources&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+        &lt;finalName&gt;${project.artifactId}&lt;/finalName&gt;
+    &lt;/build&gt;
+</code></pre>
+<h2 id="3-java配置">3. java配置</h2>
+<pre><code class="language-java">@MapperScan(basePackages = &quot;cn.boommanpro.jenkins.portal.dao&quot;)
+</code></pre>
+<h2 id="4-使用mybatiscodehelperpro使用生成代码">4. 使用mybatiscodehelperPro使用生成代码</h2>
+<p><a href="https://zhile.io/2019/04/23/mybatis-code-helper-pro-crack.html">crack link</a><br>
+请支持正版</p>
+<h2 id="5-jdbc配置">5. jdbc配置</h2>
+<pre><code class="language-yml">jdbc:mysql://127.0.0.1:3306/db?serverTimezone=GMT%2b8&amp;characterEncoding=utf8
+</code></pre>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/S_RXMuKtl/" class="tag">
+                    java-dev-tools
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/Spring/" class="tag">
+                    Spring
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://boommanpro.cn/post/2021-01-log/">
+                <a href="https://boommanpro.cn/post/leetcode-practice/">
                   <h3 class="post-title">
-                    2021年1月生活小结
+                    LeetCode Practice
                   </h3>
                 </a>
               </div>

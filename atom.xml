@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2022-05-21T16:27:07.781Z</updated>
+    <updated>2022-08-10T16:06:43.709Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -12,8 +12,8 @@
     <rights>All rights reserved 2022, BoomMan</rights>
     <entry>
         <title type="html"><![CDATA[Spock单元测试最佳实践]]></title>
-        <id>https://boommanpro.cn/post/spock-dan-yuan-ce-shi-zui-jia-shi-jian/</id>
-        <link href="https://boommanpro.cn/post/spock-dan-yuan-ce-shi-zui-jia-shi-jian/">
+        <id>https://boommanpro.cn/post/spock-best-practice/</id>
+        <link href="https://boommanpro.cn/post/spock-best-practice/">
         </link>
         <updated>2022-05-21T16:06:31.000Z</updated>
         <content type="html"><![CDATA[<h1 id="为什么要用spock写单元测试">为什么要用Spock写单元测试</h1>
