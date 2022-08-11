@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2022-08-11T15:51:50.391Z</updated>
+    <updated>2022-08-11T15:59:59.793Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -296,8 +296,8 @@ Example (Use Generator -&gt; TestMe)<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[2021-年终总结]]></title>
-        <id>https://boommanpro.cn/post/2021-nian-zhong-zong-jie/</id>
-        <link href="https://boommanpro.cn/post/2021-nian-zhong-zong-jie/">
+        <id>https://boommanpro.cn/post/2021-annual-report/</id>
+        <link href="https://boommanpro.cn/post/2021-annual-report/">
         </link>
         <updated>2021-12-31T11:01:32.000Z</updated>
         <content type="html"><![CDATA[<p>加入开水团234天了，一年在换工作，熟悉新工作环境和内容中快速度过。</p>
@@ -309,8 +309,8 @@ Example (Use Generator -&gt; TestMe)<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[关于p2p打洞的实现]]></title>
-        <id>https://boommanpro.cn/post/guan-yu-p2p-da-dong-de-shi-xian/</id>
-        <link href="https://boommanpro.cn/post/guan-yu-p2p-da-dong-de-shi-xian/">
+        <id>https://boommanpro.cn/post/golang-p2p/</id>
+        <link href="https://boommanpro.cn/post/golang-p2p/">
         </link>
         <updated>2021-11-14T10:22:14.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
