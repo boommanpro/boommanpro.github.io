@@ -1,22 +1,121 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://boommanpro.cn/</id>
-    <title>BoomMan</title>
-    <updated>2022-08-11T15:51:50.391Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://boommanpro.cn/"/>
-    <link rel="self" href="https://boommanpro.cn/atom.xml"/>
-    <subtitle>爱生活 , 爱Coding .....</subtitle>
-    <logo>https://boommanpro.cn/images/avatar.png</logo>
-    <icon>https://boommanpro.cn/favicon.ico</icon>
-    <rights>All rights reserved 2022, BoomMan</rights>
-    <entry>
-        <title type="html"><![CDATA[技术文档嵌入Echarts(用图表说话)]]></title>
-        <id>https://boommanpro.cn/post/echarts-show/</id>
-        <link href="https://boommanpro.cn/post/echarts-show/">
-        </link>
-        <updated>2022-08-11T13:41:02.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="echars">Echars</h2>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>技术文档嵌入Echarts(用图表说话) | BoomMan</title>
+<meta name="description" content="爱生活 , 爱Coding .....">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1660233107862">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+<link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
+
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-155251589-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-155251589-1');
+</script>
+
+
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://boommanpro.cn/">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1660233107862" class="site-logo">
+        <h1 class="site-title">BoomMan</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/BoomManPro" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      爱生活 , 爱Coding .....
+    </div>
+    <div class="site-footer">
+      © CopyRight 2016-2020. 晋ICP备16009994号 | <a class="rss" href="https://boommanpro.cn//atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">技术文档嵌入Echarts(用图表说话)</h2>
+            <div class="post-date">2022-08-11</div>
+            
+            <div class="post-content">
+              <h2 id="echars">Echars</h2>
 <p><a href="https://echarts.apache.org/examples/zh/index.html">Echarts官网</a></p>
 <p>在Gridea文章中直接copy代码即可，直接把Gridea当做html开发即可。同理可嵌入流程图<a href="https://app.diagrams.net/">diagrams</a></p>
 <h2 id="example">Example</h2>
@@ -173,317 +272,191 @@ function loadscript(src){
 }
 &lt;/div&gt;
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Spock单元测试最佳实践]]></title>
-        <id>https://boommanpro.cn/post/spock-best-practice/</id>
-        <link href="https://boommanpro.cn/post/spock-best-practice/">
-        </link>
-        <updated>2022-05-21T16:06:31.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="为什么要用spock写单元测试">为什么要用Spock写单元测试</h1>
-<h2 id="为什么要写单元测试">为什么要写单元测试</h2>
-<p>XML之父Tim Bray最近在博客里有个好玩的说法：“代码不写测试就像上了厕所不洗手……单元测试是对软件未来的一项必不可少的投资。”具体来说，单元测试有哪些收益呢？</p>
-<h2 id="spock-example">Spock Example</h2>
-<p>spock写出的单元测试可以很容易理解，对于输入输出及判定很容易看出。</p>
-<pre><code class="language-groovy">class MathSpec extends Specification {
-  def &quot;maximum of two numbers&quot;(int a, int b, int c) {
-    expect:
-    Math.max(a, b) == c
 
-    where:
-    a | b | c
-    1 | 3 | 3
-    7 | 4 | 7
-    0 | 0 | 0
-  }
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/p2xnAT2ZK/" class="tag">
+                    架构师之路
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/spock-best-practice/">
+                  <h3 class="post-title">
+                    Spock单元测试最佳实践
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+<script type="application/javascript">
+
+AOS.init();
+
+hljs.initHighlightingOnLoad()
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+
+var links = document.links;
+ 
+for (var i = 0, linksLength = links.length; i < linksLength; i++) {
+   if (links[i].hostname != window.location.hostname) {
+       links[i].target = '_blank';
+   } 
 }
-</code></pre>
-<h2 id="究极maven配置">究极Maven配置</h2>
-<p>配置包含了 groovy + spock + powermock</p>
-<pre><code class="language-xml">   &lt;properties&gt;
-        &lt;!--        spock version start        --&gt;
-        &lt;spock.version&gt;1.3-groovy-2.4&lt;/spock.version&gt;
-        &lt;groovy.version&gt;2.4.21&lt;/groovy.version&gt;
-        &lt;powermock.version&gt;2.0.4&lt;/powermock.version&gt;
-        &lt;jmockit.version&gt;1.39&lt;/jmockit.version&gt;
-        &lt;junitparaams.versopm&gt;1.1.0&lt;/junitparaams.versopm&gt;
-        &lt;!--        spock version end        --&gt;
-    &lt;/properties&gt;
- &lt;dependencies&gt;
 
 
-        &lt;!--        spock test dependency start        --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;
-            &lt;artifactId&gt;groovy-all&lt;/artifactId&gt;
-            &lt;version&gt;${groovy.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.spockframework&lt;/groupId&gt;
-            &lt;artifactId&gt;spock-core&lt;/artifactId&gt;
-            &lt;version&gt;${spock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.spockframework&lt;/groupId&gt;
-            &lt;artifactId&gt;spock-spring&lt;/artifactId&gt;
-            &lt;version&gt;${spock.version}&lt;/version&gt;
-        &lt;/dependency&gt;
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.mockito&lt;/groupId&gt;
-            &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;
-            &lt;version&gt;2.28.2&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-            &lt;artifactId&gt;powermock-module-junit4&lt;/artifactId&gt;
-            &lt;version&gt;${powermock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-            &lt;artifactId&gt;powermock-api-mockito2&lt;/artifactId&gt;
-            &lt;version&gt;${powermock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-
-        &lt;!--        db test        --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.h2database&lt;/groupId&gt;
-            &lt;artifactId&gt;h2&lt;/artifactId&gt;
-            &lt;version&gt;1.4.200&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.dbunit&lt;/groupId&gt;
-            &lt;artifactId&gt;dbunit&lt;/artifactId&gt;
-            &lt;version&gt;2.5.1&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;!--        db end        --&gt;
-        &lt;!--        spock test dependency end        --&gt;
+$(function(){
+    //给每一串代码元素增加复制代码节点
+    let preList = $("code");
+    for (let pre of preList) {
+        //给每个代码块增加上“复制代码”按钮
+        let btn = $("<span class='btn-pre-copy' onclick='preCopy(this)'>Copy to clipboard</span>");
+        btn.prependTo(pre);
+    }
+});
+function preCopy(obj) {
+    //执行复制
+    let btn = $(obj);
+    let pre = btn.parent();
+    //为了实现复制功能。新增一个临时的textarea节点。使用他来复制内容
+    let temp = $("<textarea></textarea>");
+    //避免复制内容时把按钮文字也复制进去。先临时置空
+    btn.text("");
+    temp.text(pre.text());
+    temp.appendTo(pre);
+    temp.select();
+    document.execCommand("Copy");
+    temp.remove();
+    //修改按钮名
+    btn.text("Copy Success");
+    //一定时间后吧按钮名改回来
+    setTimeout(()=> {
+        btn.text("Copy to clipboard");
+    },1500);
+}
 
 
-    &lt;/dependencies&gt;
-</code></pre>
-<h2 id="项目单元测试生成">项目单元测试生成</h2>
-<p>TestMe插件可以一键生成Spock、Junit等测试代码，简单修改就可以完成高代码覆盖</p>
-<p><img src="https://boommanpro.cn//post-images/1653149253728.png" alt="" loading="lazy"><br>
-Example (Use Generator -&gt; TestMe)<br>
-<img src="https://boommanpro.cn//post-images/1653149241742.png" alt="" loading="lazy"></p>
-<h2 id="高阶单元测试用法">高阶单元测试用法</h2>
-<ol>
-<li>Mock静态方法
-<ul>
-<li>注解@PrepareForTest()</li>
-</ul>
-</li>
-<li>禁止静态代码块初始化，e.g. -&gt; private static final User user=new User();
-<ul>
-<li>@SuppressStaticInitializationFor([&quot;example.com.AbbreviationProvinceUtil&quot;])</li>
-</ul>
-</li>
-</ol>
-<h2 id="关联文档">关联文档</h2>
-<p><a href="https://tech.meituan.com/2021/08/06/spock-practice-in-meituan.html">Spock单元测试框架介绍以及在美团优选实战</a></p>
-<p><a href="https://spockframework.org/">Spock 单元测试官方文档</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021-年终总结]]></title>
-        <id>https://boommanpro.cn/post/2021-nian-zhong-zong-jie/</id>
-        <link href="https://boommanpro.cn/post/2021-nian-zhong-zong-jie/">
-        </link>
-        <updated>2021-12-31T11:01:32.000Z</updated>
-        <content type="html"><![CDATA[<p>加入开水团234天了，一年在换工作，熟悉新工作环境和内容中快速度过。</p>
-<p>回头看今天年初的falg，貌似没完成几个，明年加油！</p>
-<p>抛出两个问题<br>
-1.你的工作方向是什么?<br>
-2.你的核心价值是什么(为什么这个工作只有你可以干)?</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[关于p2p打洞的实现]]></title>
-        <id>https://boommanpro.cn/post/guan-yu-p2p-da-dong-de-shi-xian/</id>
-        <link href="https://boommanpro.cn/post/guan-yu-p2p-da-dong-de-shi-xian/">
-        </link>
-        <updated>2021-11-14T10:22:14.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>研究p2p的原理，以及看是否可以通过p2p提升远程桌面速度，毕竟自己的服务器是小水管。</p>
-<p>p2p的话就不需要使用服务器的带宽，取决于本地的上下行情况。<br>
-需要明确的是p2p的两台主机都是内网主机，所以需要通过服务端建立联系。</p>
-<h3 id="frp-传输逻辑">frp 传输逻辑</h3>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1636886986079.png" alt="" loading="lazy"></figure>
-<p>frps增加日志、印证思路<br>
-在frp的init配置文件中设置log_level = trace 即可。<br>
-关联代码:<br>
-client/proxy/proxy.go:294<br>
-client/visitor.go:203</p>
-<ol>
-<li>visitor为了访问远程内网主机，需要绑定本地端口8080、然后与服务端交互获取远程内网的 外网 ip:port.</li>
-<li>server在接收到请求后会与proxy建立连接，发送需要连接的visitor信息，此时proxy和visitor发消息，并不是建立连接，因为nat原因，建立不了。</li>
-<li>此时visitor再与proxy建立tcp连接，此时是可以的，因为proxy给它发过消息了。</li>
-<li>此时再通过一遍遍代理，形成 本地8080 =&gt; 外部内网主机的联系了。</li>
-</ol>
-<h2 id="关联资料">关联资料</h2>
-<p>https://blog.csdn.net/deng_xj/article/details/89187944</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[分布式任务调度-Quartz]]></title>
-        <id>https://boommanpro.cn/post/distributed-quartz/</id>
-        <link href="https://boommanpro.cn/post/distributed-quartz/">
-        </link>
-        <updated>2021-07-31T14:44:38.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<ol>
-<li>之前写过一个分布式任务调度的demo: <a href="https://github.com/BoomManPro/spring-distributed-quartz">spring-distributed-quartz</a></li>
-<li>公司也有自己的分布式任务调度、所以认真研究、好好学习。</li>
-</ol>
-<h2 id="quartz优缺点">Quartz优缺点</h2>
-<p>首先说Quartz+MySQL持久化优点</p>
-<ol>
-<li>实现了分布式情况下的任务调度、并且与spring-boot(即使不引入starter也是可以的、starter里面只有一个META-INF文件)结合，易于开发。</li>
-<li>quartz开源早，博客使用示例多，出现问题易于解决。</li>
-</ol>
-<p>Quartz缺点</p>
-<ol>
-<li>需要把任务信息持久化到业务数据库、和业务有耦合、并且表比较多。</li>
-<li>调度逻辑和执行逻辑存在同一个项目中、在机器性能固定的情况下、业务和调度之间不可避免会相互影响。</li>
-<li>quartz+mysql集群模式下、是通过mysql的独占锁来唯一获取任务、任务执行并没有实现完善的负载均衡。</li>
-</ol>
-<h2 id="quartz相关问题">Quartz相关问题</h2>
-<ol>
-<li>调度器(Scheduler)和执行器(Job)</li>
-<li>具体执行流程是怎样的</li>
-<li>调度器是如何推送的  任务分为一次性和cron定时性的(如果在调度过程中调度器挂了会怎么样)</li>
-<li>调度器是如何保证只执行一次的</li>
-<li>Quartz的mysql有很多数据库表、都是什么含义。</li>
-</ol>
-<h2 id="从quartz中我们能学到什么">从Quartz中我们能学到什么?</h2>
-<ol>
-<li>集群环境下一种防止并发的实现。
-<ol>
-<li>创建锁 TB_LOCKS表</li>
-<li>创建记录表 记录所表示的PREV_FIRE_TIME时间</li>
-<li>通过select for update 竞争锁、竞争到后查看执行时间是否满足。 类似java代码的 sychronized然后再check一下。</li>
-</ol>
-</li>
-<li>Quartz Scheduler单例模式</li>
-<li>Quartz的job重复执行问题</li>
-</ol>
-<pre><code>triggers = qsRsrcs.getJobStore().acquireNextTriggers(now + idleWaitTime,  Math.min(availThreadCount, qsRsrcs.getMaxBatchSize()),
-qsRsrcs.getBatchTimeWindow());
-</code></pre>
-<ol start="4">
-<li>SchedulerFactoryBean =&gt; FactoryBean<T></li>
-</ol>
-<h2 id="如何提升类似像xxl-job等性能">如何提升类似像XXL-Job等性能</h2>
-<p>首先关于开源的分布式任务调度系统，其核心调度模块比如Quartz或者自身的自实现Quartz本质还是强依赖数据库性能，虽然可以通过集群部署应用达到高可用，但是存在着明显的性能瓶颈。</p>
-<p>那么如何提升呢? 核心就是拆、从BG、集群、任务组等拆分，从执行的读库到读内存的DelayQueue、再到线程池，快慢线程池等。</p>
-<ol>
-<li>如果是企业级的分布式调度平台，不要把鸡蛋放到一个篮子，或者在内部不要放在一个篮子，即通过一定方式进行分区，比如按照BG等拆分到不同集群(不同集群间是隔离的，比如数据库等)</li>
-<li>在BG下再拆分到不同机器上，做主从高可用。任务本身不要强依赖数据库，只加载，异步存储保证性能。</li>
-<li>任务拆分可以依赖分片思想拆分。</li>
-</ol>
-<h2 id="相关资料">相关资料</h2>
-<p>Quartz使用和详细流程 https://www.cnblogs.com/wuzhenzhao/p/11751504.html</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[javaparser-mvn-plugin开发]]></title>
-        <id>https://boommanpro.cn/post/javaparser-mvn-plugin/</id>
-        <link href="https://boommanpro.cn/post/javaparser-mvn-plugin/">
-        </link>
-        <updated>2021-07-29T14:20:27.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>之前有些过 <a href="https://boommanpro.cn/post/java-parser/">Java类注释解析</a>说明了类注释解析的需求、那么将其开发为mvn-plugin就顺利成章，分享给大家。</p>
-<p>cool-demo是一个maven插件的入门教程、利用javaparser-core的parse能力及maven的生命周期能力。</p>
-<ol>
-<li>读取.java文件的注释内容、并处理。</li>
-<li>在maven-initialize阶段将内容写入到项目的resource目录下。</li>
-</ol>
-<p>这样就可以将代码中的注释通过项目能力做自己想要的事，并且和maven的构建结合起来，有效的和CI/CD结合。</p>
-<p>开源地址: <a href="https://github.com/BoomManPro/cool-demo">https://github.com/BoomManPro/cool-demo</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 《塞尔达传说:旷野之息》 + 良值手柄]]></title>
-        <id>https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/</id>
-        <link href="https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/">
-        </link>
-        <updated>2021-07-04T14:08:22.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="准备工作">准备工作</h2>
-<ol>
-<li>Window电脑 配置要求 3.0主频以上+16G内存 750Ti以上显卡</li>
-<li>游戏手柄 良值二代 switch手柄即可 PDD 120+  (房子键+Y键)</li>
-<li>《塞尔达传说:旷野之息》 Cemu下载  吾爱上搜索全集即可</li>
-<li>蓝牙连接手柄  + 陀螺仪驱动 <a href="https://github.com/Davidobot/BetterJoy">BetterJoyForCemu</a></li>
-</ol>
-<h2 id="相关坑点">相关坑点</h2>
-<ol>
-<li>蓝牙连接部分。连接后又迅速断开，说明驱动安装失败，需要卸载，清空缓存重装。</li>
-<li>BetterJoyForCemu需要安装相关驱动，每次游戏启动都要启动。</li>
-<li>如果出现陀螺仪飘动，需要校准，可能每次玩都需要校准。</li>
-<li>如果陀螺仪不可用、未出现下列菜单项。需要根据cemu的版本进行更新替换。<br>
-<a href="https://cemuhook.sshnuke.net/">Cemu hook官网</a><br>
-<img src="https://boommanpro.cn//post-images/1636884818307.png" alt="" loading="lazy"></li>
-</ol>
-<p>Happy Time !!!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年6月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-06-log/</id>
-        <link href="https://boommanpro.cn/post/2021-06-log/">
-        </link>
-        <updated>2021-07-02T13:54:55.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="工作小结">工作小结</h2>
-<p>参加公司的萌芽计划，收获多多。<br>
-进一步了解公司项目。</p>
-<p>貌似这个月过得太快了，一直在努力工作，不会的可太多了啊</p>
-<p>7月同上、需求逐渐增多。</p>
-<h2 id="其他">其他</h2>
-<p>准备写一篇 Windows Cemu的塞尔达教程</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年5月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-05-log/</id>
-        <link href="https://boommanpro.cn/post/2021-05-log/">
-        </link>
-        <updated>2021-06-01T12:58:06.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="生活小结">生活小结</h2>
-<p>本月完成了离职，入职，感慨时间过的真快 !</p>
-<p>记录下一些换工作的注意事项吧！</p>
-<ol>
-<li>换工作还是要早做打算(比如提前2-3月复习，1个月找)，避免想走走不了，走时不是黄金期，无法battle的情况。</li>
-<li>离职后的离职证明自己要保存一份电子版(因为证明在入职新单位就会交，但是之后的一些证明又需要，比如工作居住证转移)</li>
-<li>社保公积金等转移(尽量在本单位15号后离职，下个单位15号前入职)，这样就可以完成无缝衔接。</li>
-<li><a href="http://www.bjrcgz.gov.cn/">北京工作居住证</a>转移需要注意目标单位可以接收，并且在入职后尽快(1-2天)办理相关事项，因为中间还需要再次审批，防止出现差错。</li>
-</ol>
-<h2 id="工作小结">工作小结</h2>
-<p>开水团的生活还是不错的，有兴趣可以找我内推哈。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年4月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-04-log/</id>
-        <link href="https://boommanpro.cn/post/2021-04-log/">
-        </link>
-        <updated>2021-04-29T03:41:14.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="生活小结">生活小结</h2>
-<p>本次屋子里又新增了智能开关，用于声控(小度音箱)控制卧室和客厅的灯，客服小哥哥nice，电路拍照就行，贼专业。</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1619667786274.jpg" alt="" loading="lazy"></figure>
-<p>我的电脑桌上增添饮水机，淘宝买怡宝大桶水就行了。终于可以在家方便喝热水了。后悔系列，没有早买。</p>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1619667946227.jpg" alt="" loading="lazy"></figure>
-<h2 id="工作小结">工作小结</h2>
-<p>本次换工作成功，下个月就去新公司了，干就完事了。</p>
-]]></content>
-    </entry>
-</feed>
+function createImgEventFullScreen() {
+        var imgs = $(".post-detail").find("img");
+        // console.log(imgs);
+        for (var i = 0; i < imgs.length; i++) {
+            // $(imgs[i]).click(createCover(imgs[i]));
+            imgs[i].onclick = function (e) {
+                var src = e.srcElement.currentSrc;
+                var _this = $(this);
+                console.log(_this);
+                createCover(src,_this);
+            }
+        }
+        function createCover(src,_this) {
+            // console.log(_this);
+            // console.log(src);
+            var cover = $("<div id='outerDiv'  style='position:fixed;top:0;left:0;background:rgba(0,0,0,0.7);z-index:5;width:100%;height:100%;display:none;'><div id='innerDiv' style='position:absolute;'><img  id='bigImg' style='border:5px solid #fff;' src=''/></div></div>");
+            $("#outerDiv").remove();
+            $("body").append(cover);
+            imgShow("#outerDiv", "#innerDiv", "#bigImg", _this,src);
+
+        }
+    }
+    function imgShow(outerDiv, innerDiv, bigImg, _this,src) {
+        //var src = _this.attr("src"); //获取当前点击的common-img元素中的src属性
+        $(bigImg).attr("src", src); //设置#bigImg元素的src属性
+
+        /*获取当前点击图片的真实大小，并显示弹出层及大图*/
+        $("<img/>").attr("src", src).bind('load',function () {
+            var windowW = $(window).width(); //获取当前窗口宽度
+            var windowH = $(window).height(); //获取当前窗口高度
+            var realWidth = this.width; //获取图片真实宽度
+            var realHeight = this.height; //获取图片真实高度
+            var imgWidth, imgHeight;
+            var scale = 0.9; //缩放尺寸，当图片真实宽度和高度大于窗口宽度和高度时进行缩放
+
+            if (realHeight > windowH * scale) { //判断图片高度
+                imgHeight = windowH * scale; //如大于窗口高度，图片高度进行缩放
+                imgWidth = imgHeight / realHeight * realWidth; //等比例缩放宽度
+                if (imgWidth > windowW * scale) { //如宽度仍大于窗口宽度
+                    imgWidth = windowW * scale; //再对宽度进行缩放
+                }
+            } else if (realWidth > windowW * scale) { //如图片高度合适，判断图片宽度
+                imgWidth = windowW * scale; //如大于窗口宽度，图片宽度进行缩放
+                imgHeight = imgWidth / realWidth * realHeight; //等比例缩放高度
+            } else { //如果图片真实高度和宽度都符合要求，高宽不变
+                imgWidth = realWidth;
+                imgHeight = realHeight;
+            }
+            $(bigImg).css("width", imgWidth); //以最终的宽度对图片缩放
+
+            var w = (windowW - imgWidth) / 2; //计算图片与窗口左边距
+            var h = (windowH - imgHeight) / 2; //计算图片与窗口上边距
+            $(innerDiv).css({ "top": h, "left": w }); //设置#innerDiv的top和left属性
+            //console.log('****')
+            $(outerDiv).fadeIn("fast"); //淡入显示#outerDiv
+        });
+
+        $(outerDiv).click(function () { //再次点击淡出消失弹出层
+            $(this).fadeOut("fast");
+        });
+    }
+setTimeout(function () {
+        createImgEventFullScreen();
+}, 1000)
+</script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
+
+
+
+
+  </body>
+</html>
