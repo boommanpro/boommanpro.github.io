@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2022-08-12T13:05:25.061Z</updated>
+    <updated>2022-08-12T15:38:59.861Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,346 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2022, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[Spring Feign Best Practice]]></title>
+        <id>https://boommanpro.cn/post/spring-feign-best-practice/</id>
+        <link href="https://boommanpro.cn/post/spring-feign-best-practice/">
+        </link>
+        <updated>2022-08-12T15:36:02.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="maven配置">Maven配置</h2>
+<pre><code class="language-xml">    &lt;properties&gt;
+        &lt;fruit.version&gt;1.0.4&lt;/fruit.version&gt;
+        &lt;java.version&gt;8&lt;/java.version&gt;
+        &lt;!--        Spring Cloud Alibaba 最新版本        --&gt;
+        &lt;spring.cloud.alibaba.version&gt;2021.0.1.0&lt;/spring.cloud.alibaba.version&gt;
+        &lt;!--        Spring Cloud 版本--&gt;
+        &lt;spring.cloud.version&gt;2021.0.1&lt;/spring.cloud.version&gt;
+        &lt;xxl-job.version&gt;2.3.0&lt;/xxl-job.version&gt;
+        &lt;hystrix-version&gt;1.5.18&lt;/hystrix-version&gt;
+
+        &lt;!--        spock version start        --&gt;
+        &lt;spock.version&gt;1.3-groovy-2.4&lt;/spock.version&gt;
+        &lt;groovy.version&gt;2.4.21&lt;/groovy.version&gt;
+        &lt;powermock.version&gt;2.0.4&lt;/powermock.version&gt;
+        &lt;jmockit.version&gt;1.39&lt;/jmockit.version&gt;
+        &lt;junitparaams.versopm&gt;1.1.0&lt;/junitparaams.versopm&gt;
+        &lt;!--        spock version end        --&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencyManagement&gt;
+        &lt;dependencies&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
+                &lt;version&gt;${spring.cloud.version}&lt;/version&gt;
+                &lt;type&gt;pom&lt;/type&gt;
+                &lt;scope&gt;import&lt;/scope&gt;
+            &lt;/dependency&gt;
+            &lt;dependency&gt;
+                &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+                &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;
+                &lt;version&gt;${spring.cloud.alibaba.version}&lt;/version&gt;
+                &lt;type&gt;pom&lt;/type&gt;
+                &lt;scope&gt;import&lt;/scope&gt;
+            &lt;/dependency&gt;
+        &lt;/dependencies&gt;
+    &lt;/dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-session-core&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;optional&gt;true&lt;/optional&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;me.ghui&lt;/groupId&gt;
+            &lt;artifactId&gt;Fruit&lt;/artifactId&gt;
+            &lt;version&gt;${fruit.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--        feign start        --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.github.openfeign&lt;/groupId&gt;
+            &lt;artifactId&gt;feign-core&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.github.openfeign&lt;/groupId&gt;
+            &lt;artifactId&gt;feign-httpclient&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.github.openfeign&lt;/groupId&gt;
+            &lt;artifactId&gt;feign-slf4j&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.github.openfeign&lt;/groupId&gt;
+            &lt;artifactId&gt;feign-jackson&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.github.openfeign.form&lt;/groupId&gt;
+            &lt;artifactId&gt;feign-form-spring&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.github.openfeign.form&lt;/groupId&gt;
+            &lt;artifactId&gt;feign-form&lt;/artifactId&gt;
+            &lt;version&gt;3.8.0&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;!--        feign end        --&gt;
+        
+        &lt;!--        spock test dependency start        --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;
+            &lt;artifactId&gt;groovy-all&lt;/artifactId&gt;
+            &lt;version&gt;${groovy.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.spockframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spock-core&lt;/artifactId&gt;
+            &lt;version&gt;${spock.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.spockframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spock-spring&lt;/artifactId&gt;
+            &lt;version&gt;${spock.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mockito&lt;/groupId&gt;
+            &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;
+            &lt;version&gt;2.28.2&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.powermock&lt;/groupId&gt;
+            &lt;artifactId&gt;powermock-module-junit4&lt;/artifactId&gt;
+            &lt;version&gt;${powermock.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.powermock&lt;/groupId&gt;
+            &lt;artifactId&gt;powermock-api-mockito2&lt;/artifactId&gt;
+            &lt;version&gt;${powermock.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!--        db test        --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.h2database&lt;/groupId&gt;
+            &lt;artifactId&gt;h2&lt;/artifactId&gt;
+            &lt;version&gt;1.4.200&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.dbunit&lt;/groupId&gt;
+            &lt;artifactId&gt;dbunit&lt;/artifactId&gt;
+            &lt;version&gt;2.5.1&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;!--        db end        --&gt;
+
+        &lt;!--        spock test dependency end        --&gt;
+
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-starter-bootstrap&lt;/artifactId&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+            &lt;version&gt;1.2.79&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- xxl-job-core --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.xuxueli&lt;/groupId&gt;
+            &lt;artifactId&gt;xxl-job-core&lt;/artifactId&gt;
+            &lt;version&gt;${xxl-job.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.netflix.hystrix&lt;/groupId&gt;
+            &lt;artifactId&gt;hystrix-core&lt;/artifactId&gt;
+            &lt;version&gt;${hystrix-version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.netflix.hystrix&lt;/groupId&gt;
+            &lt;artifactId&gt;hystrix-javanica&lt;/artifactId&gt;
+            &lt;version&gt;${hystrix-version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+    &lt;/dependencies&gt;
+</code></pre>
+<h2 id="忽略ssl配置">忽略SSL配置</h2>
+<pre><code class="language-java">import feign.Client;
+import feign.httpclient.ApacheHttpClient;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.ssl.SSLContextBuilder;
+
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+
+public class HttpClientFactory {
+
+    public static Client buildIgnoreSSLClient() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
+        SSLContextBuilder builder = new SSLContextBuilder();
+        builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(builder.build(), NoopHostnameVerifier.INSTANCE);
+        return new ApacheHttpClient(HttpClients.custom()
+                .setSSLHostnameVerifier(new NoopHostnameVerifier())
+                .setSSLSocketFactory(sslConnectionSocketFactory)
+                .build());
+    }
+}
+
+</code></pre>
+<h2 id="ftfeignclient">FtFeignClient</h2>
+<pre><code class="language-java">
+import com.boommanpro.xportsreserve.rest.FtServerNotifyClient;
+import com.boommanpro.xportsreserve.utils.HttpClientFactory;
+import feign.Feign;
+import feign.Logger;
+import feign.Request;
+import feign.form.FormEncoder;
+import feign.jackson.JacksonDecoder;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.concurrent.TimeUnit;
+
+@Slf4j
+@Configuration
+public class FtServerRestConfiguration {
+
+
+    public interface FTServerConstant {
+        String SERVER_URL = &quot;https://sctapi.ftqq.com/&quot;;
+    }
+
+    @Bean
+    public FtServerNotifyClient ftServerNotifyClient() throws Exception {
+        return Feign.builder()
+                .encoder(new FormEncoder())
+                .decoder(new JacksonDecoder())
+                .client(HttpClientFactory.buildIgnoreSSLClient())
+                .logLevel(Logger.Level.FULL)
+                .options(new Request.Options(3, TimeUnit.MINUTES, 3, TimeUnit.MINUTES, true))
+                .target(FtServerNotifyClient.class, FTServerConstant.SERVER_URL);
+    }
+    
+}
+
+</code></pre>
+<p>FtServerNotifyClient</p>
+<pre><code class="language-java">
+import com.boommanpro.xportsreserve.model.FtServerBody;
+import com.boommanpro.xportsreserve.model.FtServerResult;
+import feign.Headers;
+import feign.Param;
+import feign.RequestLine;
+
+public interface FtServerNotifyClient {
+
+
+    @RequestLine(&quot;POST {sendKey}.send&quot;)
+    @Headers(&quot;Content-Type: application/x-www-form-urlencoded;charset=UTF-8&quot;)
+    FtServerResult send(@Param String sendKey, FtServerBody ftServerBody);
+}
+
+</code></pre>
+<p>FtServerResult</p>
+<pre><code class="language-java">
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@Data
+public class FtServerResult {
+    @JsonProperty(&quot;code&quot;)
+    private Integer code;
+    @JsonProperty(&quot;message&quot;)
+    private String message;
+    @JsonProperty(&quot;data&quot;)
+    private DataDTO data;
+
+    @NoArgsConstructor
+    @Data
+    public static class DataDTO {
+        @JsonProperty(&quot;pushid&quot;)
+        private String pushid;
+        @JsonProperty(&quot;readkey&quot;)
+        private String readkey;
+        @JsonProperty(&quot;error&quot;)
+        private String error;
+        @JsonProperty(&quot;errno&quot;)
+        private Integer errno;
+    }
+}
+
+</code></pre>
+<p>FtNotifyAccountService</p>
+<pre><code class="language-java">import com.alibaba.fastjson.JSON;
+import com.boommanpro.xportsreserve.model.CommitResult;
+import com.boommanpro.xportsreserve.model.FtServerBody;
+import com.boommanpro.xportsreserve.model.FtServerResult;
+import com.boommanpro.xportsreserve.rest.FtServerNotifyClient;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Slf4j
+@Service
+public class FtNotifyAccountService {
+
+    @Autowired
+    private FtServerNotifyClient ftServerNotifyClient;
+
+    public void notifyMessage(String sendKey, String text, String desp) {
+        FtServerResult result = ftServerNotifyClient.send(sendKey, new FtServerBody(text, desp));
+        log.info(&quot;notify result:{}&quot;, result);
+    }
+}
+
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[WindowsADSL切换外网Ip + JavaExec工具类]]></title>
         <id>https://boommanpro.cn/post/adsl-exec-utils/</id>
@@ -701,25 +1041,6 @@ qsRsrcs.getBatchTimeWindow());
 <p>7月同上、需求逐渐增多。</p>
 <h2 id="其他">其他</h2>
 <p>准备写一篇 Windows Cemu的塞尔达教程</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年5月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-05-log/</id>
-        <link href="https://boommanpro.cn/post/2021-05-log/">
-        </link>
-        <updated>2021-06-01T12:58:06.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="生活小结">生活小结</h2>
-<p>本月完成了离职，入职，感慨时间过的真快 !</p>
-<p>记录下一些换工作的注意事项吧！</p>
-<ol>
-<li>换工作还是要早做打算(比如提前2-3月复习，1个月找)，避免想走走不了，走时不是黄金期，无法battle的情况。</li>
-<li>离职后的离职证明自己要保存一份电子版(因为证明在入职新单位就会交，但是之后的一些证明又需要，比如工作居住证转移)</li>
-<li>社保公积金等转移(尽量在本单位15号后离职，下个单位15号前入职)，这样就可以完成无缝衔接。</li>
-<li><a href="http://www.bjrcgz.gov.cn/">北京工作居住证</a>转移需要注意目标单位可以接收，并且在入职后尽快(1-2天)办理相关事项，因为中间还需要再次审批，防止出现差错。</li>
-</ol>
-<h2 id="工作小结">工作小结</h2>
-<p>开水团的生活还是不错的，有兴趣可以找我内推哈。</p>
 ]]></content>
     </entry>
 </feed>
