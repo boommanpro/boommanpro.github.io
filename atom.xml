@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2022-08-11T15:59:59.793Z</updated>
+    <updated>2022-08-12T13:05:25.061Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,257 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2022, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[WindowsADSL切换外网Ip + JavaExec工具类]]></title>
+        <id>https://boommanpro.cn/post/adsl-exec-utils/</id>
+        <link href="https://boommanpro.cn/post/adsl-exec-utils/">
+        </link>
+        <updated>2022-08-12T12:06:29.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="windowsadsl切换外网ip">WindowsADSL切换外网Ip</h2>
+<pre><code class="language-java">
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+@Slf4j
+public class ResetADSLNetwork {
+
+    /**
+     * 执行CMD命令,并返回String字符串
+     */
+    public static String executeCmd(String strCmd) throws Exception {
+        Process p = Runtime.getRuntime().exec(&quot;cmd /c &quot; + strCmd);
+        StringBuilder sbCmd = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), &quot;GB2312&quot;));
+        String line;
+        while ((line = br.readLine()) != null) {
+            sbCmd.append(line).append(&quot;\n&quot;);
+        }
+        return sbCmd.toString();
+
+    }
+
+    /**
+     * 连接ADSL
+     */
+    public static boolean connAdsl(String adslTitle, String adslName, String adslPass) throws Exception {
+        log.debug(&quot;正在建立连接&quot;);
+        String adslCmd = &quot;rasdial &quot; + adslTitle + &quot; &quot; + adslName + &quot; &quot; + adslPass;
+        String tempCmd = executeCmd(adslCmd);
+        // 判断是否连接成功
+        if (tempCmd.indexOf(&quot;已连接&quot;) &gt; 0) {
+            log.debug(&quot;建立连接成功&quot;);
+            return true;
+        } else {
+            log.debug(&quot;建立连接失败 cmd:{}&quot;, tempCmd);
+            return false;
+        }
+    }
+
+    /**
+     * 断开ADSL
+     */
+    public static boolean cutAdsl(String adslTitle) throws Exception {
+        String cutAdsl = &quot;rasdial &quot; + adslTitle + &quot; /disconnect&quot;;
+        String result = executeCmd(cutAdsl);
+        if (result.contains(&quot;没有连接&quot;)) {
+            log.debug(&quot;{}连接不存在!&quot;, adslTitle);
+            return false;
+        } else {
+            log.debug(&quot;{}连接已断开!&quot;, adslTitle);
+            return true;
+        }
+    }
+
+    /**
+     * 测试网络是否连接
+     */
+    public static boolean isConnect() {
+        boolean connect = false;
+        Runtime runtime = Runtime.getRuntime();
+        Process process;
+        try {
+            process = runtime.exec(&quot;ping &quot; + &quot;www.baidu.com&quot;);
+            InputStream is = process.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            StringBuffer sb = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            log.debug(&quot;返回值:{}&quot;, sb);
+            is.close();
+            isr.close();
+            br.close();
+
+            if (!sb.toString().equals(&quot;&quot;)) {
+                connect = sb.toString().indexOf(&quot;TTL&quot;) &gt; 0;
+            }
+        } catch (IOException e) {
+            log.error(&quot;is Connect:&quot;, e);
+            return false;
+        }
+        return connect;
+    }
+
+
+    private static Set&lt;String&gt; changeList = new HashSet&lt;&gt;();
+
+    public static void setChangeList(Set&lt;String&gt; changeList) {
+        ResetADSLNetwork.changeList = changeList;
+    }
+
+    public static String changeIp() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(&quot;宽带连接名称:&quot;); // 看你宽带连接的名称
+        String name = &quot;adsl&quot;;
+        System.out.println(&quot;宽带账户:&quot;);
+        String username = &quot;&quot;;
+        System.out.println(&quot;宽带密码:&quot;);
+        String password = &quot;&quot;;
+        System.out.println(&quot;更换时间(单位毫秒1秒等于1000毫秒):&quot;);
+
+        String result = &quot;&quot;;
+        while (result.equals(&quot;&quot;) || changeList.contains(result)) {
+            cutAdsl(name);
+            //再连，分配一个新的IP
+            Thread.sleep(1000);
+
+            connAdsl(name, username, password);
+            Thread.sleep(1000);
+            result = CheckNetworkUtils.checkIpV4();
+        }
+        changeList.add(result);
+        return result;
+    }
+
+    @SneakyThrows
+    public static void main(String[] args) {
+        System.out.println(changeIp());
+        System.out.println(changeIp());
+        System.out.println(changeIp());
+    }
+}
+</code></pre>
+<h2 id="javaexec工具类">JavaExec工具类</h2>
+<pre><code class="language-java">import com.boommanpro.aobidao.common.dto.ExecCmdResult;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * SystemUtil
+ * 系统工具类
+ *
+ * @author hengyumo
+ * @version 1.0
+ * @since 2020/2/4
+ */
+@Slf4j
+public class ExecCmdUtils {
+
+    private final static int BUFFER_SIZE = 1024;
+
+    private final static String DEFAULT_ENCODING = &quot;gbk&quot;;
+
+    private static class ProcessWorker extends Thread {
+        private final Process process;
+        private volatile int exitCode = -99;
+        private volatile boolean completed = false;
+        private volatile String output = &quot;&quot;;
+
+        private ProcessWorker(Process process) {
+            this.process = process;
+        }
+
+        @Override
+        public void run() {
+            try (InputStreamReader reader = new InputStreamReader(
+                    process.getInputStream(), DEFAULT_ENCODING)) {
+
+                StringBuilder log = new StringBuilder();
+                char[] buffer = new char[BUFFER_SIZE];
+                int length;
+                while ((length = reader.read(buffer)) != -1) {
+                    log.append(buffer, 0, length);
+                }
+                output = log.toString();
+                exitCode = process.waitFor();
+                completed = true;
+            } catch (InterruptedException | IOException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        public int getExitCode() {
+            return exitCode;
+        }
+
+        public String getOutput() {
+            return output;
+        }
+
+        public boolean isCompleted() {
+            return completed;
+        }
+    }
+
+    public static ExecCmdResult execCmd(String command) {
+        return execCmd(command, 15);
+    }
+
+    public static ExecCmdResult execCmd(String command, int timeoutSecond) {
+        long start = System.currentTimeMillis();
+        StringBuilder content = new StringBuilder();
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(&quot; &quot;));
+        // 合并错误输出流
+        processBuilder.redirectErrorStream(true);
+        Process process;
+        try {
+            process = processBuilder.start();
+        } catch (IOException e) {
+            log.error(&quot;execCmd error, execCmd:{}.e:&quot;, command, e);
+            return new ExecCmdResult(false, -1, command, e.getMessage(), System.currentTimeMillis() - start);
+        }
+
+        ProcessWorker processWorker = new ProcessWorker(process);
+        int exitCode = processWorker.getExitCode();
+        processWorker.start();
+        try {
+            processWorker.join(TimeUnit.SECONDS.toMillis(timeoutSecond));
+            if (processWorker.isCompleted()) {
+                content.append(processWorker.getOutput());
+                exitCode = processWorker.getExitCode();
+            } else {
+                process.destroy();
+                processWorker.interrupt();
+                return new ExecCmdResult(false, processWorker.exitCode, &quot;thread exec timeout&quot;, processWorker.getOutput(), System.currentTimeMillis() - start);
+            }
+        } catch (InterruptedException e) {
+            processWorker.interrupt();
+        }
+        return new ExecCmdResult(exitCode == 0, exitCode, command, content.toString(), System.currentTimeMillis() - start);
+    }
+}
+
+
+</code></pre>
+<p>use demo</p>
+<pre><code class="language-java">                ExecCmdUtils.execCmd(&quot;taskkill /f /t /im chrome.exe&quot;);
+                ExecCmdUtils.execCmd(&quot;taskkill /f /t /im chromedriver.exe&quot;);
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[技术文档嵌入Echarts(用图表说话)]]></title>
         <id>https://boommanpro.cn/post/echarts-show/</id>
@@ -469,21 +720,6 @@ qsRsrcs.getBatchTimeWindow());
 </ol>
 <h2 id="工作小结">工作小结</h2>
 <p>开水团的生活还是不错的，有兴趣可以找我内推哈。</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年4月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-04-log/</id>
-        <link href="https://boommanpro.cn/post/2021-04-log/">
-        </link>
-        <updated>2021-04-29T03:41:14.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="生活小结">生活小结</h2>
-<p>本次屋子里又新增了智能开关，用于声控(小度音箱)控制卧室和客厅的灯，客服小哥哥nice，电路拍照就行，贼专业。</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1619667786274.jpg" alt="" loading="lazy"></figure>
-<p>我的电脑桌上增添饮水机，淘宝买怡宝大桶水就行了。终于可以在家方便喝热水了。后悔系列，没有早买。</p>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1619667946227.jpg" alt="" loading="lazy"></figure>
-<h2 id="工作小结">工作小结</h2>
-<p>本次换工作成功，下个月就去新公司了，干就完事了。</p>
 ]]></content>
     </entry>
 </feed>

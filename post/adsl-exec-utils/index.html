@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>Spring Boot linux 运维脚本 | BoomMan</title>
+<title>WindowsADSL切换外网Ip + JavaExec工具类 | BoomMan</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -111,272 +111,260 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">Spring Boot linux 运维脚本</h2>
-            <div class="post-date">2020-05-03</div>
+            <h2 class="post-title">WindowsADSL切换外网Ip + JavaExec工具类</h2>
+            <div class="post-date">2022-08-12</div>
             
             <div class="post-content">
-              <h2 id="项目结构">项目结构</h2>
-<pre><code>├─bin
-│  └─app.sh
-│  ├─shutdown.cmd
-│  ├─shutdown.sh
-│  ├─startup.cmd
-│  └─startup.sh
-├─config
-├─lib
-├─logs
-├─target
-└─temp
+              <h2 id="windowsadsl切换外网ip">WindowsADSL切换外网Ip</h2>
+<pre><code class="language-java">
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+@Slf4j
+public class ResetADSLNetwork {
+
+    /**
+     * 执行CMD命令,并返回String字符串
+     */
+    public static String executeCmd(String strCmd) throws Exception {
+        Process p = Runtime.getRuntime().exec(&quot;cmd /c &quot; + strCmd);
+        StringBuilder sbCmd = new StringBuilder();
+        BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream(), &quot;GB2312&quot;));
+        String line;
+        while ((line = br.readLine()) != null) {
+            sbCmd.append(line).append(&quot;\n&quot;);
+        }
+        return sbCmd.toString();
+
+    }
+
+    /**
+     * 连接ADSL
+     */
+    public static boolean connAdsl(String adslTitle, String adslName, String adslPass) throws Exception {
+        log.debug(&quot;正在建立连接&quot;);
+        String adslCmd = &quot;rasdial &quot; + adslTitle + &quot; &quot; + adslName + &quot; &quot; + adslPass;
+        String tempCmd = executeCmd(adslCmd);
+        // 判断是否连接成功
+        if (tempCmd.indexOf(&quot;已连接&quot;) &gt; 0) {
+            log.debug(&quot;建立连接成功&quot;);
+            return true;
+        } else {
+            log.debug(&quot;建立连接失败 cmd:{}&quot;, tempCmd);
+            return false;
+        }
+    }
+
+    /**
+     * 断开ADSL
+     */
+    public static boolean cutAdsl(String adslTitle) throws Exception {
+        String cutAdsl = &quot;rasdial &quot; + adslTitle + &quot; /disconnect&quot;;
+        String result = executeCmd(cutAdsl);
+        if (result.contains(&quot;没有连接&quot;)) {
+            log.debug(&quot;{}连接不存在!&quot;, adslTitle);
+            return false;
+        } else {
+            log.debug(&quot;{}连接已断开!&quot;, adslTitle);
+            return true;
+        }
+    }
+
+    /**
+     * 测试网络是否连接
+     */
+    public static boolean isConnect() {
+        boolean connect = false;
+        Runtime runtime = Runtime.getRuntime();
+        Process process;
+        try {
+            process = runtime.exec(&quot;ping &quot; + &quot;www.baidu.com&quot;);
+            InputStream is = process.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            BufferedReader br = new BufferedReader(isr);
+            String line = null;
+            StringBuffer sb = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            log.debug(&quot;返回值:{}&quot;, sb);
+            is.close();
+            isr.close();
+            br.close();
+
+            if (!sb.toString().equals(&quot;&quot;)) {
+                connect = sb.toString().indexOf(&quot;TTL&quot;) &gt; 0;
+            }
+        } catch (IOException e) {
+            log.error(&quot;is Connect:&quot;, e);
+            return false;
+        }
+        return connect;
+    }
+
+
+    private static Set&lt;String&gt; changeList = new HashSet&lt;&gt;();
+
+    public static void setChangeList(Set&lt;String&gt; changeList) {
+        ResetADSLNetwork.changeList = changeList;
+    }
+
+    public static String changeIp() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        System.out.println(&quot;宽带连接名称:&quot;); // 看你宽带连接的名称
+        String name = &quot;adsl&quot;;
+        System.out.println(&quot;宽带账户:&quot;);
+        String username = &quot;&quot;;
+        System.out.println(&quot;宽带密码:&quot;);
+        String password = &quot;&quot;;
+        System.out.println(&quot;更换时间(单位毫秒1秒等于1000毫秒):&quot;);
+
+        String result = &quot;&quot;;
+        while (result.equals(&quot;&quot;) || changeList.contains(result)) {
+            cutAdsl(name);
+            //再连，分配一个新的IP
+            Thread.sleep(1000);
+
+            connAdsl(name, username, password);
+            Thread.sleep(1000);
+            result = CheckNetworkUtils.checkIpV4();
+        }
+        changeList.add(result);
+        return result;
+    }
+
+    @SneakyThrows
+    public static void main(String[] args) {
+        System.out.println(changeIp());
+        System.out.println(changeIp());
+        System.out.println(changeIp());
+    }
+}
 </code></pre>
-<h2 id="背景">背景</h2>
-<p>在spring boot 服务实际部署过程中,发现老版本脚本的很多问题<br>
-问题:</p>
-<ul>
-<li>只能在项目目录启动脚本</li>
-<li>项目可能在同一服务器部署了多套,没办法兼容</li>
-<li>没办法通过ps -ef 一次观测到项目目录</li>
-<li>logs文件必须手动创建问题</li>
-</ul>
-<h2 id="lib-目录生成">lib 目录生成</h2>
-<pre><code class="language-mvn">mvn dependency:copy-dependencies -DoutputDirectory=lib
+<h2 id="javaexec工具类">JavaExec工具类</h2>
+<pre><code class="language-java">import com.boommanpro.aobidao.common.dto.ExecCmdResult;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * SystemUtil
+ * 系统工具类
+ *
+ * @author hengyumo
+ * @version 1.0
+ * @since 2020/2/4
+ */
+@Slf4j
+public class ExecCmdUtils {
+
+    private final static int BUFFER_SIZE = 1024;
+
+    private final static String DEFAULT_ENCODING = &quot;gbk&quot;;
+
+    private static class ProcessWorker extends Thread {
+        private final Process process;
+        private volatile int exitCode = -99;
+        private volatile boolean completed = false;
+        private volatile String output = &quot;&quot;;
+
+        private ProcessWorker(Process process) {
+            this.process = process;
+        }
+
+        @Override
+        public void run() {
+            try (InputStreamReader reader = new InputStreamReader(
+                    process.getInputStream(), DEFAULT_ENCODING)) {
+
+                StringBuilder log = new StringBuilder();
+                char[] buffer = new char[BUFFER_SIZE];
+                int length;
+                while ((length = reader.read(buffer)) != -1) {
+                    log.append(buffer, 0, length);
+                }
+                output = log.toString();
+                exitCode = process.waitFor();
+                completed = true;
+            } catch (InterruptedException | IOException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        public int getExitCode() {
+            return exitCode;
+        }
+
+        public String getOutput() {
+            return output;
+        }
+
+        public boolean isCompleted() {
+            return completed;
+        }
+    }
+
+    public static ExecCmdResult execCmd(String command) {
+        return execCmd(command, 15);
+    }
+
+    public static ExecCmdResult execCmd(String command, int timeoutSecond) {
+        long start = System.currentTimeMillis();
+        StringBuilder content = new StringBuilder();
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(&quot; &quot;));
+        // 合并错误输出流
+        processBuilder.redirectErrorStream(true);
+        Process process;
+        try {
+            process = processBuilder.start();
+        } catch (IOException e) {
+            log.error(&quot;execCmd error, execCmd:{}.e:&quot;, command, e);
+            return new ExecCmdResult(false, -1, command, e.getMessage(), System.currentTimeMillis() - start);
+        }
+
+        ProcessWorker processWorker = new ProcessWorker(process);
+        int exitCode = processWorker.getExitCode();
+        processWorker.start();
+        try {
+            processWorker.join(TimeUnit.SECONDS.toMillis(timeoutSecond));
+            if (processWorker.isCompleted()) {
+                content.append(processWorker.getOutput());
+                exitCode = processWorker.getExitCode();
+            } else {
+                process.destroy();
+                processWorker.interrupt();
+                return new ExecCmdResult(false, processWorker.exitCode, &quot;thread exec timeout&quot;, processWorker.getOutput(), System.currentTimeMillis() - start);
+            }
+        } catch (InterruptedException e) {
+            processWorker.interrupt();
+        }
+        return new ExecCmdResult(exitCode == 0, exitCode, command, content.toString(), System.currentTimeMillis() - start);
+    }
+}
+
+
 </code></pre>
-<p>pom.xml</p>
-<pre><code class="language-pom.xml">    &lt;build&gt;
-        &lt;resources&gt;
-            &lt;!-- 编译之后包含xml   --&gt;
-            &lt;resource&gt;
-                &lt;directory&gt;src/main/java&lt;/directory&gt;
-                &lt;includes&gt;
-                    &lt;include&gt;**/*.xml&lt;/include&gt;
-                &lt;/includes&gt;
-                &lt;filtering&gt;false&lt;/filtering&gt;
-            &lt;/resource&gt;
-            &lt;resource&gt;
-                &lt;directory&gt;src/main/resources&lt;/directory&gt;
-            &lt;/resource&gt;
-        &lt;/resources&gt;
-        &lt;testResources&gt;
-            &lt;testResource&gt;
-                &lt;directory&gt;src/test/resources&lt;/directory&gt;
-            &lt;/testResource&gt;
-        &lt;/testResources&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-                &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
-                &lt;configuration&gt;
-                    &lt;includes&gt;
-                        &lt;include&gt;
-                            &lt;groupId&gt;nothing&lt;/groupId&gt;
-                            &lt;artifactId&gt;nothing&lt;/artifactId&gt;
-                        &lt;/include&gt;
-                    &lt;/includes&gt;
-                    &lt;layout&gt;ZIP&lt;/layout&gt;
-                &lt;/configuration&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-        &lt;finalName&gt;${project.artifactId}&lt;/finalName&gt;
-    &lt;/build&gt;
+<p>use demo</p>
+<pre><code class="language-java">                ExecCmdUtils.execCmd(&quot;taskkill /f /t /im chrome.exe&quot;);
+                ExecCmdUtils.execCmd(&quot;taskkill /f /t /im chromedriver.exe&quot;);
 </code></pre>
-<h2 id="使用方式">使用方式</h2>
-<p>修改脚本中的SERVICE_NAME的值即可</p>
-<p><code>app.sh</code></p>
-<pre><code class="language-shell">#!/bin/sh
-
-##项目服务名称
-
-SERVICE_NAME=-server
-
-## 脚本所在目录
-BASEPATH=$(
-  cd $(dirname $0)
-  cd ..
-  pwd
-)
-
-## 以脚本所在目录为执行目录
-cd $BASEPATH
-
-## 相关Config
-
-JAR_NAME=$SERVICE_NAME\.jar
-
-JAR_HOME=$BASEPATH/target/
-
-JAR_PATH=$JAR_HOME$JAR_NAME
-
-##pid监控文件 内容是程序的pid
-PID=$BASEPATH/bin/$SERVICE_NAME\.pid
-
-## 日志文件名称
-LOG_NAME=app.log
-
-##服务目录
-SERVICE_LOGS=logs
-
-SERVICE_LOGS_HOME=$SERVICE_LOGS/
-
-LOG_FILE_PATH=$SERVICE_LOGS_HOME$LOG_NAME
-
-##GC.log日志
-GC_LOG=$SERVICE_LOGS/gc.log
-
-JAVA_OPTS=&quot;&quot;
-
-## 配置外部化lib
-JAVA_OPTS=$JAVA_OPTS&quot;-Dloader.path=lib/ &quot;
-
-## 配置GC信息
-JAVA_OPTS=$JAVA_OPTS&quot;-verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -Xloggc:$GC_LOG &quot;
-
-## 配置JVM堆栈相关参数
-JAVA_OPTS=$JAVA_OPTS&quot;-ms512m -mx512m -Xmn256m -Djava.awt.headless=true -XX:MaxPermSize=128m &quot;
-
-
-
-## 使用说明,用来提示输入参数
-usage() {
-  echo &quot;Usage: sh 执行脚本.sh [start|stop|restart|status]&quot;
-  # 退出
-  exit 1
-
-  ## help
-  ## $? 是上个函数返回值
-  ## Shell中判断语句if中-z至-d的意思 https://www.cnblogs.com/coffy/p/5748292.html
-}
-
-## 检查程序是否在运行
-is_exist() {
-  ## grep -v 排除 grep字段
-  pid=$(ps -ef | grep -F $JAR_NAME | grep -v grep | awk '{print $2}')
-  ## 单个服务器部署了多个相同名称项目的话 只根据PID文件进行服务状态判断
-  ## pid=cat $PID
-  if [[ -z &quot;$pid&quot; ]]; then
-    rm -rf $PID
-  fi
-  return $pid
-}
-
-#启动方法
-
-init() {
-  ## 判断logs目录是否存在,不存在则创建
-  if [ ! -d &quot;$SERVICE_LOGS_HOME&quot; ]; then
-    mkdir -p $SERVICE_LOGS_HOME
-  fi
-
-  if [ ! -f &quot;$LOG_FILE_PATH&quot; ]; then
-    touch $LOG_FILE_PATH
-  fi
-}
-
-start() {
-  is_exist
-  init
-  if [ ! -f &quot;$PID&quot; ]; then
-    # echo &quot;java  $JAVA_OPTS -jar  $JAR_PATH &gt;/dev/null 2&gt;&amp;1 &amp;&quot;
-    # nohup java $JAVA_OPTS -jar $JAR_PATH &gt;catalin.log 2&gt;&amp;1 &amp;
-    nohup java  $JAVA_OPTS -jar  $JAR_PATH &gt;/dev/null 2&gt;&amp;1 &amp;
-    echo $! &gt;$PID
-    ## 根据传参 判断 是自动构建工具还是直接运行  构建工具 需要睡眠5s,然后 打印出最后100行
-    if [[ $1 == &quot;ci&quot; ]]; then
-      sleep 10s
-      tail -n 100 $LOG_FILE_PATH
-    else
-      tail -0f $LOG_FILE_PATH
-    fi
-    echo &quot;&gt;&gt;&gt; start $JAR_NAME successed PID=$! &lt;&lt;&lt;&quot;
-  else
-    echo &quot;&gt;&gt;&gt; $JAR_NAME  already start &lt;&lt;&lt;&quot;
-    status
-  fi
-}
-
-#停止方法 根据pid文件停止进程
-stop() {
-
-  is_exist
-  if [[ -z &quot;$pid&quot; ]]; then
-    echo &quot;&gt;&gt;&gt; jarName:[$JAR_NAME] pid:[$pidf]  process stopped success&lt;&lt;&lt;&quot;
-    return 0
-  fi
-
-  if [ ! -f &quot;$PID&quot; ]; then
-    echo -e &quot;\npid文件不存在&quot;
-    return 0
-  else
-    pidf=$(cat $PID)
-    #echo &quot;$pidf&quot;
-    echo &quot;&gt;&gt;&gt; api PID = $pidf begin kill $pidf &lt;&lt;&lt;&quot;
-    kill -15 $pidf
-    rm -rf $PID
-    sleep 5
-    kill -9 $pidf
-    sleep 2
-    echo &quot;&gt;&gt;&gt; jarName:[$JAR_NAME] pid:[$pidf]  process stopped success&lt;&lt;&lt;&quot;
-    return 0
-  fi
-}
-
-#输出运行状态
-status() {
-  is_exist
-  if [[ -z &quot;$pid&quot; ]]; then
-    echo &quot;&quot;
-    echo &quot;${JAR_NAME} is not running &quot;
-    echo &quot;&quot;
-    rm -rf $PID
-  else
-    echo -e &quot;\n${JAR_NAME} is running PID is $pid &quot;
-    detail=$(ps -ef | grep $JAR_NAME | grep -v grep)
-    echo -e &quot;\n$detail\n&quot;
-  fi
-}
-
-#重启
-restart() {
-  stop
-  start $1
-}
-
-#根据输入参数，选择执行对应方法，不输入则执行使用说明
-case &quot;$1&quot; in
-&quot;start&quot;)
-  start &quot;$2&quot;
-  ;;
-&quot;stop&quot;)
-  stop
-  ;;
-&quot;status&quot;)
-  status
-  ;;
-&quot;restart&quot;)
-  restart &quot;$2&quot;
-  ;;
-*)
-  usage
-  ;;
-esac
-exit 0
-</code></pre>
-<h2 id="more-and-more">more and more</h2>
-<p>日志由应用输出到文件(方便管理)</p>
-<p>控制台日志输出到 &gt;/dev/null</p>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://boommanpro.cn/tag/faprOoZUc/" class="tag">
-                    运维工具
-                  </a>
-                
-                  <a href="https://boommanpro.cn/tag/xF4IwPQ4T/" class="tag">
-                    项目总结
-                  </a>
-                
-                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
-                    后端技术栈
+                  <a href="https://boommanpro.cn/tag/S_RXMuKtl/" class="tag">
+                    java-dev-tools
                   </a>
                 
               </div>
@@ -384,9 +372,9 @@ exit 0
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://boommanpro.cn/post/spring-boot-extension-points/">
+                <a href="https://boommanpro.cn/post/echarts-show/">
                   <h3 class="post-title">
-                    Spring 扩展点梳理
+                    技术文档嵌入Echarts(用图表说话)
                   </h3>
                 </a>
               </div>
