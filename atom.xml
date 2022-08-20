@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2022-08-12T15:38:59.861Z</updated>
+    <updated>2022-08-20T06:58:28.575Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,78 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2022, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[Centos7 Selenium+Chrome环境安装]]></title>
+        <id>https://boommanpro.cn/post/centos7-selenium/</id>
+        <link href="https://boommanpro.cn/post/centos7-selenium/">
+        </link>
+        <updated>2022-08-20T06:48:38.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="核心逻辑">核心逻辑</h2>
+<ol>
+<li>Centos 7 安装google-chrome</li>
+<li>配置chrome-driver环境</li>
+</ol>
+<h2 id="安装google-chrome">安装google-chrome</h2>
+<ol>
+<li>如果网络yum网络不好，可以更换源为阿里云</li>
+</ol>
+<pre><code class="language-shell">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+yum clean all
+yum makecache
+</code></pre>
+<p>2.安装google-chrome</p>
+<pre><code class="language-shell">wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+
+yum install google-chrome-stable_current_x86_64.rpm
+google-chrome --version
+</code></pre>
+<h2 id="安装对应版本的chromedriver-必须与google-chrome版本对应">安装对应版本的chromedriver (必须与google-chrome版本对应)</h2>
+<p><a href="https://chromedriver.chromium.org/downloads">chromedriver</a></p>
+<pre><code class="language-shell">mv chromedriver /usr/bin
+</code></pre>
+<h2 id="jdk11下载">jdk11下载</h2>
+<p><a href="https://www.oracle.com/java/technologies/downloads/#java11">oracle jdk11</a></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Centos7 Selenium+Chrome环境安装]]></title>
+        <id>https://boommanpro.cn/post/centos7-seleniumchrome-huan-jing-an-zhuang/</id>
+        <link href="https://boommanpro.cn/post/centos7-seleniumchrome-huan-jing-an-zhuang/">
+        </link>
+        <updated>2022-08-20T06:48:38.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="核心逻辑">核心逻辑</h2>
+<ol>
+<li>Centos 7 安装google-chrome</li>
+<li>配置chrome-driver环境</li>
+</ol>
+<h2 id="安装google-chrome">安装google-chrome</h2>
+<ol>
+<li>如果网络yum网络不好，可以更换源为阿里云</li>
+</ol>
+<pre><code class="language-shell">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+yum clean all
+yum makecache
+</code></pre>
+<p>2.安装google-chrome</p>
+<pre><code class="language-shell">wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
+
+yum install google-chrome-stable_current_x86_64.rpm
+google-chrome --version
+</code></pre>
+<h2 id="安装对应版本的chromedriver-必须与google-chrome版本对应">安装对应版本的chromedriver (必须与google-chrome版本对应)</h2>
+<p><a href="https://chromedriver.chromium.org/downloads">chromedriver</a></p>
+<pre><code class="language-shell">mv chromedriver /usr/bin
+</code></pre>
+<h2 id="jdk11下载">jdk11下载</h2>
+<p><a href="https://www.oracle.com/java/technologies/downloads/#java11">oracle jdk11</a></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Spring Feign Best Practice]]></title>
         <id>https://boommanpro.cn/post/spring-feign-best-practice/</id>
@@ -1001,46 +1073,6 @@ qsRsrcs.getBatchTimeWindow());
 </ol>
 <p>这样就可以将代码中的注释通过项目能力做自己想要的事，并且和maven的构建结合起来，有效的和CI/CD结合。</p>
 <p>开源地址: <a href="https://github.com/BoomManPro/cool-demo">https://github.com/BoomManPro/cool-demo</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Windows 《塞尔达传说:旷野之息》 + 良值手柄]]></title>
-        <id>https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/</id>
-        <link href="https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/">
-        </link>
-        <updated>2021-07-04T14:08:22.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="准备工作">准备工作</h2>
-<ol>
-<li>Window电脑 配置要求 3.0主频以上+16G内存 750Ti以上显卡</li>
-<li>游戏手柄 良值二代 switch手柄即可 PDD 120+  (房子键+Y键)</li>
-<li>《塞尔达传说:旷野之息》 Cemu下载  吾爱上搜索全集即可</li>
-<li>蓝牙连接手柄  + 陀螺仪驱动 <a href="https://github.com/Davidobot/BetterJoy">BetterJoyForCemu</a></li>
-</ol>
-<h2 id="相关坑点">相关坑点</h2>
-<ol>
-<li>蓝牙连接部分。连接后又迅速断开，说明驱动安装失败，需要卸载，清空缓存重装。</li>
-<li>BetterJoyForCemu需要安装相关驱动，每次游戏启动都要启动。</li>
-<li>如果出现陀螺仪飘动，需要校准，可能每次玩都需要校准。</li>
-<li>如果陀螺仪不可用、未出现下列菜单项。需要根据cemu的版本进行更新替换。<br>
-<a href="https://cemuhook.sshnuke.net/">Cemu hook官网</a><br>
-<img src="https://boommanpro.cn//post-images/1636884818307.png" alt="" loading="lazy"></li>
-</ol>
-<p>Happy Time !!!</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021年6月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-06-log/</id>
-        <link href="https://boommanpro.cn/post/2021-06-log/">
-        </link>
-        <updated>2021-07-02T13:54:55.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="工作小结">工作小结</h2>
-<p>参加公司的萌芽计划，收获多多。<br>
-进一步了解公司项目。</p>
-<p>貌似这个月过得太快了，一直在努力工作，不会的可太多了啊</p>
-<p>7月同上、需求逐渐增多。</p>
-<h2 id="其他">其他</h2>
-<p>准备写一篇 Windows Cemu的塞尔达教程</p>
 ]]></content>
     </entry>
 </feed>
