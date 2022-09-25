@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>BoomMan</title>
+<title>项目服务启动速度提升 | BoomMan</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -104,166 +110,111 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/tools-lightproxy/">
-                  <h2 class="post-title">基于LightProxy的前后端调试</h2>
-                </a>
-                <div class="post-date">
-                  2020-05-06
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-distributed-quartz/">
-                  <h2 class="post-title">基于Quartz  分布式任务调度 </h2>
-                </a>
-                <div class="post-date">
-                  2020-05-06
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/searching-skill/">
-                  <h2 class="post-title">搜索引擎使用技巧</h2>
-                </a>
-                <div class="post-date">
-                  2020-05-04
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-enum-strategy-pattern/">
-                  <h2 class="post-title">Spring Enum Strategy Pattern</h2>
-                </a>
-                <div class="post-date">
-                  2020-05-04
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-boot-linux-script/">
-                  <h2 class="post-title">Spring Boot linux 运维脚本</h2>
-                </a>
-                <div class="post-date">
-                  2020-05-03
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-boot-extension-points/">
-                  <h2 class="post-title">Spring 扩展点梳理</h2>
-                </a>
-                <div class="post-date">
-                  2020-04-24
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-websocket/">
-                  <h2 class="post-title">WebSocket获取客户端ip</h2>
-                </a>
-                <div class="post-date">
-                  2020-04-23
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/java-maven/">
-                  <h2 class="post-title">项目Maven使用总结</h2>
-                </a>
-                <div class="post-date">
-                  2020-04-22
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-cahce/">
-                  <h2 class="post-title">Spring 多级缓存</h2>
-                </a>
-                <div class="post-date">
-                  2020-04-14
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/java-exception-system/">
-                  <h2 class="post-title">Java 异常体系</h2>
-                </a>
-                <div class="post-date">
-                  2020-04-14
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">项目服务启动速度提升</h2>
+            <div class="post-date">2022-09-25</div>
+            
+            <div class="post-content">
+              <h2 id="背景">背景</h2>
+<p>线上项目checkHealth（超时时间5min）超时，然后显示服务启动失败。<br>
+其实项目启动时间已经做过几次时间调整了，从1-3-5min。</p>
+<p>启动时间长问题会影响到：（1） 故障发生时如果需要应用回滚、扩容或者重启，启动时间长会拖慢故障恢复时间；（2） 上线时间长也是一个很大的痛点，当服务器数量比较多时，服务启动时间的影响会更明显。</p>
+<h2 id="设计方案">设计方案</h2>
+<p>项目的耗时由那些组成：容器耗时 + 初始化Bean + 初始化任务<br>
+其中比较好把我的是初始化任务和初始化Bean 这部分，我们本文主要聊一聊这一点<br>
+方案是：</p>
+<ol>
+<li>对于耗时长的任务进行手动优化，是否存在不合理的启动点
+<ul>
+<li>比如初始化Cache中查询MySQL，是否耗时过长，查询步长可以增大等</li>
+<li>Bean是否必须启动时进行初始化动作，是否可以懒加载，懒处理</li>
+</ul>
+</li>
+<li>并行初始化
+<ul>
+<li>如果单任务耗时问题已解决，就可以针对必须长耗时任务进行Bean并行初始化</li>
+<li>耗时预计 从原本串行 Sum(taskTimeOut) =&gt; Max(taskTimeOut)</li>
+</ul>
+</li>
+</ol>
+<h2 id="spring-bean-启动耗时查询">Spring Bean 启动耗时查询</h2>
+<h3 id="耗时长任务统计">耗时长任务统计</h3>
+<p>解决的是 @PostConstruct、InitializingBean(afterPropertiesSet)、initMethod方法<br>
+有目标或者指标才知道我们要如何优化，怎么优化<br>
+在Spring Bean中有注入点：BeanPostProcessor接口，实现postProcessorBeforeInitialization、postProcessAfterInitialization方法，对bean的总耗时进行打印，找到其中耗时较长的bean，进行针对性优化</p>
+<pre><code class="language-java">@Component
+public class SpringbeanAnalyse implements BeanPostProcessor,
+        ApplicationListener&lt;ContextRefreshedEvent&gt; {
+    private static Logger log = LoggerFactory.getLogger(SpringbeanAnalyse.class);
+    private Map&lt;String, Long&gt;  mapBeantime  = new HashMap&lt;&gt;();
+    private static volatile AtomicBoolean started = new AtomicBoolean(false);
+ 
+ 
+    @Autowired
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws
+            BeansException {
+        mapBeantime.put(beanName, System.currentTimeMillis());
+        return bean;
+    }
+ 
+    @Autowired
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws
+            BeansException {
+        Long begin = mapBeantime.get(beanName);
+        if (begin != null) {
+            mapBeantime.put(beanName, System.currentTimeMillis() - begin);
+        }
+        return bean;
+    }
+    @Override
+    public void onApplicationEvent(final ContextRefreshedEvent event) {
+        if (started.compareAndSet(false, true)) {
+            for (Map.Entry&lt;String,Long&gt; entry: mapBeantime.entrySet()) {
+                if (entry.getValue() &gt; 100) {
+                   log.warn(&quot;slowSpringbean =&gt; :&quot;,entry.getKey());
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="耗时长任务并行初始化">耗时长任务并行初始化</h3>
+<p>为什么不能自动：全局自动配置完成所有的bean需要解决相互依赖的问题，这个问题不是很好解决，原因在于循环依赖和Spring提供了大量的扩展能力，这样导致我们无法得到一个spring bean的全局依赖图。因此无法通过自动配置的手段来解决spring bean单线程加载的问题。<br>
+手动如何实现：<br>
+定义全局线程池，重写bean的initmethod，将任务提交到线程池中处理，最终判断线程池任务全部结束，则并行初始化完成。</p>
+<p><strong>异步初始化线程池</strong>一般设定多大：<br>
+当前机器CPu核数+1（线程在服务启动后自动销毁）</p>
 
-          <div class="pagination-container">
-  
-    <a href="https://boommanpro.cn/page/4/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
-  
-  
-    <a href="https://boommanpro.cn/page/6/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/S_RXMuKtl/" class="tag">
+                    java-dev-tools
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/centos7-selenium/">
+                  <h3 class="post-title">
+                    Centos7 Selenium+Chrome环境安装
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -392,6 +343,29 @@ setTimeout(function () {
         createImgEventFullScreen();
 }, 1000)
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
