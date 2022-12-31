@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2022-09-25T15:05:57.194Z</updated>
+    <updated>2022-12-31T03:19:43.215Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,24 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2022, BoomMan</rights>
+    <entry>
+        <title type="html"><![CDATA[2022-年终总结]]></title>
+        <id>https://boommanpro.cn/post/2022-nian-zhong-zong-jie/</id>
+        <link href="https://boommanpro.cn/post/2022-nian-zhong-zong-jie/">
+        </link>
+        <updated>2022-12-31T03:10:31.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="今年事项回顾">今年事项回顾</h2>
+<ol>
+<li>完成LeetCode千题计划</li>
+<li>5月搬家，和室友完美合租至今</li>
+<li>10月完成结婚大事，感谢我的宝宝</li>
+<li>技术上：groovy unit单元测试 + 项目启动速度提升 + spark xml配置化低代码开发 + lightproxy 插件开发，完成意想不到功能</li>
+<li>苦练写作基本功，感觉近一年文档能力述职能力有所提升</li>
+<li>不埋头技术能力，也更关心业务</li>
+</ol>
+<p>以上，明年会更好吗？</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[项目服务启动速度提升]]></title>
         <id>https://boommanpro.cn/post/project-runtime-cost-time-upgrade/</id>
@@ -1097,23 +1115,6 @@ qsRsrcs.getBatchTimeWindow());
 </ol>
 <h2 id="相关资料">相关资料</h2>
 <p>Quartz使用和详细流程 https://www.cnblogs.com/wuzhenzhao/p/11751504.html</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[javaparser-mvn-plugin开发]]></title>
-        <id>https://boommanpro.cn/post/javaparser-mvn-plugin/</id>
-        <link href="https://boommanpro.cn/post/javaparser-mvn-plugin/">
-        </link>
-        <updated>2021-07-29T14:20:27.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>之前有些过 <a href="https://boommanpro.cn/post/java-parser/">Java类注释解析</a>说明了类注释解析的需求、那么将其开发为mvn-plugin就顺利成章，分享给大家。</p>
-<p>cool-demo是一个maven插件的入门教程、利用javaparser-core的parse能力及maven的生命周期能力。</p>
-<ol>
-<li>读取.java文件的注释内容、并处理。</li>
-<li>在maven-initialize阶段将内容写入到项目的resource目录下。</li>
-</ol>
-<p>这样就可以将代码中的注释通过项目能力做自己想要的事，并且和maven的构建结合起来，有效的和CI/CD结合。</p>
-<p>开源地址: <a href="https://github.com/BoomManPro/cool-demo">https://github.com/BoomManPro/cool-demo</a></p>
 ]]></content>
     </entry>
 </feed>
