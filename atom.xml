@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>BoomMan</title>
-    <updated>2023-03-18T15:17:43.566Z</updated>
+    <updated>2023-04-01T08:39:35.451Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -11,18 +11,159 @@
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2023, BoomMan</rights>
     <entry>
+        <title type="html"><![CDATA[任务调度系统总结]]></title>
+        <id>https://boommanpro.cn/post/distributed-task/</id>
+        <link href="https://boommanpro.cn/post/distributed-task/">
+        </link>
+        <updated>2023-03-31T13:02:37.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="任务调度理解">任务调度理解</h1>
+<h2 id="windows-mac-linux">Windows &amp;&amp; Mac &amp;&amp; Linux</h2>
+<ol>
+<li>windows</li>
+<li>mac</li>
+<li>linux</li>
+</ol>
+<p>操作系统自带的任务调度，主要用于系统服务和简单用户服务</p>
+<h2 id="java原生实现-spring-task">Java原生实现 &amp;&amp; Spring Task</h2>
+<p>模式简单，如果集群部署需要自己解决并发调度问题</p>
+<h2 id="quartz">Quartz</h2>
+<p>Quartz 可以使用数据库+抢占式锁的方式解决服务SPOF问题，但是其缺点是调度和执行耦合，长周期持有锁，导致性能受限。</p>
+<p>Copy From XXL-JOB</p>
+<p>Quartz作为开源作业调度中的佼佼者，是作业调度的首选。但是集群环境中Quartz采用API的方式对任务进行管理，从而可以避免上述问题，但是同样存在以下问题：</p>
+<p>问题一：调用API的的方式操作任务，不人性化；<br>
+问题二：需要持久化业务QuartzJobBean到底层数据表中，系统侵入性相当严重。<br>
+问题三：调度逻辑和QuartzJobBean耦合在同一个项目中，这将导致一个问题，在调度任务数量逐渐增多，同时调度任务逻辑逐渐加重的情况下，此时调度系统的性能将大大受限于业务；<br>
+问题四：quartz底层以“抢占式”获取DB锁并由抢占成功节点负责运行任务，会导致节点负载悬殊非常大；而XXL-JOB通过执行器实现“协同分配式”运行任务，充分发挥集群优势，负载各节点均衡。<br>
+XXL-JOB弥补了quartz的上述不足之处。</p>
+<h2 id="xxl-job">XXL-JOB</h2>
+<p><img src="https://boommanpro.cn//post-images/1680316017479.png" alt="" loading="lazy"><br>
+项目特点：</p>
+<ol>
+<li>项目代码精简易读，<a href="https://www.xuxueli.com/xxl-job/">项目文档齐全</a>，非常适合个人企业魔改使用</li>
+<li>CS架构的RPC调度，集群化部署</li>
+<li>调度中心HA</li>
+<li>任务HA 丰富的路由策略</li>
+<li>调度线程池并行调度，内部也设计了快慢线程池，用于避免调度阻塞。</li>
+<li><a href="https://github.com/BoomManPro/groovy-dynamic-loading">通过groovy动态加载类</a>，支持低代码，配置化维护任务能力</li>
+</ol>
+<pre><code class="language-java">com.xxl.job.admin.core.thread.JobScheduleHelper#start
+
+
+ conn = XxlJobAdminConfig.getAdminConfig().getDataSource().getConnection();
+                        connAutoCommit = conn.getAutoCommit();
+                        conn.setAutoCommit(false);
+
+                        preparedStatement = conn.prepareStatement(  &quot;select * from xxl_job_lock where lock_name = 'schedule_lock' for update&quot; );
+                        preparedStatement.execute();
+
+                        // tx start
+
+                        // 1、pre read
+                        long nowTime = System.currentTimeMillis();
+                        List&lt;XxlJobInfo&gt; scheduleList = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().scheduleJobQuery(nowTime + PRE_READ_MS, preReadCount);
+</code></pre>
+<p>注：集群情况下如果任务重复执行，可能是由于表初始化时，xxl_job_lock中 'schedule_lock' 没有插入，导致DB锁失效。<br>
+具体量化指标：单机能够支撑 5000 任务并发运行稳定运行。</p>
+<h2 id="powerjob">PowerJob</h2>
+<p><a href="(https://github.com/PowerJob/PowerJob/issues/427)">Issue</a>简单说就是根据appid 做了任务拆分，保证一个appid 下的任务只会由一台server执行。。但没文档，源码看的还是不大清晰，例如如何感知到新增或删除节点，达到重分配的效果</p>
+<h2 id="企业级任务调度系统">企业级任务调度系统</h2>
+<ol>
+<li>企业级海量任务集中调度
+<ul>
+<li>任务分片</li>
+<li>高可用设计</li>
+</ul>
+</li>
+<li>调度和执行设计</li>
+<li>节点扩缩容等</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CentOs7 Javaer 常见安装整理]]></title>
+        <id>https://boommanpro.cn/post/centos7-javaer-install/</id>
+        <link href="https://boommanpro.cn/post/centos7-javaer-install/">
+        </link>
+        <updated>2023-03-28T00:26:23.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="安装列表">安装列表</h2>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>技术点</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>MySQL5.7</td>
+<td><a href="https://boommanpro.blog.csdn.net/article/details/80620533">https://boommanpro.blog.csdn.net/article/details/80620533</a></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Redis</td>
+<td><a href="https://boommanpro.blog.csdn.net/article/details/87344509">https://boommanpro.blog.csdn.net/article/details/87344509</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Nginx</td>
+<td><a href="https://boommanpro.blog.csdn.net/article/details/72677835">https://boommanpro.blog.csdn.net/article/details/72677835</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>JDK8</td>
+<td><a href="https://boommanpro.blog.csdn.net/article/details/87345295">https://boommanpro.blog.csdn.net/article/details/87345295</a></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Chrome + Driver</td>
+<td><a href="http://www.boommanpro.cn/post/centos7-selenium/">http://www.boommanpro.cn/post/centos7-selenium/</a></td>
+</tr>
+</tbody>
+</table>
+<p>以上~</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[EC600NC 4G模块 windows使用教程]]></title>
-        <id>https://boommanpro.cn/post/ec600nc-4g-mo-kuai-windows-shi-yong-jiao-cheng/</id>
-        <link href="https://boommanpro.cn/post/ec600nc-4g-mo-kuai-windows-shi-yong-jiao-cheng/">
+        <id>https://boommanpro.cn/post/ec600nc-4g-model/</id>
+        <link href="https://boommanpro.cn/post/ec600nc-4g-model/">
         </link>
         <updated>2023-03-18T15:15:49.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="拨号上网配置">拨号上网配置</h2>
+        <content type="html"><![CDATA[<h2 id="大致原理">大致原理</h2>
+<p>4G模块和手机一样，它用来连接基站，然后通过usb的方式和电脑通信，进而连接网络。</p>
+<h2 id="配置记录">配置记录</h2>
+<p>大致配置流程如下，插上模块后会自动安装驱动。<br>
+然后自动在windows安装电话和调制解调器，然后进行配置即可。</p>
+<ol>
+<li>对<code>Quetel USB Modem</code>强制解调器列表进行配置
+<ol>
+<li>端口速度 115200</li>
+<li>高级 <strong>初始化指令</strong> <code>AT+CGDCONT=1,&quot;IP&quot;,&quot;CTNET&quot;</code></li>
+</ol>
+</li>
+<li>进行拨号上网
+<ol>
+<li>创建拨号上网，就跟传统adsl pppoe拨号一样，只不过选择 拨号方式</li>
+<li>只需要填写服务器地址 <code>*99#</code> 即可，如果手机卡有 pin密码，暂不知如何设置，建议临时取消</li>
+<li>然后就可以拨号上网成功了~~</li>
+</ol>
+</li>
+</ol>
+<p>如果第二次插上，进行拨号失败，建议多等一会，比如1min，可能是设备初始化中~</p>
+<p><img src="https://boommanpro.cn//post-images/1679962611327.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1679962614923.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1679962618522.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1679962621527.png" alt="" loading="lazy"></p>
+<p><img src="https://boommanpro.cn//post-images/1679962976394.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1679962307770.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[2022-年终总结]]></title>
-        <id>https://boommanpro.cn/post/2022-nian-zhong-zong-jie/</id>
-        <link href="https://boommanpro.cn/post/2022-nian-zhong-zong-jie/">
+        <id>https://boommanpro.cn/post/2022-end/</id>
+        <link href="https://boommanpro.cn/post/2022-end/">
         </link>
         <updated>2022-12-31T03:10:31.000Z</updated>
         <content type="html"><![CDATA[<h2 id="今年事项回顾">今年事项回顾</h2>
@@ -1023,46 +1164,6 @@ Example (Use Generator -&gt; TestMe)<br>
 <h2 id="关联文档">关联文档</h2>
 <p><a href="https://tech.meituan.com/2021/08/06/spock-practice-in-meituan.html">Spock单元测试框架介绍以及在美团优选实战</a></p>
 <p><a href="https://spockframework.org/">Spock 单元测试官方文档</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2021-年终总结]]></title>
-        <id>https://boommanpro.cn/post/2021-annual-report/</id>
-        <link href="https://boommanpro.cn/post/2021-annual-report/">
-        </link>
-        <updated>2021-12-31T11:01:32.000Z</updated>
-        <content type="html"><![CDATA[<p>加入开水团234天了，一年在换工作，熟悉新工作环境和内容中快速度过。</p>
-<p>回头看今天年初的falg，貌似没完成几个，明年加油！</p>
-<p>抛出两个问题<br>
-1.你的工作方向是什么?<br>
-2.你的核心价值是什么(为什么这个工作只有你可以干)?</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[关于p2p打洞的实现]]></title>
-        <id>https://boommanpro.cn/post/golang-p2p/</id>
-        <link href="https://boommanpro.cn/post/golang-p2p/">
-        </link>
-        <updated>2021-11-14T10:22:14.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>研究p2p的原理，以及看是否可以通过p2p提升远程桌面速度，毕竟自己的服务器是小水管。</p>
-<p>p2p的话就不需要使用服务器的带宽，取决于本地的上下行情况。<br>
-需要明确的是p2p的两台主机都是内网主机，所以需要通过服务端建立联系。</p>
-<h3 id="frp-传输逻辑">frp 传输逻辑</h3>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1636886986079.png" alt="" loading="lazy"></figure>
-<p>frps增加日志、印证思路<br>
-在frp的init配置文件中设置log_level = trace 即可。<br>
-关联代码:<br>
-client/proxy/proxy.go:294<br>
-client/visitor.go:203</p>
-<ol>
-<li>visitor为了访问远程内网主机，需要绑定本地端口8080、然后与服务端交互获取远程内网的 外网 ip:port.</li>
-<li>server在接收到请求后会与proxy建立连接，发送需要连接的visitor信息，此时proxy和visitor发消息，并不是建立连接，因为nat原因，建立不了。</li>
-<li>此时visitor再与proxy建立tcp连接，此时是可以的，因为proxy给它发过消息了。</li>
-<li>此时再通过一遍遍代理，形成 本地8080 =&gt; 外部内网主机的联系了。</li>
-</ol>
-<h2 id="关联资料">关联资料</h2>
-<p>https://blog.csdn.net/deng_xj/article/details/89187944</p>
 ]]></content>
     </entry>
 </feed>
