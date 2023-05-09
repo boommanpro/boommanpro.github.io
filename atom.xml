@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>夏天时光空间</title>
-    <updated>2023-05-09T11:58:54.691Z</updated>
+    <updated>2023-05-09T12:10:00.595Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,150 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2023, 夏天时光空间</rights>
+    <entry>
+        <title type="html"><![CDATA[Java Windows 执行命令行脚本工具类]]></title>
+        <id>https://boommanpro.cn/post/java-windows-exec/</id>
+        <link href="https://boommanpro.cn/post/java-windows-exec/">
+        </link>
+        <updated>2023-05-09T12:06:22.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>Java外调程序，比如frp、进行服务监听，然后保活，如果挂掉，不断拉起等操作</p>
+<h2 id="show-code">Show Code</h2>
+<pre><code class="language-java">import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ExecCmdResult {
+    private boolean status;
+    private int exitCode;
+    private String execCommand;
+    private String execContent;
+    private Long cost;
+}
+</code></pre>
+<pre><code class="language-java">
+import com.boommanpro.marriott.helper.model.ExecCmdResult;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
+
+@Slf4j
+public class ExecCmdUtils {
+
+    private final static int BUFFER_SIZE = 1024;
+
+    private final static String DEFAULT_ENCODING = &quot;gbk&quot;;
+
+    private static class ProcessWorker extends Thread {
+        private final Process process;
+        private volatile int exitCode = -99;
+        private volatile boolean completed = false;
+        private volatile String output = &quot;&quot;;
+
+        private ProcessWorker(Process process) {
+            this.process = process;
+        }
+
+        @Override
+        public void run() {
+            try (InputStreamReader reader = new InputStreamReader(
+                    process.getInputStream(), DEFAULT_ENCODING)) {
+
+                StringBuilder log = new StringBuilder();
+                char[] buffer = new char[BUFFER_SIZE];
+                int length;
+                while ((length = reader.read(buffer)) != -1) {
+                    log.append(buffer, 0, length);
+                }
+                output = log.toString();
+                exitCode = process.waitFor();
+                completed = true;
+            } catch (InterruptedException | IOException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        public int getExitCode() {
+            return exitCode;
+        }
+
+        public String getOutput() {
+            return output;
+        }
+
+        public boolean isCompleted() {
+            return completed;
+        }
+    }
+
+
+    public static ExecCmdResult execCmd(String command) {
+        return execCmd(command, 15);
+    }
+
+
+    public static void execDaemonCmd(String command) {
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(&quot; &quot;));
+        // 合并错误输出流
+        processBuilder.redirectErrorStream(true);
+
+        try {
+            Process process = processBuilder.start();
+            InputStreamReader reader = new InputStreamReader(process.getInputStream(), DEFAULT_ENCODING);
+
+            char[] buffer = new char[BUFFER_SIZE];
+            int length;
+            while ((length = reader.read(buffer)) != -1) {
+                log.info(&quot;command:{},rowOutput:\n{}&quot;, command, new String(buffer, 0, length));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        throw new RuntimeException(&quot;run error&quot;);
+
+    }
+
+    public static ExecCmdResult execCmd(String command, int timeoutSecond) {
+        long start = System.currentTimeMillis();
+        StringBuilder content = new StringBuilder();
+        ProcessBuilder processBuilder = new ProcessBuilder(command.split(&quot; &quot;));
+        // 合并错误输出流
+        processBuilder.redirectErrorStream(true);
+        Process process;
+        try {
+            process = processBuilder.start();
+        } catch (IOException e) {
+            log.error(&quot;execCmd error, execCmd:{}.e:&quot;, command, e);
+            return new ExecCmdResult(false, -1, command, e.getMessage(), System.currentTimeMillis() - start);
+        }
+
+        ProcessWorker processWorker = new ProcessWorker(process);
+        int exitCode = processWorker.getExitCode();
+        processWorker.start();
+        try {
+            processWorker.join(TimeUnit.SECONDS.toMillis(timeoutSecond));
+            if (processWorker.isCompleted()) {
+                content.append(processWorker.getOutput());
+                exitCode = processWorker.getExitCode();
+            } else {
+                process.destroy();
+                processWorker.interrupt();
+                return new ExecCmdResult(false, processWorker.exitCode, &quot;thread exec timeout&quot;, processWorker.getOutput(), System.currentTimeMillis() - start);
+            }
+        } catch (InterruptedException e) {
+            processWorker.interrupt();
+        }
+        return new ExecCmdResult(exitCode == 0, exitCode, command, content.toString(), System.currentTimeMillis() - start);
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[任务调度系统总结]]></title>
         <id>https://boommanpro.cn/post/distributed-task/</id>
@@ -1045,125 +1189,6 @@ function loadscript(src){
 }
 &lt;/div&gt;
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Spock单元测试最佳实践]]></title>
-        <id>https://boommanpro.cn/post/spock-best-practice/</id>
-        <link href="https://boommanpro.cn/post/spock-best-practice/">
-        </link>
-        <updated>2022-05-21T16:06:31.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="为什么要用spock写单元测试">为什么要用Spock写单元测试</h1>
-<h2 id="为什么要写单元测试">为什么要写单元测试</h2>
-<p>XML之父Tim Bray最近在博客里有个好玩的说法：“代码不写测试就像上了厕所不洗手……单元测试是对软件未来的一项必不可少的投资。”具体来说，单元测试有哪些收益呢？</p>
-<h2 id="spock-example">Spock Example</h2>
-<p>spock写出的单元测试可以很容易理解，对于输入输出及判定很容易看出。</p>
-<pre><code class="language-groovy">class MathSpec extends Specification {
-  def &quot;maximum of two numbers&quot;(int a, int b, int c) {
-    expect:
-    Math.max(a, b) == c
-
-    where:
-    a | b | c
-    1 | 3 | 3
-    7 | 4 | 7
-    0 | 0 | 0
-  }
-}
-</code></pre>
-<h2 id="究极maven配置">究极Maven配置</h2>
-<p>配置包含了 groovy + spock + powermock</p>
-<pre><code class="language-xml">   &lt;properties&gt;
-        &lt;!--        spock version start        --&gt;
-        &lt;spock.version&gt;1.3-groovy-2.4&lt;/spock.version&gt;
-        &lt;groovy.version&gt;2.4.21&lt;/groovy.version&gt;
-        &lt;powermock.version&gt;2.0.4&lt;/powermock.version&gt;
-        &lt;jmockit.version&gt;1.39&lt;/jmockit.version&gt;
-        &lt;junitparaams.versopm&gt;1.1.0&lt;/junitparaams.versopm&gt;
-        &lt;!--        spock version end        --&gt;
-    &lt;/properties&gt;
- &lt;dependencies&gt;
-
-
-        &lt;!--        spock test dependency start        --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;
-            &lt;artifactId&gt;groovy-all&lt;/artifactId&gt;
-            &lt;version&gt;${groovy.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.spockframework&lt;/groupId&gt;
-            &lt;artifactId&gt;spock-core&lt;/artifactId&gt;
-            &lt;version&gt;${spock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.spockframework&lt;/groupId&gt;
-            &lt;artifactId&gt;spock-spring&lt;/artifactId&gt;
-            &lt;version&gt;${spock.version}&lt;/version&gt;
-        &lt;/dependency&gt;
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.mockito&lt;/groupId&gt;
-            &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;
-            &lt;version&gt;2.28.2&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-            &lt;artifactId&gt;powermock-module-junit4&lt;/artifactId&gt;
-            &lt;version&gt;${powermock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-            &lt;artifactId&gt;powermock-api-mockito2&lt;/artifactId&gt;
-            &lt;version&gt;${powermock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-
-        &lt;!--        db test        --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.h2database&lt;/groupId&gt;
-            &lt;artifactId&gt;h2&lt;/artifactId&gt;
-            &lt;version&gt;1.4.200&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.dbunit&lt;/groupId&gt;
-            &lt;artifactId&gt;dbunit&lt;/artifactId&gt;
-            &lt;version&gt;2.5.1&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;!--        db end        --&gt;
-        &lt;!--        spock test dependency end        --&gt;
-
-
-    &lt;/dependencies&gt;
-</code></pre>
-<h2 id="项目单元测试生成">项目单元测试生成</h2>
-<p>TestMe插件可以一键生成Spock、Junit等测试代码，简单修改就可以完成高代码覆盖</p>
-<p><img src="https://boommanpro.cn//post-images/1653149253728.png" alt="" loading="lazy"><br>
-Example (Use Generator -&gt; TestMe)<br>
-<img src="https://boommanpro.cn//post-images/1653149241742.png" alt="" loading="lazy"></p>
-<h2 id="高阶单元测试用法">高阶单元测试用法</h2>
-<ol>
-<li>Mock静态方法
-<ul>
-<li>注解@PrepareForTest()</li>
-</ul>
-</li>
-<li>禁止静态代码块初始化，e.g. -&gt; private static final User user=new User();
-<ul>
-<li>@SuppressStaticInitializationFor([&quot;example.com.AbbreviationProvinceUtil&quot;])</li>
-</ul>
-</li>
-</ol>
-<h2 id="关联文档">关联文档</h2>
-<p><a href="https://tech.meituan.com/2021/08/06/spock-practice-in-meituan.html">Spock单元测试框架介绍以及在美团优选实战</a></p>
-<p><a href="https://spockframework.org/">Spock 单元测试官方文档</a></p>
 ]]></content>
     </entry>
 </feed>
