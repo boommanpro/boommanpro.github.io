@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>java-dev-tools | 夏天时光空间</title>
+<title>LeetCode 刷题 前缀树模板 | 夏天时光空间</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -105,165 +111,138 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: java-dev-tools</h2>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/java-windows-exec/">
-                  <h2 class="post-title">Java Windows 执行命令行脚本工具类</h2>
-                </a>
-                <div class="post-date">
-                  2023-05-09
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/distributed-task/">
-                  <h2 class="post-title">任务调度系统总结</h2>
-                </a>
-                <div class="post-date">
-                  2023-03-31
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/centos7-javaer-install/">
-                  <h2 class="post-title">CentOs7 Javaer 常见安装整理</h2>
-                </a>
-                <div class="post-date">
-                  2023-03-28
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/project-runtime-cost-time-upgrade/">
-                  <h2 class="post-title">项目服务启动速度提升</h2>
-                </a>
-                <div class="post-date">
-                  2022-09-25
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/centos7-selenium/">
-                  <h2 class="post-title">Centos7 Selenium+Chrome环境安装</h2>
-                </a>
-                <div class="post-date">
-                  2022-08-20
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-feign-best-practice/">
-                  <h2 class="post-title">Spring Feign Best Practice</h2>
-                </a>
-                <div class="post-date">
-                  2022-08-12
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/adsl-exec-utils/">
-                  <h2 class="post-title">WindowsADSL切换外网Ip + JavaExec工具类</h2>
-                </a>
-                <div class="post-date">
-                  2022-08-12
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spock-best-practice/">
-                  <h2 class="post-title">Spock单元测试最佳实践</h2>
-                </a>
-                <div class="post-date">
-                  2022-05-22
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/javaparser-mvn-plugin/">
-                  <h2 class="post-title">javaparser-mvn-plugin开发</h2>
-                </a>
-                <div class="post-date">
-                  2021-07-29
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/springelutil-code/">
-                  <h2 class="post-title">SpringElUtil 工具类</h2>
-                </a>
-                <div class="post-date">
-                  2020-12-17
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">LeetCode 刷题 前缀树模板</h2>
+            <div class="post-date">2023-07-16</div>
+            
+            <div class="post-content">
+              <h2 id="log">Log</h2>
+<p>第 354 场周赛 全部AC了，但是前缀树好久没写花了很长时间，记录一下模板，以后直接copy。</p>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1689478164917.png" alt="" loading="lazy"></figure>
+<pre><code class="language-java">        static class Trie {
+            private TrieNode root;
 
-          <div class="pagination-container">
-  
-  
-    <a href="https://boommanpro.cn/tag/S_RXMuKtl/page/2" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
-  
-</div>
+            /**
+             * Initialize your data structure here.
+             */
+            public Trie() {
+                root = new TrieNode();
+            }
+
+            /**
+             * Inserts a word into the trie.
+             */
+            public void insert(String word) {
+                TrieNode node = root;
+                int n = word.length();
+                for (int i = 0; i &lt; n; i++) {
+                    char ch = word.charAt(i);
+                    TrieNode next = node.get(ch);
+                    if (next == null) {
+                        next = new TrieNode();
+                        node.put(ch, next);
+                    }
+                    node = next;
+                }
+                node.setIsEnd();
+            }
+
+            public boolean search(String word) {
+                TrieNode node = root;
+                int n = word.length();
+                for (int i = 0; i &lt; n; i++) {
+                    char ch = word.charAt(i);
+                    TrieNode next = node.get(ch);
+                    if ( next== null) {
+                        return false;
+                    }
+                    node = next;
+                }
+                return node.isEnd;
+            }
+
+
+            public int contains(String word) {
+                int n = word.length();
+                TrieNode node = root;
+                for (int i = 0; i &lt; n; i++) {
+                    char ch = word.charAt(i);
+                    TrieNode next = node.get(ch);
+                    if (next == null) {
+                        return -1;
+                    }
+                    if (next.isEnd) {
+                        return i + 1;
+                    }
+                    node = next;
+                }
+                return -1;
+            }
+        }
+
+        static class TrieNode {
+            private TrieNode[] links;
+
+            private final int R = 26;
+
+            private boolean isEnd;
+
+            public TrieNode() {
+                links = new TrieNode[R];
+            }
+
+            public boolean containsKey(char ch) {
+                return links[ch - 'a'] != null;
+            }
+
+            public TrieNode get(char ch) {
+                return links[ch - 'a'];
+            }
+
+            public void put(char ch, TrieNode node) {
+                links[ch - 'a'] = node;
+            }
+
+            public boolean isEnd() {
+                return isEnd;
+            }
+
+            public void setIsEnd() {
+                this.isEnd = true;
+            }
+        }
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/yfZiURS8F/" class="tag">
+                    LeetCode
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/java-windows-exec/">
+                  <h3 class="post-title">
+                    Java Windows 执行命令行脚本工具类
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -392,6 +371,29 @@ setTimeout(function () {
         createImgEventFullScreen();
 }, 1000)
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
