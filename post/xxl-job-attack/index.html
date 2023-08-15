@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>夏天时光空间</title>
+<title>记XXL-JOB服务被攻击日志及修复 | 夏天时光空间</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
+
+  
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  
+
+  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -105,166 +111,57 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-boot-enableConfigurationProperties/">
-                  <h2 class="post-title">让@EnableConfigurationProperties的值注入到@Value中</h2>
-                </a>
-                <div class="post-date">
-                  2020-03-03
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/linux-command-summary/">
-                  <h2 class="post-title">linux 常用命令 - for BoomMan</h2>
-                </a>
-                <div class="post-date">
-                  2020-03-01
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/java-generate-word/">
-                  <h2 class="post-title">Java 通过模板生成word文档</h2>
-                </a>
-                <div class="post-date">
-                  2020-03-01
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/http-huan-cun-xiang-jie/">
-                  <h2 class="post-title">HTTP 缓存详解</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-25
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/project-dev-summary/">
-                  <h2 class="post-title">项目开发总结</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-22
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/tx-cloud-server/">
-                  <h2 class="post-title">腾讯云开发者服务器申请</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-18
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-state-machine-practice/">
-                  <h2 class="post-title">Spring State Machine Practice</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-14
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/okhttpclient-retry/">
-                  <h2 class="post-title">OkHttpClient 重试处理</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-14
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/spring-security-summarize/">
-                  <h2 class="post-title">Spring Security 登录配置总结</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-13
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
-            <article class="post-item">
-              <div class="left">
-                <a href="https://boommanpro.cn/post/jenkins/">
-                  <h2 class="post-title">服务器Jenkins搭建</h2>
-                </a>
-                <div class="post-date">
-                  2020-02-12
-                </div>
-                <div class="post-abstract">
-                  
-                </div>
-              </div>
-              
-            </article>
-          
+          <div class="post-detail">
+            <h2 class="post-title">记XXL-JOB服务被攻击日志及修复</h2>
+            <div class="post-date">2023-08-11</div>
+            
+            <div class="post-content">
+              <h2 id="背景">背景</h2>
+<p>在2023-08-11 12:54:19遭遇攻击，腾讯云爆出 <strong>Linux.Trojan.Ganiw.Rnkl</strong> 病毒。<br>
+止损手段：</p>
+<ol>
+<li>通过防火墙关闭所有外网访问。</li>
+<li>根据时间点查找文件变动，发现是XXL-JOB被攻击，简单百度后是因为使用的是默认秘钥被攻击
+<ol>
+<li><code>find / -newermt '2023-08-11 12:50:00' ! -newermt '2023-08-11 13:00:00'</code></li>
+</ol>
+</li>
+<li>向阿里云提工单举报OSS，期望对方提供上传方，最终判断不出来是病毒，让我去找当地zf，有点搞笑。<br>
+<img src="https://boommanpro.cn//post-images/1692095883734.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1692096051543.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.cn//post-images/1692096054678.png" alt="" loading="lazy"></li>
+</ol>
 
-          <div class="pagination-container">
-  
-    <a href="https://boommanpro.cn/page/6/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
-  
-  
-    <a href="https://boommanpro.cn/page/8/" class="next">下一页 <i class="icon-arrow-ios-forward-outline"></i></a>
-  
-</div>
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://boommanpro.cn/tag/1sWixdvcl/" class="tag">
+                    主机防护
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://boommanpro.cn/post/leetcode-trie/">
+                  <h3 class="post-title">
+                    LeetCode 刷题 前缀树模板
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+              
+                <div id="gitalk-container" data-aos="fade-in"></div>
+              
+
+              
+            
+
+          </div>
 
         </div>
       </div>
@@ -393,6 +290,29 @@ setTimeout(function () {
         createImgEventFullScreen();
 }, 1000)
 </script>
+
+
+
+  
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+
+      var gitalk = new Gitalk({
+        clientID: '604203165ca31f355811',
+        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
+        repo: 'boommanpro.github.io',
+        owner: 'BoomManPro',
+        admin: ['BoomManPro'],
+        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+
+      gitalk.render('gitalk-container')
+
+    </script>
+  
+
+  
 
 
 
