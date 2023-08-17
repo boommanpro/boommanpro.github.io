@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>夏天时光空间</title>
-    <updated>2023-08-15T10:43:24.684Z</updated>
+    <updated>2023-08-17T16:54:38.607Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,79 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2023, 夏天时光空间</rights>
+    <entry>
+        <title type="html"><![CDATA[项目通用子调度设计]]></title>
+        <id>https://boommanpro.cn/post/project-shceduled-design/</id>
+        <link href="https://boommanpro.cn/post/project-shceduled-design/">
+        </link>
+        <updated>2023-08-16T14:21:30.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>公司有自己的任务调度系统，但是当前模块又设计自己的调度，他的级别是按天或者小时级别的，且任务非常多，如果注册到公司的调度系统上来看的话，不好管理，且没有业务语义，不方便问题排查。</p>
+<h2 id="实现方案">实现方案</h2>
+<p>简述实现方案是：通过公司调度系统进行调度服务，服务自身建立子调度逻辑。<br>
+假设任务是小时级别调度，那么云每小时调度一次：</p>
+<pre><code class="language-java">var gapHour=1;
+var localDateTime=LocalDateTime.now();
+var maxDateTime=localDateTime.plusHour(gapHour);
+var taskList = select * from task where trigger_next_time &lt;= maxDateTime
+
+for(task:taskList){
+    doTask(task);
+    updateTaskNextTime(task);
+}
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1692280673565.png" alt="" loading="lazy"></figure>
+<h2 id="表结构设计">表结构设计</h2>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1692281049404.png" alt="" loading="lazy"></figure>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[工程中常见的性能优化]]></title>
+        <id>https://boommanpro.cn/post/project-performance-optimization/</id>
+        <link href="https://boommanpro.cn/post/project-performance-optimization/">
+        </link>
+        <updated>2023-08-15T15:28:12.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>总结一下在项目中同学们常见的性能问题</p>
+<h2 id="简述">简述</h2>
+<ol>
+<li>DB操作都是single，没有batch操作，类比有rpc接口，没有批量调用接口。</li>
+<li>任务调度子任务中有大量积压，可以使用线程池，数据分片等操作解决。</li>
+<li>项目中随意使用事务，任务没有设计成幂等的，事务之间相互影响。</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[旧工程现代化改造]]></title>
+        <id>https://boommanpro.cn/post/project-modernization/</id>
+        <link href="https://boommanpro.cn/post/project-modernization/">
+        </link>
+        <updated>2023-08-15T15:26:17.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>近期完成了旧工程的现代化改造，项目从原本的spring mvc -&gt; spring boot,从原本本地无法启动，到本地一键启动，提高了研发效率，减少了新同学加入时的沟通成本，也吃上公司spring boot工程的（类似 启动长耗时项检测）的红利，就此记录一下。</p>
+<h2 id="改造方案">改造方案</h2>
+<p>本地完成完整升级方案的尝试，要求最少本地可以启动，然后进行拆分，大概为以下几步。</p>
+<ol>
+<li>spring 大版本升级  spring 4 -&gt; spring 5</li>
+<li>build,runtime和工具类改造，原本工程是通过maven filter方式替换文件配置的，需要改为profiles的形式，还有就是工具类中有很多取了env变量，这种在本地都需要配置，所以采用默认 test的方式解决。</li>
+<li>spring mvc -&gt; spring boot升级，将原本的web.xml 升级为bean注解形式。</li>
+</ol>
+<h2 id="感触">感触</h2>
+<p>当完成项目现代化改造后，直观感受是同学们的代码commit次数变少，不用一直远程debug，新依赖导入的时候也能使用starter了，减少了很多无用代码。<br>
+项目原本的启动耗时问题也可以使用公司的注解或者配置化形式并行化启动，大大减少启动耗时。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[并发编程实践]]></title>
+        <id>https://boommanpro.cn/post/project-concurrent-summary/</id>
+        <link href="https://boommanpro.cn/post/project-concurrent-summary/">
+        </link>
+        <updated>2023-08-15T15:21:36.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="使用场景">使用场景</h2>
+<h2 id="线程评估方式">线程评估方式</h2>
+<h2 id="最佳实践">最佳实践</h2>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[记XXL-JOB服务被攻击日志及修复]]></title>
         <id>https://boommanpro.cn/post/xxl-job-attack/</id>
@@ -429,477 +502,6 @@ XXL-JOB弥补了quartz的上述不足之处。</p>
 <img src="https://boommanpro.cn//post-images/1679962621527.png" alt="" loading="lazy"></p>
 <p><img src="https://boommanpro.cn//post-images/1679962976394.png" alt="" loading="lazy"><br>
 <img src="https://boommanpro.cn//post-images/1679962307770.png" alt="" loading="lazy"></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[2022-年终总结]]></title>
-        <id>https://boommanpro.cn/post/2022-end/</id>
-        <link href="https://boommanpro.cn/post/2022-end/">
-        </link>
-        <updated>2022-12-31T03:10:31.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="今年事项回顾">今年事项回顾</h2>
-<ol>
-<li>完成LeetCode千题计划</li>
-<li>5月搬家，和室友完美合租至今</li>
-<li>10月完成结婚大事，感谢我的宝宝</li>
-<li>技术上：groovy unit单元测试 + 项目启动速度提升 + spark xml配置化低代码开发 + lightproxy 插件开发，完成意想不到功能</li>
-<li>苦练写作基本功，感觉近一年文档能力述职能力有所提升</li>
-<li>不埋头技术能力，也更关心业务</li>
-</ol>
-<p>以上，明年会更好吗？</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[项目服务启动速度提升]]></title>
-        <id>https://boommanpro.cn/post/project-runtime-cost-time-upgrade/</id>
-        <link href="https://boommanpro.cn/post/project-runtime-cost-time-upgrade/">
-        </link>
-        <updated>2022-09-25T13:08:52.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>线上项目checkHealth（超时时间5min）超时，然后显示服务启动失败。<br>
-其实项目启动时间已经做过几次时间调整了，从1-3-5min。</p>
-<p>启动时间长问题会影响到：（1） 故障发生时如果需要应用回滚、扩容或者重启，启动时间长会拖慢故障恢复时间；（2） 上线时间长也是一个很大的痛点，当服务器数量比较多时，服务启动时间的影响会更明显。</p>
-<h2 id="设计方案">设计方案</h2>
-<p>项目的耗时由那些组成：容器耗时 + 初始化Bean + 初始化任务<br>
-其中比较好把我的是初始化任务和初始化Bean 这部分，我们本文主要聊一聊这一点<br>
-方案是：</p>
-<ol>
-<li>对于耗时长的任务进行手动优化，是否存在不合理的启动点
-<ul>
-<li>比如初始化Cache中查询MySQL，是否耗时过长，查询步长可以增大等</li>
-<li>Bean是否必须启动时进行初始化动作，是否可以懒加载，懒处理</li>
-</ul>
-</li>
-<li>并行初始化
-<ul>
-<li>如果单任务耗时问题已解决，就可以针对必须长耗时任务进行Bean并行初始化</li>
-<li>耗时预计 从原本串行 Sum(taskTimeOut) =&gt; Max(taskTimeOut)</li>
-</ul>
-</li>
-</ol>
-<h2 id="spring-bean-启动耗时查询">Spring Bean 启动耗时查询</h2>
-<h3 id="耗时长任务统计">耗时长任务统计</h3>
-<p>解决的是 @PostConstruct、InitializingBean(afterPropertiesSet)、initMethod方法<br>
-有目标或者指标才知道我们要如何优化，怎么优化<br>
-在Spring Bean中有注入点：BeanPostProcessor接口，实现postProcessorBeforeInitialization、postProcessAfterInitialization方法，对bean的总耗时进行打印，找到其中耗时较长的bean，进行针对性优化</p>
-<pre><code class="language-java">@Component
-public class SpringbeanAnalyse implements BeanPostProcessor,
-        ApplicationListener&lt;ContextRefreshedEvent&gt; {
-    private static Logger log = LoggerFactory.getLogger(SpringbeanAnalyse.class);
-    private Map&lt;String, Long&gt;  mapBeantime  = new HashMap&lt;&gt;();
-    private static volatile AtomicBoolean started = new AtomicBoolean(false);
- 
- 
-    @Autowired
-    public Object postProcessBeforeInitialization(Object bean, String beanName) throws
-            BeansException {
-        mapBeantime.put(beanName, System.currentTimeMillis());
-        return bean;
-    }
- 
-    @Autowired
-    public Object postProcessAfterInitialization(Object bean, String beanName) throws
-            BeansException {
-        Long begin = mapBeantime.get(beanName);
-        if (begin != null) {
-            mapBeantime.put(beanName, System.currentTimeMillis() - begin);
-        }
-        return bean;
-    }
-    @Override
-    public void onApplicationEvent(final ContextRefreshedEvent event) {
-        if (started.compareAndSet(false, true)) {
-            for (Map.Entry&lt;String,Long&gt; entry: mapBeantime.entrySet()) {
-                if (entry.getValue() &gt; 100) {
-                   log.warn(&quot;slowSpringbean =&gt; :&quot;,entry.getKey());
-                }
-            }
-        }
-    }
-}
-</code></pre>
-<h3 id="耗时长任务并行初始化">耗时长任务并行初始化</h3>
-<p>为什么不能自动：全局自动配置完成所有的bean需要解决相互依赖的问题，这个问题不是很好解决，原因在于循环依赖和Spring提供了大量的扩展能力，这样导致我们无法得到一个spring bean的全局依赖图。因此无法通过自动配置的手段来解决spring bean单线程加载的问题。<br>
-手动如何实现：<br>
-定义全局线程池，重写bean的initmethod，将任务提交到线程池中处理，最终判断线程池任务全部结束，则并行初始化完成。</p>
-<p><strong>异步初始化线程池</strong>一般设定多大：<br>
-当前机器CPu核数+1（线程在服务启动后自动销毁）</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Centos7 Selenium+Chrome环境安装]]></title>
-        <id>https://boommanpro.cn/post/centos7-selenium/</id>
-        <link href="https://boommanpro.cn/post/centos7-selenium/">
-        </link>
-        <updated>2022-08-20T06:48:38.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="核心逻辑">核心逻辑</h2>
-<ol>
-<li>Centos 7 安装google-chrome</li>
-<li>配置chrome-driver环境</li>
-</ol>
-<h2 id="安装google-chrome">安装google-chrome</h2>
-<ol>
-<li>如果网络yum网络不好，可以更换源为阿里云</li>
-</ol>
-<pre><code class="language-shell">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
-
-wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-
-yum clean all
-yum makecache
-</code></pre>
-<p>2.安装google-chrome</p>
-<pre><code class="language-shell">wget https://dl.google.com/linux/direct/google-chrome-stable_current_x86_64.rpm
-
-yum install google-chrome-stable_current_x86_64.rpm
-google-chrome --version
-</code></pre>
-<h2 id="安装对应版本的chromedriver-必须与google-chrome版本对应">安装对应版本的chromedriver (必须与google-chrome版本对应)</h2>
-<p><a href="https://chromedriver.chromium.org/downloads">chromedriver</a></p>
-<pre><code class="language-shell">mv chromedriver /usr/bin
-</code></pre>
-<h2 id="jdk11下载">jdk11下载</h2>
-<p><a href="https://www.oracle.com/java/technologies/downloads/#java11">oracle jdk11</a></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Spring Feign Best Practice]]></title>
-        <id>https://boommanpro.cn/post/spring-feign-best-practice/</id>
-        <link href="https://boommanpro.cn/post/spring-feign-best-practice/">
-        </link>
-        <updated>2022-08-12T15:36:02.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="maven配置">Maven配置</h2>
-<pre><code class="language-xml">    &lt;properties&gt;
-        &lt;fruit.version&gt;1.0.4&lt;/fruit.version&gt;
-        &lt;java.version&gt;8&lt;/java.version&gt;
-        &lt;!--        Spring Cloud Alibaba 最新版本        --&gt;
-        &lt;spring.cloud.alibaba.version&gt;2021.0.1.0&lt;/spring.cloud.alibaba.version&gt;
-        &lt;!--        Spring Cloud 版本--&gt;
-        &lt;spring.cloud.version&gt;2021.0.1&lt;/spring.cloud.version&gt;
-        &lt;xxl-job.version&gt;2.3.0&lt;/xxl-job.version&gt;
-        &lt;hystrix-version&gt;1.5.18&lt;/hystrix-version&gt;
-
-        &lt;!--        spock version start        --&gt;
-        &lt;spock.version&gt;1.3-groovy-2.4&lt;/spock.version&gt;
-        &lt;groovy.version&gt;2.4.21&lt;/groovy.version&gt;
-        &lt;powermock.version&gt;2.0.4&lt;/powermock.version&gt;
-        &lt;jmockit.version&gt;1.39&lt;/jmockit.version&gt;
-        &lt;junitparaams.versopm&gt;1.1.0&lt;/junitparaams.versopm&gt;
-        &lt;!--        spock version end        --&gt;
-    &lt;/properties&gt;
-
-    &lt;dependencyManagement&gt;
-        &lt;dependencies&gt;
-            &lt;dependency&gt;
-                &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-                &lt;artifactId&gt;spring-cloud-dependencies&lt;/artifactId&gt;
-                &lt;version&gt;${spring.cloud.version}&lt;/version&gt;
-                &lt;type&gt;pom&lt;/type&gt;
-                &lt;scope&gt;import&lt;/scope&gt;
-            &lt;/dependency&gt;
-            &lt;dependency&gt;
-                &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
-                &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;
-                &lt;version&gt;${spring.cloud.alibaba.version}&lt;/version&gt;
-                &lt;type&gt;pom&lt;/type&gt;
-                &lt;scope&gt;import&lt;/scope&gt;
-            &lt;/dependency&gt;
-        &lt;/dependencies&gt;
-    &lt;/dependencyManagement&gt;
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-validation&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.session&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-session-core&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-configuration-processor&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-aop&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
-            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
-            &lt;optional&gt;true&lt;/optional&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-boot-starter-test&lt;/artifactId&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;me.ghui&lt;/groupId&gt;
-            &lt;artifactId&gt;Fruit&lt;/artifactId&gt;
-            &lt;version&gt;${fruit.version}&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;!--        feign start        --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;io.github.openfeign&lt;/groupId&gt;
-            &lt;artifactId&gt;feign-core&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;io.github.openfeign&lt;/groupId&gt;
-            &lt;artifactId&gt;feign-httpclient&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;io.github.openfeign&lt;/groupId&gt;
-            &lt;artifactId&gt;feign-slf4j&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;io.github.openfeign&lt;/groupId&gt;
-            &lt;artifactId&gt;feign-jackson&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;io.github.openfeign.form&lt;/groupId&gt;
-            &lt;artifactId&gt;feign-form-spring&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;io.github.openfeign.form&lt;/groupId&gt;
-            &lt;artifactId&gt;feign-form&lt;/artifactId&gt;
-            &lt;version&gt;3.8.0&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;!--        feign end        --&gt;
-        
-        &lt;!--        spock test dependency start        --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.codehaus.groovy&lt;/groupId&gt;
-            &lt;artifactId&gt;groovy-all&lt;/artifactId&gt;
-            &lt;version&gt;${groovy.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.spockframework&lt;/groupId&gt;
-            &lt;artifactId&gt;spock-core&lt;/artifactId&gt;
-            &lt;version&gt;${spock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.spockframework&lt;/groupId&gt;
-            &lt;artifactId&gt;spock-spring&lt;/artifactId&gt;
-            &lt;version&gt;${spock.version}&lt;/version&gt;
-        &lt;/dependency&gt;
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.mockito&lt;/groupId&gt;
-            &lt;artifactId&gt;mockito-core&lt;/artifactId&gt;
-            &lt;version&gt;2.28.2&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-            &lt;artifactId&gt;powermock-module-junit4&lt;/artifactId&gt;
-            &lt;version&gt;${powermock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.powermock&lt;/groupId&gt;
-            &lt;artifactId&gt;powermock-api-mockito2&lt;/artifactId&gt;
-            &lt;version&gt;${powermock.version}&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-
-        &lt;!--        db test        --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.h2database&lt;/groupId&gt;
-            &lt;artifactId&gt;h2&lt;/artifactId&gt;
-            &lt;version&gt;1.4.200&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.dbunit&lt;/groupId&gt;
-            &lt;artifactId&gt;dbunit&lt;/artifactId&gt;
-            &lt;version&gt;2.5.1&lt;/version&gt;
-            &lt;scope&gt;test&lt;/scope&gt;
-        &lt;/dependency&gt;
-        &lt;!--        db end        --&gt;
-
-        &lt;!--        spock test dependency end        --&gt;
-
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
-            &lt;artifactId&gt;spring-cloud-starter-bootstrap&lt;/artifactId&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
-            &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
-            &lt;version&gt;1.2.79&lt;/version&gt;
-        &lt;/dependency&gt;
-
-        &lt;!-- xxl-job-core --&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.xuxueli&lt;/groupId&gt;
-            &lt;artifactId&gt;xxl-job-core&lt;/artifactId&gt;
-            &lt;version&gt;${xxl-job.version}&lt;/version&gt;
-        &lt;/dependency&gt;
-
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.netflix.hystrix&lt;/groupId&gt;
-            &lt;artifactId&gt;hystrix-core&lt;/artifactId&gt;
-            &lt;version&gt;${hystrix-version}&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;com.netflix.hystrix&lt;/groupId&gt;
-            &lt;artifactId&gt;hystrix-javanica&lt;/artifactId&gt;
-            &lt;version&gt;${hystrix-version}&lt;/version&gt;
-        &lt;/dependency&gt;
-
-    &lt;/dependencies&gt;
-</code></pre>
-<h2 id="忽略ssl配置">忽略SSL配置</h2>
-<pre><code class="language-java">import feign.Client;
-import feign.httpclient.ApacheHttpClient;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.ssl.SSLContextBuilder;
-
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-
-public class HttpClientFactory {
-
-    public static Client buildIgnoreSSLClient() throws NoSuchAlgorithmException, KeyStoreException, KeyManagementException {
-        SSLContextBuilder builder = new SSLContextBuilder();
-        builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-        SSLConnectionSocketFactory sslConnectionSocketFactory = new SSLConnectionSocketFactory(builder.build(), NoopHostnameVerifier.INSTANCE);
-        return new ApacheHttpClient(HttpClients.custom()
-                .setSSLHostnameVerifier(new NoopHostnameVerifier())
-                .setSSLSocketFactory(sslConnectionSocketFactory)
-                .build());
-    }
-}
-
-</code></pre>
-<h2 id="ftfeignclient">FtFeignClient</h2>
-<pre><code class="language-java">
-import com.boommanpro.xportsreserve.rest.FtServerNotifyClient;
-import com.boommanpro.xportsreserve.utils.HttpClientFactory;
-import feign.Feign;
-import feign.Logger;
-import feign.Request;
-import feign.form.FormEncoder;
-import feign.jackson.JacksonDecoder;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-
-import java.util.concurrent.TimeUnit;
-
-@Slf4j
-@Configuration
-public class FtServerRestConfiguration {
-
-
-    public interface FTServerConstant {
-        String SERVER_URL = &quot;https://sctapi.ftqq.com/&quot;;
-    }
-
-    @Bean
-    public FtServerNotifyClient ftServerNotifyClient() throws Exception {
-        return Feign.builder()
-                .encoder(new FormEncoder())
-                .decoder(new JacksonDecoder())
-                .client(HttpClientFactory.buildIgnoreSSLClient())
-                .logLevel(Logger.Level.FULL)
-                .options(new Request.Options(3, TimeUnit.MINUTES, 3, TimeUnit.MINUTES, true))
-                .target(FtServerNotifyClient.class, FTServerConstant.SERVER_URL);
-    }
-    
-}
-
-</code></pre>
-<p>FtServerNotifyClient</p>
-<pre><code class="language-java">
-import com.boommanpro.xportsreserve.model.FtServerBody;
-import com.boommanpro.xportsreserve.model.FtServerResult;
-import feign.Headers;
-import feign.Param;
-import feign.RequestLine;
-
-public interface FtServerNotifyClient {
-
-
-    @RequestLine(&quot;POST {sendKey}.send&quot;)
-    @Headers(&quot;Content-Type: application/x-www-form-urlencoded;charset=UTF-8&quot;)
-    FtServerResult send(@Param String sendKey, FtServerBody ftServerBody);
-}
-
-</code></pre>
-<p>FtServerResult</p>
-<pre><code class="language-java">
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@NoArgsConstructor
-@Data
-public class FtServerResult {
-    @JsonProperty(&quot;code&quot;)
-    private Integer code;
-    @JsonProperty(&quot;message&quot;)
-    private String message;
-    @JsonProperty(&quot;data&quot;)
-    private DataDTO data;
-
-    @NoArgsConstructor
-    @Data
-    public static class DataDTO {
-        @JsonProperty(&quot;pushid&quot;)
-        private String pushid;
-        @JsonProperty(&quot;readkey&quot;)
-        private String readkey;
-        @JsonProperty(&quot;error&quot;)
-        private String error;
-        @JsonProperty(&quot;errno&quot;)
-        private Integer errno;
-    }
-}
-
-</code></pre>
-<p>FtNotifyAccountService</p>
-<pre><code class="language-java">import com.alibaba.fastjson.JSON;
-import com.boommanpro.xportsreserve.model.CommitResult;
-import com.boommanpro.xportsreserve.model.FtServerBody;
-import com.boommanpro.xportsreserve.model.FtServerResult;
-import com.boommanpro.xportsreserve.rest.FtServerNotifyClient;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
-@Slf4j
-@Service
-public class FtNotifyAccountService {
-
-    @Autowired
-    private FtServerNotifyClient ftServerNotifyClient;
-
-    public void notifyMessage(String sendKey, String text, String desp) {
-        FtServerResult result = ftServerNotifyClient.send(sendKey, new FtServerBody(text, desp));
-        log.info(&quot;notify result:{}&quot;, result);
-    }
-}
-
-</code></pre>
 ]]></content>
     </entry>
 </feed>
