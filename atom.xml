@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>夏天时光空间</title>
-    <updated>2023-08-17T16:54:38.607Z</updated>
+    <updated>2023-09-05T16:08:54.148Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,36 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2023, 夏天时光空间</rights>
+    <entry>
+        <title type="html"><![CDATA[XXL-JOB 魔改支持SQLite]]></title>
+        <id>https://boommanpro.cn/post/xxl-job-modify/</id>
+        <link href="https://boommanpro.cn/post/xxl-job-modify/">
+        </link>
+        <updated>2023-09-05T15:56:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="使用场景">使用场景</h1>
+<ol>
+<li>单机服务端场景（路由器部署，测试支持-Xms32m -Xmx32m配置），一键部署，直接使用</li>
+<li>electron 集成使用，使用electron-egg框架，直接启动时集成，无需依赖mysql</li>
+<li>单机测试非常方便，admin + executor集成在一起，一键调度，支持shell、powershell等场景。</li>
+</ol>
+<p>具体代码：https://github.com/BoomManPro/xxl-job/tree/boommanpro/feat/sqliteDbAdmin</p>
+<ol>
+<li>额外魔改了前端页面，merge xxl-job-front前端，使用起来比原版好用。</li>
+<li>支持pushplus推送，重构了alarm模块，可支持其他推送。</li>
+</ol>
+<h2 id="可能的todo">可能的TODO</h2>
+<ol>
+<li>XXL-JOB的python、shell、powershell脚本市场。</li>
+</ol>
+<h2 id="魔改链路">魔改链路</h2>
+<ol>
+<li>关于锁部分通过重构代码，判断是否是sqlite模式，采用不同sql执行。</li>
+<li>关于其他涉及语法差异部分，使用mybatis的databaseId执行不同类型sql数据库。</li>
+<li>spring.datasource.hikari.connection-test-query=PRAGMA journal_mode=WAL; 解决sqlite并发问题</li>
+<li>通过集成XxlJobExecutorConfig实现admin端绑定执行器一体化。</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[项目通用子调度设计]]></title>
         <id>https://boommanpro.cn/post/project-shceduled-design/</id>
@@ -467,41 +497,6 @@ XXL-JOB弥补了quartz的上述不足之处。</p>
 </tbody>
 </table>
 <p>以上~</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[EC600NC 4G模块 windows使用教程]]></title>
-        <id>https://boommanpro.cn/post/ec600nc-4g-model/</id>
-        <link href="https://boommanpro.cn/post/ec600nc-4g-model/">
-        </link>
-        <updated>2023-03-18T15:15:49.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="大致原理">大致原理</h2>
-<p>4G模块和手机一样，它用来连接基站，然后通过usb的方式和电脑通信，进而连接网络。</p>
-<h2 id="配置记录">配置记录</h2>
-<p>大致配置流程如下，插上模块后会自动安装驱动。<br>
-然后自动在windows安装电话和调制解调器，然后进行配置即可。</p>
-<ol>
-<li>对<code>Quetel USB Modem</code>强制解调器列表进行配置
-<ol>
-<li>端口速度 115200</li>
-<li>高级 <strong>初始化指令</strong> <code>AT+CGDCONT=1,&quot;IP&quot;,&quot;CTNET&quot;</code></li>
-</ol>
-</li>
-<li>进行拨号上网
-<ol>
-<li>创建拨号上网，就跟传统adsl pppoe拨号一样，只不过选择 拨号方式</li>
-<li>只需要填写服务器地址 <code>*99#</code> 即可，如果手机卡有 pin密码，暂不知如何设置，建议临时取消</li>
-<li>然后就可以拨号上网成功了~~</li>
-</ol>
-</li>
-</ol>
-<p>如果第二次插上，进行拨号失败，建议多等一会，比如1min，可能是设备初始化中~</p>
-<p><img src="https://boommanpro.cn//post-images/1679962611327.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1679962614923.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1679962618522.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1679962621527.png" alt="" loading="lazy"></p>
-<p><img src="https://boommanpro.cn//post-images/1679962976394.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1679962307770.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>
