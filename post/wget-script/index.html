@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1694838531872">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1694848677881">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://boommanpro.cn/">
-        <img src="https://boommanpro.cn//images/avatar.png?v=1694838531872" class="site-logo">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1694848677881" class="site-logo">
         <h1 class="site-title">夏天时光空间</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -118,6 +118,12 @@
             <div class="post-content">
               <h2 id="背景">背景</h2>
 <p>天翼网关不支持自动重启，恰好有Padavan二级路由在，所以想通过定时执行脚本重启网关。</p>
+<p>大致抓包看了下：</p>
+<ol>
+<li>登录 保存cookie</li>
+<li>访问pc页面保存token</li>
+<li>请求重启接口</li>
+</ol>
 <h2 id="命令解读">命令解读</h2>
 <p>使用light proxy 抓包看具体哪里出错</p>
 <p>-- 设置代理<br>
@@ -126,7 +132,12 @@
 --max-redirect=0</p>
 <p>-- debug 请求<br>
 -d</p>
+<h2 id="完整脚本">完整脚本</h2>
 <pre><code class="language-shell">#!/bin/bash
+
+
+password=qqq
+
 
 result=$(wget --max-redirect=0 -d --quiet \
   --method POST \
@@ -141,12 +152,52 @@ result=$(wget --max-redirect=0 -d --quiet \
   --header 'Referer: http://192.168.1.1/' \
   --header 'Upgrade-Insecure-Requests: 1' \
   --header 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36' \
-  --body-data 'username=useradmin&amp;psd=qqq' \
+  --body-data &quot;username=useradmin&amp;psd=$password&quot; \
   'http://192.168.1.1/cgi-bin/luci' 2&gt;&amp;1)
 
-set_cookie=$(echo &quot;$result&quot; | grep -i 'Set-Cookie')
 
-echo $set_cookie
+
+
+cookie_vale=$(echo &quot;$result&quot; | grep -i 'Set-Cookie'   | sed -n 's/.*sysauth=\([^;]*\).*/\1/p')
+
+cookie_string='Cookie: sysauth='$cookie_vale
+
+echo $cookie_string
+
+
+
+
+
+
+
+
+result=$(curl --location 'http://192.168.1.1/cgi-bin/luci/admin/device/pc' \
+         --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+         --header 'Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7' \
+         --header 'Cache-Control: no-cache' \
+         --header 'Connection: keep-alive' \
+         --header &quot;$cookie_string&quot; \
+         --header 'Pragma: no-cache' \
+         --header 'Upgrade-Insecure-Requests: 1' \
+         --header 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36')
+
+
+token=$(echo &quot;$result&quot; | sed -n &quot;s/.*token: '\([^']*\).*/\1/p&quot; | sed -n '1p')
+
+
+curl --location 'http://192.168.1.1/cgi-bin/luci/admin/reboot' \
+--header 'Accept: */*' \
+--header 'Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7' \
+--header 'Cache-Control: no-cache' \
+--header 'Connection: keep-alive' \
+--header 'Content-type: application/x-www-form-urlencoded' \
+--header &quot;$cookie_string&quot; \
+--header 'Origin: http://192.168.1.1' \
+--header 'Pragma: no-cache' \
+--header 'Referer: http://192.168.1.1/cgi-bin/luci/' \
+--header 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36' \
+--data-urlencode &quot;token=$token&quot; \
+--data-urlencode '_=0.24887794922555595'
 
 </code></pre>
 
