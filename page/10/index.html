@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>分布式任务调度-Quartz | 夏天时光空间</title>
+<title>夏天时光空间</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -13,12 +13,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
-
-  
-    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
-  
-
-  
 
 
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -111,99 +105,29 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <div class="post-detail">
-            <h2 class="post-title">分布式任务调度-Quartz</h2>
-            <div class="post-date">2021-07-31</div>
-            
-            <div class="post-content">
-              <h2 id="背景">背景</h2>
-<ol>
-<li>之前写过一个分布式任务调度的demo: <a href="https://github.com/BoomManPro/spring-distributed-quartz">spring-distributed-quartz</a></li>
-<li>公司也有自己的分布式任务调度、所以认真研究、好好学习。</li>
-</ol>
-<h2 id="quartz优缺点">Quartz优缺点</h2>
-<p>首先说Quartz+MySQL持久化优点</p>
-<ol>
-<li>实现了分布式情况下的任务调度、并且与spring-boot(即使不引入starter也是可以的、starter里面只有一个META-INF文件)结合，易于开发。</li>
-<li>quartz开源早，博客使用示例多，出现问题易于解决。</li>
-</ol>
-<p>Quartz缺点</p>
-<ol>
-<li>需要把任务信息持久化到业务数据库、和业务有耦合、并且表比较多。</li>
-<li>调度逻辑和执行逻辑存在同一个项目中、在机器性能固定的情况下、业务和调度之间不可避免会相互影响。</li>
-<li>quartz+mysql集群模式下、是通过mysql的独占锁来唯一获取任务、任务执行并没有实现完善的负载均衡。</li>
-</ol>
-<h2 id="quartz相关问题">Quartz相关问题</h2>
-<ol>
-<li>调度器(Scheduler)和执行器(Job)</li>
-<li>具体执行流程是怎样的</li>
-<li>调度器是如何推送的  任务分为一次性和cron定时性的(如果在调度过程中调度器挂了会怎么样)</li>
-<li>调度器是如何保证只执行一次的</li>
-<li>Quartz的mysql有很多数据库表、都是什么含义。</li>
-</ol>
-<h2 id="从quartz中我们能学到什么">从Quartz中我们能学到什么?</h2>
-<ol>
-<li>集群环境下一种防止并发的实现。
-<ol>
-<li>创建锁 TB_LOCKS表</li>
-<li>创建记录表 记录所表示的PREV_FIRE_TIME时间</li>
-<li>通过select for update 竞争锁、竞争到后查看执行时间是否满足。 类似java代码的 sychronized然后再check一下。</li>
-</ol>
-</li>
-<li>Quartz Scheduler单例模式</li>
-<li>Quartz的job重复执行问题</li>
-</ol>
-<pre><code>triggers = qsRsrcs.getJobStore().acquireNextTriggers(now + idleWaitTime,  Math.min(availThreadCount, qsRsrcs.getMaxBatchSize()),
-qsRsrcs.getBatchTimeWindow());
-</code></pre>
-<ol start="4">
-<li>SchedulerFactoryBean =&gt; FactoryBean<T></li>
-</ol>
-<h2 id="如何提升类似像xxl-job等性能">如何提升类似像XXL-Job等性能</h2>
-<p>首先关于开源的分布式任务调度系统，其核心调度模块比如Quartz或者自身的自实现Quartz本质还是强依赖数据库性能，虽然可以通过集群部署应用达到高可用，但是存在着明显的性能瓶颈。</p>
-<p>那么如何提升呢? 核心就是拆、从BG、集群、任务组等拆分，从执行的读库到读内存的DelayQueue、再到线程池，快慢线程池等。</p>
-<ol>
-<li>如果是企业级的分布式调度平台，不要把鸡蛋放到一个篮子，或者在内部不要放在一个篮子，即通过一定方式进行分区，比如按照BG等拆分到不同集群(不同集群间是隔离的，比如数据库等)</li>
-<li>在BG下再拆分到不同机器上，做主从高可用。任务本身不要强依赖数据库，只加载，异步存储保证性能。</li>
-<li>任务拆分可以依赖分片思想拆分。</li>
-</ol>
-<h2 id="相关资料">相关资料</h2>
-<p>Quartz使用和详细流程 https://www.cnblogs.com/wuzhenzhao/p/11751504.html</p>
-
-            </div>
-            
-              <div class="tag-container">
-                
-                  <a href="https://boommanpro.cn/tag/p2xnAT2ZK/" class="tag">
-                    架构师之路
-                  </a>
-                
-                  <a href="https://boommanpro.cn/tag/sDkznJCo8/" class="tag">
-                    后端技术栈
-                  </a>
-                
-              </div>
-            
-            
-              <div class="next-post">
-                <div class="next">下一篇</div>
-                <a href="https://boommanpro.cn/post/javaparser-mvn-plugin/">
-                  <h3 class="post-title">
-                    javaparser-mvn-plugin开发
-                  </h3>
+          
+            <article class="post-item">
+              <div class="left">
+                <a href="https://boommanpro.cn/post/gridea-reference/">
+                  <h2 class="post-title">Gridea 个人搭建教程</h2>
                 </a>
+                <div class="post-date">
+                  2020-01-02
+                </div>
+                <div class="post-abstract">
+                  
+                </div>
               </div>
-            
-
-            
               
-                <div id="gitalk-container" data-aos="fade-in"></div>
-              
+            </article>
+          
 
-              
-            
-
-          </div>
+          <div class="pagination-container">
+  
+    <a href="https://boommanpro.cn/page/9/" class="prev"><i class="icon-arrow-ios-back-outline"></i> 上一页</a>
+  
+  
+</div>
 
         </div>
       </div>
@@ -332,29 +256,6 @@ setTimeout(function () {
         createImgEventFullScreen();
 }, 1000)
 </script>
-
-
-
-  
-    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-    <script>
-
-      var gitalk = new Gitalk({
-        clientID: '604203165ca31f355811',
-        clientSecret: '28129e87b1c6f330265852bb2ae64931391f8898',
-        repo: 'boommanpro.github.io',
-        owner: 'BoomManPro',
-        admin: ['BoomManPro'],
-        id: (location.pathname).substring(0, 49),      // Ensure uniqueness and length less than 50
-        distractionFreeMode: false  // Facebook-like distraction free mode
-      })
-
-      gitalk.render('gitalk-container')
-
-    </script>
-  
-
-  
 
 
 

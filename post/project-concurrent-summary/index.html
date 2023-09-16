@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>并发编程实践 | 夏天时光空间</title>
+<title>如何评估线程池配置 | 夏天时光空间</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1693930116542">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1694838531872">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://boommanpro.cn/">
-        <img src="https://boommanpro.cn//images/avatar.png?v=1693930116542" class="site-logo">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1694838531872" class="site-logo">
         <h1 class="site-title">夏天时光空间</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,12 +112,29 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">并发编程实践</h2>
+            <h2 class="post-title">如何评估线程池配置</h2>
             <div class="post-date">2023-08-15</div>
             
             <div class="post-content">
-              <h2 id="使用场景">使用场景</h2>
-<h2 id="线程评估方式">线程评估方式</h2>
+              <h2 id="线程池的使用场景">线程池的使用场景</h2>
+<p>一、异步化场景，不阻塞主线程<br>
+二、批量场景、提高性能<br>
+一般来说解决高并发、高性能都会应用线程池或线程能力，本文主要想讲清楚如何用好线程池，或者如何评估你用的好不好，回答问题可以自洽。</p>
+<p>示例：</p>
+<ol>
+<li>web容器</li>
+<li>rpc服务端线程池</li>
+<li>rpc请求线程池隔离（限流或者请求池）</li>
+<li>异步任务</li>
+<li>项目框架（xxl-job-executor）</li>
+<li>批量任务</li>
+<li>jdk8 parallelstream</li>
+</ol>
+<h2 id="线程池评估方式">线程池评估方式</h2>
+<h3 id="传统解答">传统解答</h3>
+<ol>
+<li></li>
+</ol>
 <h2 id="最佳实践">最佳实践</h2>
 
             </div>

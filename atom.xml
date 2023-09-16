@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>夏天时光空间</title>
-    <updated>2023-09-05T16:08:54.148Z</updated>
+    <updated>2023-09-16T04:28:54.710Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,73 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2023, 夏天时光空间</rights>
+    <entry>
+        <title type="html"><![CDATA[天翼网关定时重启脚本编写]]></title>
+        <id>https://boommanpro.cn/post/wget-script/</id>
+        <link href="https://boommanpro.cn/post/wget-script/">
+        </link>
+        <updated>2023-09-16T04:13:29.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>天翼网关不支持自动重启，恰好有Padavan二级路由在，所以想通过定时执行脚本重启网关。</p>
+<h2 id="命令解读">命令解读</h2>
+<p>使用light proxy 抓包看具体哪里出错</p>
+<p>-- 设置代理<br>
+-p -e &quot;http_proxy=http://127.0.0.1:12888&quot;</p>
+<p>-- 最大重定向次数<br>
+--max-redirect=0</p>
+<p>-- debug 请求<br>
+-d</p>
+<pre><code class="language-shell">#!/bin/bash
+
+result=$(wget --max-redirect=0 -d --quiet \
+  --method POST \
+  --timeout=0 \
+  --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+  --header 'Accept-Language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7' \
+  --header 'Cache-Control: no-cache' \
+  --header 'Connection: keep-alive' \
+  --header 'Content-Type: application/x-www-form-urlencoded' \
+  --header 'Origin: http://192.168.1.1' \
+  --header 'Pragma: no-cache' \
+  --header 'Referer: http://192.168.1.1/' \
+  --header 'Upgrade-Insecure-Requests: 1' \
+  --header 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36' \
+  --body-data 'username=useradmin&amp;psd=qqq' \
+  'http://192.168.1.1/cgi-bin/luci' 2&gt;&amp;1)
+
+set_cookie=$(echo &quot;$result&quot; | grep -i 'Set-Cookie')
+
+echo $set_cookie
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[WLB摘抄、尝试过好这一生]]></title>
+        <id>https://boommanpro.cn/post/work-life-blance/</id>
+        <link href="https://boommanpro.cn/post/work-life-blance/">
+        </link>
+        <updated>2023-09-12T13:50:36.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="做四休三">做四休三</h2>
+<p>总结就是：周五晚上要去做一件特别的、让自己充满期待的事。让美丽的周五有所期待，周五会过的非常快，就轻松营造出了打工人一周做四休三的错觉。<br>
+【周末延长大法】本人亲测了一周，非常有效，分享给姐妹们:<br>
+1⃣️【工作休息分离法】---【周一到周三】<br>
+上班：周一到周三可以集中处理重要且紧急的工作。<br>
+下班：回家就洗澡，摆脱工作带来的疲惫感。快速给工作和休息做个38线。然后尽情享受休息的时光～追剧、看小说……<br>
+2⃣️【周四清洁日】<br>
+上班：重要工作收尾，如果已经基本完成就适当摸鱼，享受摸鱼的快乐时光。<br>
+下班：周末收拾房间会占用很多周末时光，所以我们将清洁日放工作日，即节约了周末的时光。收拾干净的房屋给迎接周末营造满满的仪式感，有一种周末马上就来了的感觉……<br>
+3⃣️【周五期待日】<br>
+最开心的不是周末，而是周五有没有？因为太有期待了哈哈<br>
+周五不管遇到什么事，让自己拥有一个美好心情。周五上班时可以安排下周末的行程，然后周五晚上要去做一件特别的、让自己会快乐的事，比如：好朋友聚餐、剧本杀、home趴、看电影……爽的不行结束后你发现：竟然还有2天美好的周末在等着你。哇塞～<br>
+4⃣️【周六特种兵日】<br>
+可设置为运动日：周边游、爬山、逛街……解锁周边城市的吃喝玩乐，体验生活在别处的新奇，多多和大自然接触，放松身心，强健体魄！<br>
+5⃣️【周日懒惰日】<br>
+周日安排【躺平】，可以做一些放松身心的活动，比如听听音乐、看治愈系书籍、思考思考人生呀。<br>
+晚上计划下周工作、洗洗本周的衣服、准备好下周一的衣服，然后早睡应该美好的下周……<br>
+以上方法亲测有效，希望可以帮到大家。既然现实生活中我们没办法做到做四休三，我们只能靠自己有做四休三的感觉。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[XXL-JOB 魔改支持SQLite]]></title>
         <id>https://boommanpro.cn/post/xxl-job-modify/</id>
@@ -103,13 +170,30 @@ for(task:taskList){
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[并发编程实践]]></title>
+        <title type="html"><![CDATA[如何评估线程池配置]]></title>
         <id>https://boommanpro.cn/post/project-concurrent-summary/</id>
         <link href="https://boommanpro.cn/post/project-concurrent-summary/">
         </link>
         <updated>2023-08-15T15:21:36.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="使用场景">使用场景</h2>
-<h2 id="线程评估方式">线程评估方式</h2>
+        <content type="html"><![CDATA[<h2 id="线程池的使用场景">线程池的使用场景</h2>
+<p>一、异步化场景，不阻塞主线程<br>
+二、批量场景、提高性能<br>
+一般来说解决高并发、高性能都会应用线程池或线程能力，本文主要想讲清楚如何用好线程池，或者如何评估你用的好不好，回答问题可以自洽。</p>
+<p>示例：</p>
+<ol>
+<li>web容器</li>
+<li>rpc服务端线程池</li>
+<li>rpc请求线程池隔离（限流或者请求池）</li>
+<li>异步任务</li>
+<li>项目框架（xxl-job-executor）</li>
+<li>批量任务</li>
+<li>jdk8 parallelstream</li>
+</ol>
+<h2 id="线程池评估方式">线程池评估方式</h2>
+<h3 id="传统解答">传统解答</h3>
+<ol>
+<li></li>
+</ol>
 <h2 id="最佳实践">最佳实践</h2>
 ]]></content>
     </entry>
@@ -382,121 +466,6 @@ public class ExecCmdUtils {
     }
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[任务调度系统总结]]></title>
-        <id>https://boommanpro.cn/post/distributed-task/</id>
-        <link href="https://boommanpro.cn/post/distributed-task/">
-        </link>
-        <updated>2023-03-31T13:02:37.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="任务调度理解">任务调度理解</h1>
-<h2 id="windows-mac-linux">Windows &amp;&amp; Mac &amp;&amp; Linux</h2>
-<ol>
-<li>windows</li>
-<li>mac</li>
-<li>linux</li>
-</ol>
-<p>操作系统自带的任务调度，主要用于系统服务和简单用户服务</p>
-<h2 id="java原生实现-spring-task">Java原生实现 &amp;&amp; Spring Task</h2>
-<p>模式简单，如果集群部署需要自己解决并发调度问题</p>
-<h2 id="quartz">Quartz</h2>
-<p>Quartz 可以使用数据库+抢占式锁的方式解决服务SPOF问题，但是其缺点是调度和执行耦合，长周期持有锁，导致性能受限。</p>
-<p>Copy From XXL-JOB</p>
-<p>Quartz作为开源作业调度中的佼佼者，是作业调度的首选。但是集群环境中Quartz采用API的方式对任务进行管理，从而可以避免上述问题，但是同样存在以下问题：</p>
-<p>问题一：调用API的的方式操作任务，不人性化；<br>
-问题二：需要持久化业务QuartzJobBean到底层数据表中，系统侵入性相当严重。<br>
-问题三：调度逻辑和QuartzJobBean耦合在同一个项目中，这将导致一个问题，在调度任务数量逐渐增多，同时调度任务逻辑逐渐加重的情况下，此时调度系统的性能将大大受限于业务；<br>
-问题四：quartz底层以“抢占式”获取DB锁并由抢占成功节点负责运行任务，会导致节点负载悬殊非常大；而XXL-JOB通过执行器实现“协同分配式”运行任务，充分发挥集群优势，负载各节点均衡。<br>
-XXL-JOB弥补了quartz的上述不足之处。</p>
-<h2 id="xxl-job">XXL-JOB</h2>
-<p><img src="https://boommanpro.cn//post-images/1680316017479.png" alt="" loading="lazy"><br>
-项目特点：</p>
-<ol>
-<li>项目代码精简易读，<a href="https://www.xuxueli.com/xxl-job/">项目文档齐全</a>，非常适合个人企业魔改使用</li>
-<li>CS架构的RPC调度，集群化部署</li>
-<li>调度中心HA</li>
-<li>任务HA 丰富的路由策略</li>
-<li>调度线程池并行调度，内部也设计了快慢线程池，用于避免调度阻塞。</li>
-<li><a href="https://github.com/BoomManPro/groovy-dynamic-loading">通过groovy动态加载类</a>，支持低代码，配置化维护任务能力</li>
-</ol>
-<pre><code class="language-java">com.xxl.job.admin.core.thread.JobScheduleHelper#start
-
-
- conn = XxlJobAdminConfig.getAdminConfig().getDataSource().getConnection();
-                        connAutoCommit = conn.getAutoCommit();
-                        conn.setAutoCommit(false);
-
-                        preparedStatement = conn.prepareStatement(  &quot;select * from xxl_job_lock where lock_name = 'schedule_lock' for update&quot; );
-                        preparedStatement.execute();
-
-                        // tx start
-
-                        // 1、pre read
-                        long nowTime = System.currentTimeMillis();
-                        List&lt;XxlJobInfo&gt; scheduleList = XxlJobAdminConfig.getAdminConfig().getXxlJobInfoDao().scheduleJobQuery(nowTime + PRE_READ_MS, preReadCount);
-</code></pre>
-<p>注：集群情况下如果任务重复执行，可能是由于表初始化时，xxl_job_lock中 'schedule_lock' 没有插入，导致DB锁失效。<br>
-具体量化指标：单机能够支撑 5000 任务并发运行稳定运行。</p>
-<h2 id="powerjob">PowerJob</h2>
-<p><a href="(https://github.com/PowerJob/PowerJob/issues/427)">Issue</a>简单说就是根据appid 做了任务拆分，保证一个appid 下的任务只会由一台server执行。。但没文档，源码看的还是不大清晰，例如如何感知到新增或删除节点，达到重分配的效果</p>
-<h2 id="企业级任务调度系统">企业级任务调度系统</h2>
-<ol>
-<li>企业级海量任务集中调度
-<ul>
-<li>任务分片</li>
-<li>高可用设计</li>
-</ul>
-</li>
-<li>调度和执行设计</li>
-<li>节点扩缩容等</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CentOs7 Javaer 常见安装整理]]></title>
-        <id>https://boommanpro.cn/post/centos7-javaer-install/</id>
-        <link href="https://boommanpro.cn/post/centos7-javaer-install/">
-        </link>
-        <updated>2023-03-28T00:26:23.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="安装列表">安装列表</h2>
-<table>
-<thead>
-<tr>
-<th>序号</th>
-<th>技术点</th>
-<th>链接</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>MySQL5.7</td>
-<td><a href="https://boommanpro.blog.csdn.net/article/details/80620533">https://boommanpro.blog.csdn.net/article/details/80620533</a></td>
-</tr>
-<tr>
-<td>2</td>
-<td>Redis</td>
-<td><a href="https://boommanpro.blog.csdn.net/article/details/87344509">https://boommanpro.blog.csdn.net/article/details/87344509</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td>Nginx</td>
-<td><a href="https://boommanpro.blog.csdn.net/article/details/72677835">https://boommanpro.blog.csdn.net/article/details/72677835</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td>JDK8</td>
-<td><a href="https://boommanpro.blog.csdn.net/article/details/87345295">https://boommanpro.blog.csdn.net/article/details/87345295</a></td>
-</tr>
-<tr>
-<td>3</td>
-<td>Chrome + Driver</td>
-<td><a href="http://www.boommanpro.cn/post/centos7-selenium/">http://www.boommanpro.cn/post/centos7-selenium/</a></td>
-</tr>
-</tbody>
-</table>
-<p>以上~</p>
 ]]></content>
     </entry>
 </feed>
