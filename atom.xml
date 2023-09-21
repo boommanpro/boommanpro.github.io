@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>夏天时光空间</title>
-    <updated>2023-09-16T07:18:13.787Z</updated>
+    <updated>2023-09-21T12:49:37.676Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -98,6 +98,50 @@ curl --location 'http://192.168.1.1/cgi-bin/luci/admin/reboot' \
 --header 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36' \
 --data-urlencode &quot;token=$token&quot; \
 --data-urlencode '_=0.24887794922555595'
+
+</code></pre>
+<p>python3代码</p>
+<pre><code class="language-python">import requests
+
+password = &quot;xxx&quot;
+
+headers = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'Accept-Language': 'zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Origin': 'http://192.168.1.1',
+    'Pragma': 'no-cache',
+    'Referer': 'http://192.168.1.1/',
+    'Upgrade-Insecure-Requests': '1',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
+}
+
+data = {
+    'username': 'useradmin',
+    'psd': password
+}
+
+
+def main():
+    # 登录获取Cookie
+    response = requests.post('http://192.168.1.1/cgi-bin/luci', headers=headers, data=data, allow_redirects=False)
+    cookie_value = response.headers.get('Set-Cookie').split(';')[0].split('=')[1]
+    cookie_string = f'sysauth={cookie_value}'
+    print(cookie_string)
+    # 发送请求获取token
+    headers['Cookie'] = cookie_string
+    response = requests.get('http://192.168.1.1/cgi-bin/luci/admin/device/pc', headers=headers)
+    token = response.text.split(&quot;token: '&quot;)[1].split(&quot;'&quot;)[0]
+    print(token)
+    payload = f'token={token}&amp;_=0.24887794922555595'
+
+    response = requests.request(&quot;POST&quot;, 'http://192.168.1.1/cgi-bin/luci/admin/reboot', headers=headers, data=payload)
+    print('success')
+
+if __name__ == &quot;__main__&quot;:
+    main()
 
 </code></pre>
 ]]></content>
