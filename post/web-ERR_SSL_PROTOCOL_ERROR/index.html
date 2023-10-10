@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>FRP配置部署 基于最新版本 v0.22.0 | 夏天时光空间</title>
+<title>Mac Chrome 访问自建网站 ERR_SSL_PROTOCOL_ERROR | 夏天时光空间</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -112,188 +112,37 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">FRP配置部署 基于最新版本 v0.22.0</h2>
-            <div class="post-date">2020-01-10</div>
+            <h2 class="post-title">Mac Chrome 访问自建网站 ERR_SSL_PROTOCOL_ERROR</h2>
+            <div class="post-date">2023-10-10</div>
             
             <div class="post-content">
-              <p>作者的项目更新很快，看到我这篇博客看的人也蛮多的，我是搞java web 开发的，为什么这个看的多!!!</p>
-<p>遂跟新client server 配置至 v0.22.0</p>
-<p>作者<a href="https://github.com/fatedier/frp">github地址</a></p>
-<figure data-type="image" tabindex="1"><img src="https://img-blog.csdnimg.cn/20190114170110393.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2Jvb21fbWFu,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" loading="lazy"></figure>
-<hr>
-<h3 id="下面是-v0220的配置">下面是 v0.22.0的配置</h3>
-<h2 id="frpsini">frps.ini</h2>
-<pre><code>[common]
-
-bind_port = 8080
-dashboard_addr = 0.0.0.0
-dashboard_port = 8081
-</code></pre>
-<h2 id="frpcini">frpc.ini</h2>
-<pre><code>[common]
-server_addr = 远程服务地址 域名或者 ip地址都行 就是frps运行的地址  
-server_port = 8080
-
-[ssh]
-type = tcp
-local_ip = 127.0.0.1
-local_port = 3389
-remote_port = 3389
-
-</code></pre>
-<hr>
-<h3 id="下面是093的配置">下面是0.93的配置</h3>
-<p>我的配置文件基于0.93</p>
-<h2 id="frpsini-2">frps.ini</h2>
-<pre><code># [common] is integral section
-
-[common]
-
-# A literal address or host name for IPv6 must be enclosed
-
-# in square brackets, as in &quot;[::1]:80&quot;, &quot;[ipv6-host]:http&quot; or &quot;[ipv6-host%zone]:80&quot;
-
-bind_addr = 0.0.0.0
-# 绑定服务器端口,会被占用
-bind_port = 8089
-
-# if you want to support virtual host, you must set the http port for listening (optional)
-
-vhost_http_port = 80
-
-vhost_https_port = 433
-
-# if you want to configure or reload frps by dashboard, dashboard_port must be set
-# 仪表盘显示地址
-dashboard_port = 7000
-
-# dashboard assets directory(only for debug mode)
-
-# assets_dir = ./static
-
-# console or real logFile path like ./frps.log
-
-log_file = ./frps.log
-
-# debug, info, warn, error
-
-log_level = info
-
-log_max_days = 3
-
-# if you enable privilege mode, frpc can create a proxy without pre-configure in frps when privilege_token is correct
-
-privilege_mode = true
-
-privilege_token = 12345678
-
-# only allow frpc to bind ports you list, if you set nothing, there won't be any limit
-
-privilege_allow_ports = 2000-3000,3001,3003,4000-50000,78,79
-
-# pool_count in each proxy will change to max_pool_count if they exceed the maximum value
-
-max_pool_count = 100
-
- 
-
-# ssh is the proxy name, client will use this name and auth_token to connect to server
-
-[ssh]
-
-type = tcp
-
-auth_token = 123
-
-bind_addr = 0.0.0.0
-
-listen_port = 6000
-
- 
-
-[web01]
-
-# if type equals http, vhost_http_port must be set
-
-type = http
-
-auth_token = 123
-
-# if proxy type equals http, custom_domains must be set separated by commas
-
-#custom_domains = web01.yourdomain.com,web01.yourdomain2.com
-
-custom_domains = 127.0.0.1
-
-[web02]
-
-# if type equals https, vhost_https_port must be set
-
-type = https
-
-auth_token = 123
-
-custom_domains = web02.yourdomain.com
-</code></pre>
-<h2 id="frpcini-2">frpc.ini</h2>
-<pre><code>[common] 
-server_addr = 服务器ip地址 
-privilege_token = 12345678 
-server_port = 8089 
-log_file = frpc.log 
-log_level = info 
-log_max_days = 7 
-
-[tcp_29168] 
-type = tcp 
-remote_port = 29168 
-local_ip = 192.168.1.104 
-local_port = 8080 
-privilege_mode = true 
-authentication_timeout = 0 
-use_encryption = true 
-use_gzip = true 
-
-</code></pre>
-<p>写在最后,frp用了很久了,非常好用,作者在一直更新，相信作者会更好！</p>
-<p>tips:在需要用到服务器时,不需要频繁在服务器上搭建项目,本地通过反向代理,即可在手机端展示.<br>
-尤其是微信小程序！</p>
-<h3 id="windos启动脚本">Windos启动脚本</h3>
-<p>startup.bat</p>
-<pre><code class="language-bat">echo run frp client
-
-frpc.exe -c frpc.ini
-
-pause
-</code></pre>
-<h3 id="linux启动脚本">Linux启动脚本</h3>
-<p>下面是Linux Server 的相关脚本</p>
-<h3 id="startupsh"><code>startup.sh</code></h3>
-<pre><code>#!/bin/bash
-
-nohup ./frps -c ./frps.ini &gt;frps.log 2&gt;&amp;1 &amp;
-</code></pre>
-<h3 id="shutdownsh"><code>shutdown.sh</code></h3>
-<p>注意:<code>需要修改port的值</code></p>
-<pre><code>#!/bin/bash
-## 需要修改port的值
-port=8080
-#根据端口号查询对应的pid
-pid=$(netstat -nlp | grep :$port | awk '{print $7}' | awk -F&quot;/&quot; '{ print $1 }');
-
-#杀掉对应的进程，如果pid不存在，则不执行
-if [  -n  &quot;$pid&quot;  ];  then
-    kill  -9  $pid;
-fi 
-
-</code></pre>
+              <h2 id="背景">背景</h2>
+<p>Mac 升级Sonoma 14.0后忽然发现自建网站https 网站请求出现ERR_SSL_PROTOCOL_ERROR。<br>
+<img src="https://boommanpro.cn//post-images/1696951287063.png" alt="Mac Os 版本" loading="lazy"></p>
+<p>尝试：Windows 10 Chrome、IPhone Chrome、低版本Mac os 访问都正常。<br>
+还有就是请求通过Whistle代理也能正常打开网页了，postman请求也正常。</p>
+<p>一度以为本机代理或者证书出现问题，疯狂重置。。。</p>
+<h2 id="解决方案">解决方案</h2>
+<p>原因是nginx 或者openssl版本过低。参考：<a href="https://www.ffeeii.com/2058.html">https://www.ffeeii.com/2058.html</a></p>
+<ol>
+<li>升级服务器openssl</li>
+<li>安装nginx 可参考 记得升级脚本中nginx版本：<a href="https://blog.csdn.net/boom_man/article/details/72677835?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169695149716800225555189%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&amp;request_id=169695149716800225555189&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-3-72677835-null-null.nonecase&amp;utm_term=nginx&amp;spm=1018.2226.3001.4450">nginx 安装脚本</a></li>
+</ol>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://boommanpro.cn/tag/YtisD-ZVS/" class="tag">
-                    开发工具
+                  <a href="https://boommanpro.cn/tag/faprOoZUc/" class="tag">
+                    运维工具
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/p2xnAT2ZK/" class="tag">
+                    架构师之路
+                  </a>
+                
+                  <a href="https://boommanpro.cn/tag/tba2yedzl/" class="tag">
+                    Linux
                   </a>
                 
               </div>
@@ -301,9 +150,9 @@ fi
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://boommanpro.cn/post/yapi-tools/">
+                <a href="https://boommanpro.cn/post/wget-script/">
                   <h3 class="post-title">
-                    Yapi环境搭建及使用
+                    天翼网关定时重启脚本编写
                   </h3>
                 </a>
               </div>

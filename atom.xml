@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://boommanpro.cn/</id>
     <title>夏天时光空间</title>
-    <updated>2023-09-21T12:49:37.676Z</updated>
+    <updated>2023-10-10T15:26:43.650Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://boommanpro.cn/"/>
     <link rel="self" href="https://boommanpro.cn/atom.xml"/>
@@ -10,6 +10,26 @@
     <logo>https://boommanpro.cn/images/avatar.png</logo>
     <icon>https://boommanpro.cn/favicon.ico</icon>
     <rights>All rights reserved 2023, 夏天时光空间</rights>
+    <entry>
+        <title type="html"><![CDATA[Mac Chrome 访问自建网站 ERR_SSL_PROTOCOL_ERROR]]></title>
+        <id>https://boommanpro.cn/post/web-ERR_SSL_PROTOCOL_ERROR/</id>
+        <link href="https://boommanpro.cn/post/web-ERR_SSL_PROTOCOL_ERROR/">
+        </link>
+        <updated>2023-10-10T15:19:55.000Z</updated>
+        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
+<p>Mac 升级Sonoma 14.0后忽然发现自建网站https 网站请求出现ERR_SSL_PROTOCOL_ERROR。<br>
+<img src="https://boommanpro.cn//post-images/1696951287063.png" alt="Mac Os 版本" loading="lazy"></p>
+<p>尝试：Windows 10 Chrome、IPhone Chrome、低版本Mac os 访问都正常。<br>
+还有就是请求通过Whistle代理也能正常打开网页了，postman请求也正常。</p>
+<p>一度以为本机代理或者证书出现问题，疯狂重置。。。</p>
+<h2 id="解决方案">解决方案</h2>
+<p>原因是nginx 或者openssl版本过低。参考：<a href="https://www.ffeeii.com/2058.html">https://www.ffeeii.com/2058.html</a></p>
+<ol>
+<li>升级服务器openssl</li>
+<li>安装nginx 可参考 记得升级脚本中nginx版本：<a href="https://blog.csdn.net/boom_man/article/details/72677835?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522169695149716800225555189%2522%252C%2522scm%2522%253A%252220140713.130102334.pc%255Fblog.%2522%257D&amp;request_id=169695149716800225555189&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~blog~first_rank_ecpm_v1~rank_v31_ecpm-3-72677835-null-null.nonecase&amp;utm_term=nginx&amp;spm=1018.2226.3001.4450">nginx 安装脚本</a></li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[天翼网关定时重启脚本编写]]></title>
         <id>https://boommanpro.cn/post/wget-script/</id>
@@ -101,9 +121,16 @@ curl --location 'http://192.168.1.1/cgi-bin/luci/admin/reboot' \
 
 </code></pre>
 <p>python3代码</p>
-<pre><code class="language-python">import requests
+<pre><code class="language-python"># -*- coding: utf-8 -*-
+import paramiko
 
-password = &quot;xxx&quot;
+remote_file_path = '/tmp/reload.py'
+
+script_content = '''
+# -*- coding: utf-8 -*-
+import requests
+
+password = &quot;xxxxx&quot;
 
 headers = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -139,6 +166,59 @@ def main():
 
     response = requests.request(&quot;POST&quot;, 'http://192.168.1.1/cgi-bin/luci/admin/reboot', headers=headers, data=payload)
     print('success')
+
+if __name__ == &quot;__main__&quot;:
+    main()
+'''
+
+
+def main():
+    def ssh_execute_command(hostname, port, username, password, command):
+        # 创建SSH客户端对象
+        client = paramiko.SSHClient()
+        # 自动添加和保存远程服务器的SSH密钥
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        try:
+            # 连接远程服务器
+            client.connect(hostname, port=port, username=username, password=password)
+
+            # 执行命令
+            stdin, stdout, stderr = client.exec_command(command)
+
+            # 打印命令执行结果
+            print(stdout.read().decode())
+
+        except paramiko.AuthenticationException:
+            print(&quot;认证失败，请检查用户名和密码&quot;)
+        except paramiko.SSHException as e:
+            print(&quot;SSH连接错误:&quot;, str(e))
+        except Exception as e:
+            print(&quot;连接远程服务器错误:&quot;, str(e))
+        finally:
+            # 关闭SSH连接
+            client.close()
+
+    def uploadFile(hostname, password, port, username):
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname, port, username, password)
+        # 将文本内容写入远程文件
+        sftp = ssh.open_sftp()
+        with sftp.open(remote_file_path, 'w') as remote_file:
+            remote_file.write(script_content)
+
+    # SSH服务器的连接信息
+    hostname = &quot;127.0.0.1&quot;
+    port = 5022
+    username = &quot;admin&quot;
+    password = &quot;xxxxx&quot;
+    # 要写入脚本的内容
+    uploadFile(hostname, password, port, username)
+    # 写入脚本并执行
+    command = 'python3 ' + remote_file_path
+    ssh_execute_command(hostname, port, username, password, command)
+
 
 if __name__ == &quot;__main__&quot;:
     main()
@@ -416,150 +496,6 @@ for(task:taskList){
                 this.isEnd = true;
             }
         }
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Java Windows 执行命令行脚本工具类]]></title>
-        <id>https://boommanpro.cn/post/java-windows-exec/</id>
-        <link href="https://boommanpro.cn/post/java-windows-exec/">
-        </link>
-        <updated>2023-05-09T12:06:22.000Z</updated>
-        <content type="html"><![CDATA[<h2 id="背景">背景</h2>
-<p>Java外调程序，比如frp、进行服务监听，然后保活，如果挂掉，不断拉起等操作</p>
-<h2 id="show-code">Show Code</h2>
-<pre><code class="language-java">import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class ExecCmdResult {
-    private boolean status;
-    private int exitCode;
-    private String execCommand;
-    private String execContent;
-    private Long cost;
-}
-</code></pre>
-<pre><code class="language-java">
-import com.boommanpro.marriott.helper.model.ExecCmdResult;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.concurrent.TimeUnit;
-
-@Slf4j
-public class ExecCmdUtils {
-
-    private final static int BUFFER_SIZE = 1024;
-
-    private final static String DEFAULT_ENCODING = &quot;gbk&quot;;
-
-    private static class ProcessWorker extends Thread {
-        private final Process process;
-        private volatile int exitCode = -99;
-        private volatile boolean completed = false;
-        private volatile String output = &quot;&quot;;
-
-        private ProcessWorker(Process process) {
-            this.process = process;
-        }
-
-        @Override
-        public void run() {
-            try (InputStreamReader reader = new InputStreamReader(
-                    process.getInputStream(), DEFAULT_ENCODING)) {
-
-                StringBuilder log = new StringBuilder();
-                char[] buffer = new char[BUFFER_SIZE];
-                int length;
-                while ((length = reader.read(buffer)) != -1) {
-                    log.append(buffer, 0, length);
-                }
-                output = log.toString();
-                exitCode = process.waitFor();
-                completed = true;
-            } catch (InterruptedException | IOException e) {
-                Thread.currentThread().interrupt();
-            }
-        }
-
-        public int getExitCode() {
-            return exitCode;
-        }
-
-        public String getOutput() {
-            return output;
-        }
-
-        public boolean isCompleted() {
-            return completed;
-        }
-    }
-
-
-    public static ExecCmdResult execCmd(String command) {
-        return execCmd(command, 15);
-    }
-
-
-    public static void execDaemonCmd(String command) {
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(&quot; &quot;));
-        // 合并错误输出流
-        processBuilder.redirectErrorStream(true);
-
-        try {
-            Process process = processBuilder.start();
-            InputStreamReader reader = new InputStreamReader(process.getInputStream(), DEFAULT_ENCODING);
-
-            char[] buffer = new char[BUFFER_SIZE];
-            int length;
-            while ((length = reader.read(buffer)) != -1) {
-                log.info(&quot;command:{},rowOutput:\n{}&quot;, command, new String(buffer, 0, length));
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        throw new RuntimeException(&quot;run error&quot;);
-
-    }
-
-    public static ExecCmdResult execCmd(String command, int timeoutSecond) {
-        long start = System.currentTimeMillis();
-        StringBuilder content = new StringBuilder();
-        ProcessBuilder processBuilder = new ProcessBuilder(command.split(&quot; &quot;));
-        // 合并错误输出流
-        processBuilder.redirectErrorStream(true);
-        Process process;
-        try {
-            process = processBuilder.start();
-        } catch (IOException e) {
-            log.error(&quot;execCmd error, execCmd:{}.e:&quot;, command, e);
-            return new ExecCmdResult(false, -1, command, e.getMessage(), System.currentTimeMillis() - start);
-        }
-
-        ProcessWorker processWorker = new ProcessWorker(process);
-        int exitCode = processWorker.getExitCode();
-        processWorker.start();
-        try {
-            processWorker.join(TimeUnit.SECONDS.toMillis(timeoutSecond));
-            if (processWorker.isCompleted()) {
-                content.append(processWorker.getOutput());
-                exitCode = processWorker.getExitCode();
-            } else {
-                process.destroy();
-                processWorker.interrupt();
-                return new ExecCmdResult(false, processWorker.exitCode, &quot;thread exec timeout&quot;, processWorker.getOutput(), System.currentTimeMillis() - start);
-            }
-        } catch (InterruptedException e) {
-            processWorker.interrupt();
-        }
-        return new ExecCmdResult(exitCode == 0, exitCode, command, content.toString(), System.currentTimeMillis() - start);
-    }
-}
 </code></pre>
 ]]></content>
     </entry>
