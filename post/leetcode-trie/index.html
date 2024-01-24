@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8" >
 
-<title>LeetCode 刷题 前缀树模板 | 夏天时光空间</title>
+<title>LeetCode 刷题 常见算法模板 | 夏天时光空间</title>
 <meta name="description" content="爱生活 , 爱Coding .....">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.7.2/css/all.css" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1696951599513">
+<link rel="shortcut icon" href="https://boommanpro.cn//favicon.ico?v=1706108851644">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://boommanpro.cn//styles/main.css">
 
@@ -45,7 +45,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://boommanpro.cn/">
-        <img src="https://boommanpro.cn//images/avatar.png?v=1696951599513" class="site-logo">
+        <img src="https://boommanpro.cn//images/avatar.png?v=1706108851644" class="site-logo">
         <h1 class="site-title">夏天时光空间</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -112,13 +112,14 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">LeetCode 刷题 前缀树模板</h2>
+            <h2 class="post-title">LeetCode 刷题 常见算法模板</h2>
             <div class="post-date">2023-07-16</div>
             
             <div class="post-content">
               <h2 id="log">Log</h2>
-<p>第 354 场周赛 全部AC了，但是前缀树好久没写花了很长时间，记录一下模板，以后直接copy。</p>
+<p>第 354 场周赛 全部AC了，但是前缀树好久没写花了很长时间，记录一下模板，以后直接copy，后序常见算法模板也会总结下。</p>
 <figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1689478164917.png" alt="" loading="lazy"></figure>
+<h3 id="前缀树算法模板">前缀树算法模板</h3>
 <pre><code class="language-java">        static class Trie {
             private TrieNode root;
 
@@ -209,6 +210,71 @@
 
             public void setIsEnd() {
                 this.isEnd = true;
+            }
+        }
+</code></pre>
+<h3 id="线段树算法模板">线段树算法模板</h3>
+<pre><code class="language-java">        class SegmentTree {
+            int[] tree;
+            int[] nums;
+
+            public SegmentTree(int[] nums) {
+                this.nums = nums;
+                int n = nums.length;
+                int height = (int) Math.ceil(Math.log(n) / Math.log(2));
+                int maxSize = 2 * (int) Math.pow(2, height) - 1;
+                tree = new int[maxSize];
+                buildTree(0, 0, n - 1);
+            }
+
+            private int buildTree(int node, int start, int end) {
+                if (start == end) {
+                    tree[node] = nums[start];
+                    return tree[node];
+                }
+
+                int mid = start + (end - start) / 2;
+                tree[node] = buildTree(2 * node + 1, start, mid) +
+                        buildTree(2 * node + 2, mid + 1, end);
+                return tree[node];
+            }
+
+            public int query(int queryStart, int queryEnd) {
+                return queryHelper(0, 0, nums.length - 1, queryStart, queryEnd);
+            }
+
+            private int queryHelper(int node, int start, int end, int queryStart, int queryEnd) {
+                if (queryStart &lt;= start &amp;&amp; queryEnd &gt;= end) {
+                    return tree[node];
+                }
+
+                if (queryStart &gt; end || queryEnd &lt; start) {
+                    return 0;
+                }
+
+                int mid = start + (end - start) / 2;
+                return queryHelper(2 * node + 1, start, mid, queryStart, queryEnd) +
+                        queryHelper(2 * node + 2, mid + 1, end, queryStart, queryEnd);
+            }
+
+            public void update(int index, int newValue) {
+                int diff = newValue - nums[index];
+                nums[index] = newValue;
+                updateHelper(0, 0, nums.length - 1, index, diff);
+            }
+
+            private void updateHelper(int node, int start, int end, int index, int diff) {
+                if (index &lt; start || index &gt; end) {
+                    return;
+                }
+
+                tree[node] += diff;
+
+                if (start != end) {
+                    int mid = start + (end - start) / 2;
+                    updateHelper(2 * node + 1, start, mid, index, diff);
+                    updateHelper(2 * node + 2, mid + 1, end, index, diff);
+                }
             }
         }
 </code></pre>
