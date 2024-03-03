@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://boommanpro.cn/</id>
+    <id>https://boommanpro.github.io/</id>
     <title>夏天时光空间</title>
-    <updated>2024-01-25T13:46:06.106Z</updated>
+    <updated>2024-03-03T03:30:32.510Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://boommanpro.cn/"/>
-    <link rel="self" href="https://boommanpro.cn/atom.xml"/>
+    <link rel="alternate" href="https://boommanpro.github.io/"/>
+    <link rel="self" href="https://boommanpro.github.io/atom.xml"/>
     <subtitle>爱生活 , 爱Coding .....</subtitle>
-    <logo>https://boommanpro.cn/images/avatar.png</logo>
-    <icon>https://boommanpro.cn/favicon.ico</icon>
+    <logo>https://boommanpro.github.io/images/avatar.png</logo>
+    <icon>https://boommanpro.github.io/favicon.ico</icon>
     <rights>All rights reserved 2024, 夏天时光空间</rights>
     <entry>
         <title type="html"><![CDATA[Mac Chrome 访问自建网站 ERR_SSL_PROTOCOL_ERROR]]></title>
-        <id>https://boommanpro.cn/post/web-ERR_SSL_PROTOCOL_ERROR/</id>
-        <link href="https://boommanpro.cn/post/web-ERR_SSL_PROTOCOL_ERROR/">
+        <id>https://boommanpro.github.io/post/web-ERR_SSL_PROTOCOL_ERROR/</id>
+        <link href="https://boommanpro.github.io/post/web-ERR_SSL_PROTOCOL_ERROR/">
         </link>
         <updated>2023-10-10T15:19:55.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
 <p>Mac 升级Sonoma 14.0后忽然发现自建网站https 网站请求出现ERR_SSL_PROTOCOL_ERROR。<br>
-<img src="https://boommanpro.cn//post-images/1696951287063.png" alt="Mac Os 版本" loading="lazy"></p>
+<img src="https://boommanpro.github.io//post-images/1696951287063.png" alt="Mac Os 版本" loading="lazy"></p>
 <p>尝试：Windows 10 Chrome、IPhone Chrome、低版本Mac os 访问都正常。<br>
 还有就是请求通过Whistle代理也能正常打开网页了，postman请求也正常。</p>
 <p>一度以为本机代理或者证书出现问题，疯狂重置。。。</p>
@@ -32,8 +32,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[天翼网关定时重启脚本编写]]></title>
-        <id>https://boommanpro.cn/post/wget-script/</id>
-        <link href="https://boommanpro.cn/post/wget-script/">
+        <id>https://boommanpro.github.io/post/wget-script/</id>
+        <link href="https://boommanpro.github.io/post/wget-script/">
         </link>
         <updated>2023-09-16T04:13:29.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -228,8 +228,8 @@ if __name__ == &quot;__main__&quot;:
     </entry>
     <entry>
         <title type="html"><![CDATA[WLB摘抄、尝试过好这一生]]></title>
-        <id>https://boommanpro.cn/post/work-life-blance/</id>
-        <link href="https://boommanpro.cn/post/work-life-blance/">
+        <id>https://boommanpro.github.io/post/work-life-blance/</id>
+        <link href="https://boommanpro.github.io/post/work-life-blance/">
         </link>
         <updated>2023-09-12T13:50:36.000Z</updated>
         <content type="html"><![CDATA[<h2 id="做四休三">做四休三</h2>
@@ -254,8 +254,8 @@ if __name__ == &quot;__main__&quot;:
     </entry>
     <entry>
         <title type="html"><![CDATA[XXL-JOB 魔改支持SQLite]]></title>
-        <id>https://boommanpro.cn/post/xxl-job-modify/</id>
-        <link href="https://boommanpro.cn/post/xxl-job-modify/">
+        <id>https://boommanpro.github.io/post/xxl-job-modify/</id>
+        <link href="https://boommanpro.github.io/post/xxl-job-modify/">
         </link>
         <updated>2023-09-05T15:56:10.000Z</updated>
         <content type="html"><![CDATA[<h1 id="使用场景">使用场景</h1>
@@ -284,8 +284,8 @@ if __name__ == &quot;__main__&quot;:
     </entry>
     <entry>
         <title type="html"><![CDATA[项目通用子调度设计]]></title>
-        <id>https://boommanpro.cn/post/project-shceduled-design/</id>
-        <link href="https://boommanpro.cn/post/project-shceduled-design/">
+        <id>https://boommanpro.github.io/post/project-shceduled-design/</id>
+        <link href="https://boommanpro.github.io/post/project-shceduled-design/">
         </link>
         <updated>2023-08-16T14:21:30.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -303,15 +303,15 @@ for(task:taskList){
     updateTaskNextTime(task);
 }
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1692280673565.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1692280673565.png" alt="" loading="lazy"></figure>
 <h2 id="表结构设计">表结构设计</h2>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1692281049404.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.github.io//post-images/1692281049404.png" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[工程中常见的性能优化]]></title>
-        <id>https://boommanpro.cn/post/project-performance-optimization/</id>
-        <link href="https://boommanpro.cn/post/project-performance-optimization/">
+        <id>https://boommanpro.github.io/post/project-performance-optimization/</id>
+        <link href="https://boommanpro.github.io/post/project-performance-optimization/">
         </link>
         <updated>2023-08-15T15:28:12.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -326,8 +326,8 @@ for(task:taskList){
     </entry>
     <entry>
         <title type="html"><![CDATA[旧工程现代化改造]]></title>
-        <id>https://boommanpro.cn/post/project-modernization/</id>
-        <link href="https://boommanpro.cn/post/project-modernization/">
+        <id>https://boommanpro.github.io/post/project-modernization/</id>
+        <link href="https://boommanpro.github.io/post/project-modernization/">
         </link>
         <updated>2023-08-15T15:26:17.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -346,8 +346,8 @@ for(task:taskList){
     </entry>
     <entry>
         <title type="html"><![CDATA[如何评估线程池配置]]></title>
-        <id>https://boommanpro.cn/post/project-concurrent-summary/</id>
-        <link href="https://boommanpro.cn/post/project-concurrent-summary/">
+        <id>https://boommanpro.github.io/post/project-concurrent-summary/</id>
+        <link href="https://boommanpro.github.io/post/project-concurrent-summary/">
         </link>
         <updated>2023-08-15T15:21:36.000Z</updated>
         <content type="html"><![CDATA[<h2 id="线程池的使用场景">线程池的使用场景</h2>
@@ -374,8 +374,8 @@ for(task:taskList){
     </entry>
     <entry>
         <title type="html"><![CDATA[记XXL-JOB服务被攻击日志及修复]]></title>
-        <id>https://boommanpro.cn/post/xxl-job-attack/</id>
-        <link href="https://boommanpro.cn/post/xxl-job-attack/">
+        <id>https://boommanpro.github.io/post/xxl-job-attack/</id>
+        <link href="https://boommanpro.github.io/post/xxl-job-attack/">
         </link>
         <updated>2023-08-11T15:42:33.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -389,21 +389,21 @@ for(task:taskList){
 </ol>
 </li>
 <li>向阿里云提工单举报OSS，期望对方提供上传方，最终判断不出来是病毒，让我去找当地zf，有点搞笑。<br>
-<img src="https://boommanpro.cn//post-images/1692095883734.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1692096051543.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1692096054678.png" alt="" loading="lazy"></li>
+<img src="https://boommanpro.github.io//post-images/1692095883734.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1692096051543.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1692096054678.png" alt="" loading="lazy"></li>
 </ol>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[LeetCode 刷题 常见算法模板]]></title>
-        <id>https://boommanpro.cn/post/leetcode-trie/</id>
-        <link href="https://boommanpro.cn/post/leetcode-trie/">
+        <id>https://boommanpro.github.io/post/leetcode-trie/</id>
+        <link href="https://boommanpro.github.io/post/leetcode-trie/">
         </link>
         <updated>2023-07-16T03:26:10.000Z</updated>
         <content type="html"><![CDATA[<h2 id="log">Log</h2>
 <p>第 354 场周赛 全部AC了，但是前缀树好久没写花了很长时间，记录一下模板，以后直接copy，后序常见算法模板也会总结下。</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1689478164917.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1689478164917.png" alt="" loading="lazy"></figure>
 <h3 id="前缀树算法模板">前缀树算法模板</h3>
 <pre><code class="language-java">        static class Trie {
             private TrieNode root;
@@ -567,8 +567,8 @@ for(task:taskList){
     </entry>
     <entry>
         <title type="html"><![CDATA[Java Windows 执行命令行脚本工具类]]></title>
-        <id>https://boommanpro.cn/post/java-windows-exec/</id>
-        <link href="https://boommanpro.cn/post/java-windows-exec/">
+        <id>https://boommanpro.github.io/post/java-windows-exec/</id>
+        <link href="https://boommanpro.github.io/post/java-windows-exec/">
         </link>
         <updated>2023-05-09T12:06:22.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -711,8 +711,8 @@ public class ExecCmdUtils {
     </entry>
     <entry>
         <title type="html"><![CDATA[任务调度系统总结]]></title>
-        <id>https://boommanpro.cn/post/distributed-task/</id>
-        <link href="https://boommanpro.cn/post/distributed-task/">
+        <id>https://boommanpro.github.io/post/distributed-task/</id>
+        <link href="https://boommanpro.github.io/post/distributed-task/">
         </link>
         <updated>2023-03-31T13:02:37.000Z</updated>
         <content type="html"><![CDATA[<h1 id="任务调度理解">任务调度理解</h1>
@@ -735,7 +735,7 @@ public class ExecCmdUtils {
 问题四：quartz底层以“抢占式”获取DB锁并由抢占成功节点负责运行任务，会导致节点负载悬殊非常大；而XXL-JOB通过执行器实现“协同分配式”运行任务，充分发挥集群优势，负载各节点均衡。<br>
 XXL-JOB弥补了quartz的上述不足之处。</p>
 <h2 id="xxl-job">XXL-JOB</h2>
-<p><img src="https://boommanpro.cn//post-images/1680316017479.png" alt="" loading="lazy"><br>
+<p><img src="https://boommanpro.github.io//post-images/1680316017479.png" alt="" loading="lazy"><br>
 项目特点：</p>
 <ol>
 <li>项目代码精简易读，<a href="https://www.xuxueli.com/xxl-job/">项目文档齐全</a>，非常适合个人企业魔改使用</li>
@@ -780,8 +780,8 @@ XXL-JOB弥补了quartz的上述不足之处。</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[CentOs7 Javaer 常见安装整理]]></title>
-        <id>https://boommanpro.cn/post/centos7-javaer-install/</id>
-        <link href="https://boommanpro.cn/post/centos7-javaer-install/">
+        <id>https://boommanpro.github.io/post/centos7-javaer-install/</id>
+        <link href="https://boommanpro.github.io/post/centos7-javaer-install/">
         </link>
         <updated>2023-03-28T00:26:23.000Z</updated>
         <content type="html"><![CDATA[<h2 id="安装列表">安装列表</h2>
@@ -826,8 +826,8 @@ XXL-JOB弥补了quartz的上述不足之处。</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[EC600NC 4G模块 windows使用教程]]></title>
-        <id>https://boommanpro.cn/post/ec600nc-4g-model/</id>
-        <link href="https://boommanpro.cn/post/ec600nc-4g-model/">
+        <id>https://boommanpro.github.io/post/ec600nc-4g-model/</id>
+        <link href="https://boommanpro.github.io/post/ec600nc-4g-model/">
         </link>
         <updated>2023-03-18T15:15:49.000Z</updated>
         <content type="html"><![CDATA[<h2 id="大致原理">大致原理</h2>
@@ -851,18 +851,18 @@ XXL-JOB弥补了quartz的上述不足之处。</p>
 </li>
 </ol>
 <p>如果第二次插上，进行拨号失败，建议多等一会，比如1min，可能是设备初始化中~</p>
-<p><img src="https://boommanpro.cn//post-images/1679962611327.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1679962614923.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1679962618522.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1679962621527.png" alt="" loading="lazy"></p>
-<p><img src="https://boommanpro.cn//post-images/1679962976394.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1679962307770.png" alt="" loading="lazy"></p>
+<p><img src="https://boommanpro.github.io//post-images/1679962611327.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1679962614923.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1679962618522.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1679962621527.png" alt="" loading="lazy"></p>
+<p><img src="https://boommanpro.github.io//post-images/1679962976394.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1679962307770.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[2022-年终总结]]></title>
-        <id>https://boommanpro.cn/post/2022-end/</id>
-        <link href="https://boommanpro.cn/post/2022-end/">
+        <id>https://boommanpro.github.io/post/2022-end/</id>
+        <link href="https://boommanpro.github.io/post/2022-end/">
         </link>
         <updated>2022-12-31T03:10:31.000Z</updated>
         <content type="html"><![CDATA[<h2 id="今年事项回顾">今年事项回顾</h2>
@@ -879,8 +879,8 @@ XXL-JOB弥补了quartz的上述不足之处。</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[项目服务启动速度提升]]></title>
-        <id>https://boommanpro.cn/post/project-runtime-cost-time-upgrade/</id>
-        <link href="https://boommanpro.cn/post/project-runtime-cost-time-upgrade/">
+        <id>https://boommanpro.github.io/post/project-runtime-cost-time-upgrade/</id>
+        <link href="https://boommanpro.github.io/post/project-runtime-cost-time-upgrade/">
         </link>
         <updated>2022-09-25T13:08:52.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -956,8 +956,8 @@ public class SpringbeanAnalyse implements BeanPostProcessor,
     </entry>
     <entry>
         <title type="html"><![CDATA[Centos7 Selenium+Chrome环境安装]]></title>
-        <id>https://boommanpro.cn/post/centos7-selenium/</id>
-        <link href="https://boommanpro.cn/post/centos7-selenium/">
+        <id>https://boommanpro.github.io/post/centos7-selenium/</id>
+        <link href="https://boommanpro.github.io/post/centos7-selenium/">
         </link>
         <updated>2022-08-20T06:48:38.000Z</updated>
         <content type="html"><![CDATA[<h2 id="核心逻辑">核心逻辑</h2>
@@ -992,8 +992,8 @@ google-chrome --version
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Feign Best Practice]]></title>
-        <id>https://boommanpro.cn/post/spring-feign-best-practice/</id>
-        <link href="https://boommanpro.cn/post/spring-feign-best-practice/">
+        <id>https://boommanpro.github.io/post/spring-feign-best-practice/</id>
+        <link href="https://boommanpro.github.io/post/spring-feign-best-practice/">
         </link>
         <updated>2022-08-12T15:36:02.000Z</updated>
         <content type="html"><![CDATA[<h2 id="maven配置">Maven配置</h2>
@@ -1332,8 +1332,8 @@ public class FtNotifyAccountService {
     </entry>
     <entry>
         <title type="html"><![CDATA[WindowsADSL切换外网Ip + JavaExec工具类]]></title>
-        <id>https://boommanpro.cn/post/adsl-exec-utils/</id>
-        <link href="https://boommanpro.cn/post/adsl-exec-utils/">
+        <id>https://boommanpro.github.io/post/adsl-exec-utils/</id>
+        <link href="https://boommanpro.github.io/post/adsl-exec-utils/">
         </link>
         <updated>2022-08-12T12:06:29.000Z</updated>
         <content type="html"><![CDATA[<h2 id="windowsadsl切换外网ip">WindowsADSL切换外网Ip</h2>
@@ -1583,8 +1583,8 @@ public class ExecCmdUtils {
     </entry>
     <entry>
         <title type="html"><![CDATA[技术文档嵌入Echarts(用图表说话)]]></title>
-        <id>https://boommanpro.cn/post/echarts-show/</id>
-        <link href="https://boommanpro.cn/post/echarts-show/">
+        <id>https://boommanpro.github.io/post/echarts-show/</id>
+        <link href="https://boommanpro.github.io/post/echarts-show/">
         </link>
         <updated>2022-08-11T13:41:02.000Z</updated>
         <content type="html"><![CDATA[<h2 id="echars">Echars</h2>
@@ -1748,8 +1748,8 @@ function loadscript(src){
     </entry>
     <entry>
         <title type="html"><![CDATA[Spock单元测试最佳实践]]></title>
-        <id>https://boommanpro.cn/post/spock-best-practice/</id>
-        <link href="https://boommanpro.cn/post/spock-best-practice/">
+        <id>https://boommanpro.github.io/post/spock-best-practice/</id>
+        <link href="https://boommanpro.github.io/post/spock-best-practice/">
         </link>
         <updated>2022-05-21T16:06:31.000Z</updated>
         <content type="html"><![CDATA[<h1 id="为什么要用spock写单元测试">为什么要用Spock写单元测试</h1>
@@ -1844,9 +1844,9 @@ function loadscript(src){
 </code></pre>
 <h2 id="项目单元测试生成">项目单元测试生成</h2>
 <p>TestMe插件可以一键生成Spock、Junit等测试代码，简单修改就可以完成高代码覆盖</p>
-<p><img src="https://boommanpro.cn//post-images/1653149253728.png" alt="" loading="lazy"><br>
+<p><img src="https://boommanpro.github.io//post-images/1653149253728.png" alt="" loading="lazy"><br>
 Example (Use Generator -&gt; TestMe)<br>
-<img src="https://boommanpro.cn//post-images/1653149241742.png" alt="" loading="lazy"></p>
+<img src="https://boommanpro.github.io//post-images/1653149241742.png" alt="" loading="lazy"></p>
 <h2 id="高阶单元测试用法">高阶单元测试用法</h2>
 <ol>
 <li>Mock静态方法
@@ -1867,8 +1867,8 @@ Example (Use Generator -&gt; TestMe)<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[2021-年终总结]]></title>
-        <id>https://boommanpro.cn/post/2021-annual-report/</id>
-        <link href="https://boommanpro.cn/post/2021-annual-report/">
+        <id>https://boommanpro.github.io/post/2021-annual-report/</id>
+        <link href="https://boommanpro.github.io/post/2021-annual-report/">
         </link>
         <updated>2021-12-31T11:01:32.000Z</updated>
         <content type="html"><![CDATA[<p>加入开水团234天了，一年在换工作，熟悉新工作环境和内容中快速度过。</p>
@@ -1880,8 +1880,8 @@ Example (Use Generator -&gt; TestMe)<br>
     </entry>
     <entry>
         <title type="html"><![CDATA[关于p2p打洞的实现]]></title>
-        <id>https://boommanpro.cn/post/golang-p2p/</id>
-        <link href="https://boommanpro.cn/post/golang-p2p/">
+        <id>https://boommanpro.github.io/post/golang-p2p/</id>
+        <link href="https://boommanpro.github.io/post/golang-p2p/">
         </link>
         <updated>2021-11-14T10:22:14.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -1889,7 +1889,7 @@ Example (Use Generator -&gt; TestMe)<br>
 <p>p2p的话就不需要使用服务器的带宽，取决于本地的上下行情况。<br>
 需要明确的是p2p的两台主机都是内网主机，所以需要通过服务端建立联系。</p>
 <h3 id="frp-传输逻辑">frp 传输逻辑</h3>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1636886986079.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1636886986079.png" alt="" loading="lazy"></figure>
 <p>frps增加日志、印证思路<br>
 在frp的init配置文件中设置log_level = trace 即可。<br>
 关联代码:<br>
@@ -1907,8 +1907,8 @@ client/visitor.go:203</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[分布式任务调度-Quartz]]></title>
-        <id>https://boommanpro.cn/post/distributed-quartz/</id>
-        <link href="https://boommanpro.cn/post/distributed-quartz/">
+        <id>https://boommanpro.github.io/post/distributed-quartz/</id>
+        <link href="https://boommanpro.github.io/post/distributed-quartz/">
         </link>
         <updated>2021-07-31T14:44:38.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -1968,8 +1968,8 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[javaparser-mvn-plugin开发]]></title>
-        <id>https://boommanpro.cn/post/javaparser-mvn-plugin/</id>
-        <link href="https://boommanpro.cn/post/javaparser-mvn-plugin/">
+        <id>https://boommanpro.github.io/post/javaparser-mvn-plugin/</id>
+        <link href="https://boommanpro.github.io/post/javaparser-mvn-plugin/">
         </link>
         <updated>2021-07-29T14:20:27.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -1985,8 +1985,8 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[Windows 《塞尔达传说:旷野之息》 + 良值手柄]]></title>
-        <id>https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/</id>
-        <link href="https://boommanpro.cn/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/">
+        <id>https://boommanpro.github.io/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/</id>
+        <link href="https://boommanpro.github.io/post/windows-lesslesssai-er-da-chuan-shuo-kuang-ye-zhi-xi-greatergreater-liang-zhi-shou-bing/">
         </link>
         <updated>2021-07-04T14:08:22.000Z</updated>
         <content type="html"><![CDATA[<h2 id="准备工作">准备工作</h2>
@@ -2003,15 +2003,15 @@ qsRsrcs.getBatchTimeWindow());
 <li>如果出现陀螺仪飘动，需要校准，可能每次玩都需要校准。</li>
 <li>如果陀螺仪不可用、未出现下列菜单项。需要根据cemu的版本进行更新替换。<br>
 <a href="https://cemuhook.sshnuke.net/">Cemu hook官网</a><br>
-<img src="https://boommanpro.cn//post-images/1636884818307.png" alt="" loading="lazy"></li>
+<img src="https://boommanpro.github.io//post-images/1636884818307.png" alt="" loading="lazy"></li>
 </ol>
 <p>Happy Time !!!</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[2021年6月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-06-log/</id>
-        <link href="https://boommanpro.cn/post/2021-06-log/">
+        <id>https://boommanpro.github.io/post/2021-06-log/</id>
+        <link href="https://boommanpro.github.io/post/2021-06-log/">
         </link>
         <updated>2021-07-02T13:54:55.000Z</updated>
         <content type="html"><![CDATA[<h2 id="工作小结">工作小结</h2>
@@ -2025,8 +2025,8 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[2021年5月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-05-log/</id>
-        <link href="https://boommanpro.cn/post/2021-05-log/">
+        <id>https://boommanpro.github.io/post/2021-05-log/</id>
+        <link href="https://boommanpro.github.io/post/2021-05-log/">
         </link>
         <updated>2021-06-01T12:58:06.000Z</updated>
         <content type="html"><![CDATA[<h2 id="生活小结">生活小结</h2>
@@ -2044,23 +2044,23 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[2021年4月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-04-log/</id>
-        <link href="https://boommanpro.cn/post/2021-04-log/">
+        <id>https://boommanpro.github.io/post/2021-04-log/</id>
+        <link href="https://boommanpro.github.io/post/2021-04-log/">
         </link>
         <updated>2021-04-29T03:41:14.000Z</updated>
         <content type="html"><![CDATA[<h2 id="生活小结">生活小结</h2>
 <p>本次屋子里又新增了智能开关，用于声控(小度音箱)控制卧室和客厅的灯，客服小哥哥nice，电路拍照就行，贼专业。</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1619667786274.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1619667786274.jpg" alt="" loading="lazy"></figure>
 <p>我的电脑桌上增添饮水机，淘宝买怡宝大桶水就行了。终于可以在家方便喝热水了。后悔系列，没有早买。</p>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1619667946227.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.github.io//post-images/1619667946227.jpg" alt="" loading="lazy"></figure>
 <h2 id="工作小结">工作小结</h2>
 <p>本次换工作成功，下个月就去新公司了，干就完事了。</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[关于一些编程书籍推荐]]></title>
-        <id>https://boommanpro.cn/post/book/</id>
-        <link href="https://boommanpro.cn/post/book/">
+        <id>https://boommanpro.github.io/post/book/</id>
+        <link href="https://boommanpro.github.io/post/book/">
         </link>
         <updated>2021-04-24T14:22:08.000Z</updated>
         <content type="html"><![CDATA[<h2 id="http">HTTP</h2>
@@ -2092,8 +2092,8 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[2021年3月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-03-log/</id>
-        <link href="https://boommanpro.cn/post/2021-03-log/">
+        <id>https://boommanpro.github.io/post/2021-03-log/</id>
+        <link href="https://boommanpro.github.io/post/2021-03-log/">
         </link>
         <updated>2021-03-28T03:32:07.000Z</updated>
         <content type="html"><![CDATA[<h2 id="简单小结">简单小结</h2>
@@ -2101,20 +2101,20 @@ qsRsrcs.getBatchTimeWindow());
 <p>成都的酒店现在都是机器人送餐，然后下单冷吃兔后等待外卖送达，在超时了10分钟后，外卖小哥联系到我，说外卖送达，酒店机器人会送到，随即点了送达。又等了10分钟后，外卖还未到，我便打电话问前台情况，又上楼找外卖，在寻找中又问外卖小哥是否送了，他说机器人可能忙，一会就到。就在这时。。我在电梯口碰上了外卖小哥，拿着我的外卖，尴尬一笑。</p>
 <p>程序是不会骗人的，程序员是会骗人的。</p>
 <p>外卖机器人背锅。</p>
-<p><img src="https://boommanpro.cn//post-images/1619667630508.jpg" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1619667633265.jpg" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1619667635927.jpg" alt="" loading="lazy"></p>
+<p><img src="https://boommanpro.github.io//post-images/1619667630508.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1619667633265.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1619667635927.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[2021年1月生活小结]]></title>
-        <id>https://boommanpro.cn/post/2021-01-log/</id>
-        <link href="https://boommanpro.cn/post/2021-01-log/">
+        <id>https://boommanpro.github.io/post/2021-01-log/</id>
+        <link href="https://boommanpro.github.io/post/2021-01-log/">
         </link>
         <updated>2021-01-23T09:36:30.000Z</updated>
         <content type="html"><![CDATA[<h2 id="简单小结">简单小结</h2>
-<p><img src="https://boommanpro.cn//post-images/1611395077323.jpg" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1611394733635.jpg" alt="" loading="lazy"></p>
+<p><img src="https://boommanpro.github.io//post-images/1611395077323.jpg" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1611394733635.jpg" alt="" loading="lazy"></p>
 <p>在1月中旬结束了长时间的出差，暂时撤场回到北京，与我的宝宝一起上下班，好开心😀.</p>
 <h2 id="技术小结">技术小结</h2>
 <p>编写技术博客 3篇，并且对2021年做了flag，希望2021年好好努力</p>
@@ -2127,8 +2127,8 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[Window Tcp 数据篡改]]></title>
-        <id>https://boommanpro.cn/post/window-tcp-update/</id>
-        <link href="https://boommanpro.cn/post/window-tcp-update/">
+        <id>https://boommanpro.github.io/post/window-tcp-update/</id>
+        <link href="https://boommanpro.github.io/post/window-tcp-update/">
         </link>
         <updated>2021-01-07T09:53:28.000Z</updated>
         <content type="html"><![CDATA[<h1 id="背景">背景</h1>
@@ -2185,8 +2185,8 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Boot 2.4 外部化配置的改变]]></title>
-        <id>https://boommanpro.cn/post/spring-boot-external-config/</id>
-        <link href="https://boommanpro.cn/post/spring-boot-external-config/">
+        <id>https://boommanpro.github.io/post/spring-boot-external-config/</id>
+        <link href="https://boommanpro.github.io/post/spring-boot-external-config/">
         </link>
         <updated>2021-01-04T03:15:15.000Z</updated>
         <content type="html"><![CDATA[<h2 id="official-guide">Official Guide</h2>
@@ -2194,9 +2194,9 @@ qsRsrcs.getBatchTimeWindow());
 <p>熟悉外部化配置的同学应该知道，我们获取属性都是从 Bean =&gt; Environment中获取的，所以我们打印 Standard的getPropertySources()即可知道</p>
 <h2 id="同样是外部化配置-springprofilesactivedev">同样是外部化配置 spring.profiles.active=dev</h2>
 <p>2.3.5.RELEASE</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1609730299381.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1609730299381.png" alt="" loading="lazy"></figure>
 <p>2.4.1</p>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1609730341477.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.github.io//post-images/1609730341477.png" alt="" loading="lazy"></figure>
 <h2 id="为什么做了如此改变">为什么做了如此改变</h2>
 <p>官方issue : <a href="https://github.com/spring-projects/spring-boot/issues/2404">#2404</a> =&gt;<a href="https://github.com/spring-projects/spring-boot/issues/3845">#3845</a></p>
 <p>即可了解到 =&gt;<br>
@@ -2213,8 +2213,8 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[spring-boot-devtools 使用引发的一系列问题]]></title>
-        <id>https://boommanpro.cn/post/spring-boot-devtools-error/</id>
-        <link href="https://boommanpro.cn/post/spring-boot-devtools-error/">
+        <id>https://boommanpro.github.io/post/spring-boot-devtools-error/</id>
+        <link href="https://boommanpro.github.io/post/spring-boot-devtools-error/">
         </link>
         <updated>2021-01-03T09:02:08.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -2284,8 +2284,8 @@ qsRsrcs.getBatchTimeWindow());
     </entry>
     <entry>
         <title type="html"><![CDATA[分布式id服务 tinyId源码学习]]></title>
-        <id>https://boommanpro.cn/post/tinyid/</id>
-        <link href="https://boommanpro.cn/post/tinyid/">
+        <id>https://boommanpro.github.io/post/tinyid/</id>
+        <link href="https://boommanpro.github.io/post/tinyid/">
         </link>
         <updated>2020-12-28T06:26:59.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -2304,9 +2304,9 @@ qsRsrcs.getBatchTimeWindow());
 <p>基于高可用,高性能,简单易用性,使用tinyId和学习tinyId源码.<br>
 <code>关于tinyid，并不是滴滴官方产品，只是滴滴拥有的代码。</code></p>
 <p><a href="https://github.com/didi/tinyid/wiki">tinyId-官方wiki</a></p>
-<p><img src="https://boommanpro.cn//post-images/1609137839166.png" alt="" loading="lazy"><br>
+<p><img src="https://boommanpro.github.io//post-images/1609137839166.png" alt="" loading="lazy"><br>
 代码行数统计<br>
-<img src="https://boommanpro.cn//post-images/1609137842127.png" alt="" loading="lazy"></p>
+<img src="https://boommanpro.github.io//post-images/1609137842127.png" alt="" loading="lazy"></p>
 <h2 id="简单使用">简单使用</h2>
 <pre><code class="language-shell">
 ## git原版
@@ -2441,8 +2441,8 @@ remainder 从0按顺序递增
     </entry>
     <entry>
         <title type="html"><![CDATA[嵌入式数据库 Sqlite]]></title>
-        <id>https://boommanpro.cn/post/sqlite/</id>
-        <link href="https://boommanpro.cn/post/sqlite/">
+        <id>https://boommanpro.github.io/post/sqlite/</id>
+        <link href="https://boommanpro.github.io/post/sqlite/">
         </link>
         <updated>2020-12-21T07:51:58.000Z</updated>
         <content type="html"><![CDATA[<h2 id="嵌入式数据库">嵌入式数据库</h2>
@@ -2501,8 +2501,8 @@ Caused by: org.springframework.data.jdbc.repository.config.DialectResolver$NoDia
     </entry>
     <entry>
         <title type="html"><![CDATA[SpringElUtil 工具类]]></title>
-        <id>https://boommanpro.cn/post/springelutil-code/</id>
-        <link href="https://boommanpro.cn/post/springelutil-code/">
+        <id>https://boommanpro.github.io/post/springelutil-code/</id>
+        <link href="https://boommanpro.github.io/post/springelutil-code/">
         </link>
         <updated>2020-12-17T11:05:16.000Z</updated>
         <content type="html"><![CDATA[<h1 id="springelutil-工具类">SpringElUtil 工具类</h1>
@@ -2608,8 +2608,8 @@ T(String).CASE_INSENSITIVE_ORDER
     </entry>
     <entry>
         <title type="html"><![CDATA[VSCode - Alibaba Cloud Toolkit]]></title>
-        <id>https://boommanpro.cn/post/vscode-alibaba-cloud-toolkit/</id>
-        <link href="https://boommanpro.cn/post/vscode-alibaba-cloud-toolkit/">
+        <id>https://boommanpro.github.io/post/vscode-alibaba-cloud-toolkit/</id>
+        <link href="https://boommanpro.github.io/post/vscode-alibaba-cloud-toolkit/">
         </link>
         <updated>2020-12-09T11:04:00.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -2621,24 +2621,24 @@ T(String).CASE_INSENSITIVE_ORDER
 <ol>
 <li>
 <p>下载过程<br>
-<img src="https://boommanpro.cn//post-images/1607512179792.png" alt="" loading="lazy"></p>
+<img src="https://boommanpro.github.io//post-images/1607512179792.png" alt="" loading="lazy"></p>
 </li>
 <li>
 <p>安装</p>
 </li>
 </ol>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1607512218202.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1607512218202.png" alt="" loading="lazy"></figure>
 <h2 id="使用教程-部署到私有服务器上">使用教程 部署到私有服务器上</h2>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1607512315392.png" alt="" loading="lazy"></figure>
-<figure data-type="image" tabindex="3"><img src="https://boommanpro.cn//post-images/1607512518138.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.github.io//post-images/1607512315392.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="3"><img src="https://boommanpro.github.io//post-images/1607512518138.png" alt="" loading="lazy"></figure>
 <h2 id="写在最后">写在最后</h2>
 <p>VSCode - Alibaba Cloud Toolkit 和 IDEA 的plugins 大同小异，使用起来都是一样的。如果上述不满足你的要求，可以对build的前后做aop,增加相关脚本，如备份等等。</p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[高并发数据爬取实战]]></title>
-        <id>https://boommanpro.cn/post/concurrent-crawler/</id>
-        <link href="https://boommanpro.cn/post/concurrent-crawler/">
+        <id>https://boommanpro.github.io/post/concurrent-crawler/</id>
+        <link href="https://boommanpro.github.io/post/concurrent-crawler/">
         </link>
         <updated>2020-12-01T07:39:39.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -2680,8 +2680,8 @@ adfa-20932-ada-dafa2,http://xxxxx
     </entry>
     <entry>
         <title type="html"><![CDATA[Java类注释解析]]></title>
-        <id>https://boommanpro.cn/post/java-parser/</id>
-        <link href="https://boommanpro.cn/post/java-parser/">
+        <id>https://boommanpro.github.io/post/java-parser/</id>
+        <link href="https://boommanpro.github.io/post/java-parser/">
         </link>
         <updated>2020-11-19T09:31:20.000Z</updated>
         <content type="html"><![CDATA[<h2 id="需求背景">需求背景</h2>
@@ -2700,7 +2700,7 @@ adfa-20932-ada-dafa2,http://xxxxx
 <ol>
 <li>git clone https://github.com/geningxiang/javadoc-help.git</li>
 <li>修改如下文件的如下信息<br>
-<img src="https://boommanpro.cn//post-images/1605779488382.png" alt="" loading="lazy"></li>
+<img src="https://boommanpro.github.io//post-images/1605779488382.png" alt="" loading="lazy"></li>
 <li>进行相关扩展</li>
 </ol>
 <p>如 =&gt; 将读取到的信息存储在excel中或者mysql中<br>
@@ -2728,13 +2728,13 @@ mvn javadoc-mvn:javaDoc
     </entry>
     <entry>
         <title type="html"><![CDATA[Linux Socket状态及含义]]></title>
-        <id>https://boommanpro.cn/post/linux-socket-state/</id>
-        <link href="https://boommanpro.cn/post/linux-socket-state/">
+        <id>https://boommanpro.github.io/post/linux-socket-state/</id>
+        <link href="https://boommanpro.github.io/post/linux-socket-state/">
         </link>
         <updated>2020-11-09T07:40:15.000Z</updated>
         <content type="html"><![CDATA[<h2 id="linux-socket状态及含义">Linux Socket状态及含义</h2>
 <p>linux 主机 <code>man netstat</code> 有些是11个状态，有些是12个状态 区别在是否有CLOSED 套接字未用</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1606810162986.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1606810162986.png" alt="" loading="lazy"></figure>
 <p>我们假设都是客户端断开连接</p>
 <table>
 <thead>
@@ -2827,8 +2827,8 @@ FRAG：使用的IP段数量</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[台式电脑开机棒(配合小度音响)]]></title>
-        <id>https://boommanpro.cn/post/desktop-open/</id>
-        <link href="https://boommanpro.cn/post/desktop-open/">
+        <id>https://boommanpro.github.io/post/desktop-open/</id>
+        <link href="https://boommanpro.github.io/post/desktop-open/">
         </link>
         <updated>2020-10-22T07:50:15.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -2851,8 +2851,8 @@ FRAG：使用的IP段数量</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Java 线上常见命令]]></title>
-        <id>https://boommanpro.cn/post/java-online-command/</id>
-        <link href="https://boommanpro.cn/post/java-online-command/">
+        <id>https://boommanpro.github.io/post/java-online-command/</id>
+        <link href="https://boommanpro.github.io/post/java-online-command/">
         </link>
         <updated>2020-10-10T09:48:23.000Z</updated>
         <content type="html"><![CDATA[<h1 id="overview">Overview</h1>
@@ -3089,8 +3089,8 @@ jinfo -flag +PrintGC pid
     </entry>
     <entry>
         <title type="html"><![CDATA[记录 一个客户需要双节点服务的解决方案]]></title>
-        <id>https://boommanpro.cn/post/nginx-load-balance/</id>
-        <link href="https://boommanpro.cn/post/nginx-load-balance/">
+        <id>https://boommanpro.github.io/post/nginx-load-balance/</id>
+        <link href="https://boommanpro.github.io/post/nginx-load-balance/">
         </link>
         <updated>2020-09-28T08:58:37.000Z</updated>
         <content type="html"><![CDATA[<h2 id="项目背景">项目背景</h2>
@@ -3138,8 +3138,8 @@ jinfo -flag +PrintGC pid
     </entry>
     <entry>
         <title type="html"><![CDATA[Java 锁相关汇总]]></title>
-        <id>https://boommanpro.cn/post/java-synchronized/</id>
-        <link href="https://boommanpro.cn/post/java-synchronized/">
+        <id>https://boommanpro.github.io/post/java-synchronized/</id>
+        <link href="https://boommanpro.github.io/post/java-synchronized/">
         </link>
         <updated>2020-09-06T14:22:48.000Z</updated>
         <content type="html"><![CDATA[<h1 id="java-锁相关汇总">Java 锁相关汇总</h1>
@@ -3219,8 +3219,8 @@ Mark Word的最后2bit是锁标志位，代表当前对象处于哪种锁状态�
     </entry>
     <entry>
         <title type="html"><![CDATA[算法: 随机生成大数 并且相加]]></title>
-        <id>https://boommanpro.cn/post/arithmetic-ramdom-add/</id>
-        <link href="https://boommanpro.cn/post/arithmetic-ramdom-add/">
+        <id>https://boommanpro.github.io/post/arithmetic-ramdom-add/</id>
+        <link href="https://boommanpro.github.io/post/arithmetic-ramdom-add/">
         </link>
         <updated>2020-09-06T14:09:10.000Z</updated>
         <content type="html"><![CDATA[<p>100-200位的大数</p>
@@ -3366,8 +3366,8 @@ public class ByteDance1Test {
     </entry>
     <entry>
         <title type="html"><![CDATA[MySql 语句编写]]></title>
-        <id>https://boommanpro.cn/post/mysql-query-write/</id>
-        <link href="https://boommanpro.cn/post/mysql-query-write/">
+        <id>https://boommanpro.github.io/post/mysql-query-write/</id>
+        <link href="https://boommanpro.github.io/post/mysql-query-write/">
         </link>
         <updated>2020-09-06T14:08:25.000Z</updated>
         <content type="html"><![CDATA[<h1 id="背景">背景</h1>
@@ -3390,8 +3390,8 @@ public class ByteDance1Test {
     </entry>
     <entry>
         <title type="html"><![CDATA[MySql 索引复习]]></title>
-        <id>https://boommanpro.cn/post/mysql-index/</id>
-        <link href="https://boommanpro.cn/post/mysql-index/">
+        <id>https://boommanpro.github.io/post/mysql-index/</id>
+        <link href="https://boommanpro.github.io/post/mysql-index/">
         </link>
         <updated>2020-09-06T14:07:03.000Z</updated>
         <content type="html"><![CDATA[<h1 id="mysql索引复习">Mysql索引复习</h1>
@@ -3426,8 +3426,8 @@ public class ByteDance1Test {
     </entry>
     <entry>
         <title type="html"><![CDATA[Linux 常见命令汇总]]></title>
-        <id>https://boommanpro.cn/post/linux-comman/</id>
-        <link href="https://boommanpro.cn/post/linux-comman/">
+        <id>https://boommanpro.github.io/post/linux-comman/</id>
+        <link href="https://boommanpro.github.io/post/linux-comman/">
         </link>
         <updated>2020-09-06T14:05:34.000Z</updated>
         <content type="html"><![CDATA[<h1 id="linux-常见命令">Linux 常见命令</h1>
@@ -3545,8 +3545,8 @@ curl 'https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=xxxxx' \
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Kafka 消费端在指定时间段消费]]></title>
-        <id>https://boommanpro.cn/post/spring-kafka-consumer-time-bucket/</id>
-        <link href="https://boommanpro.cn/post/spring-kafka-consumer-time-bucket/">
+        <id>https://boommanpro.github.io/post/spring-kafka-consumer-time-bucket/</id>
+        <link href="https://boommanpro.github.io/post/spring-kafka-consumer-time-bucket/">
         </link>
         <updated>2020-06-25T06:25:00.000Z</updated>
         <content type="html"><![CDATA[<h2 id="业务背景">业务背景</h2>
@@ -3621,8 +3621,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[如何写出能引发内存泄露的代码?]]></title>
-        <id>https://boommanpro.cn/post/java-memory-leak/</id>
-        <link href="https://boommanpro.cn/post/java-memory-leak/">
+        <id>https://boommanpro.github.io/post/java-memory-leak/</id>
+        <link href="https://boommanpro.github.io/post/java-memory-leak/">
         </link>
         <updated>2020-06-04T08:01:39.000Z</updated>
         <content type="html"><![CDATA[<h2 id="内存泄露">内存泄露</h2>
@@ -3636,8 +3636,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring 相关命名总结]]></title>
-        <id>https://boommanpro.cn/post/spring-name-design/</id>
-        <link href="https://boommanpro.cn/post/spring-name-design/">
+        <id>https://boommanpro.github.io/post/spring-name-design/</id>
+        <link href="https://boommanpro.github.io/post/spring-name-design/">
         </link>
         <updated>2020-06-03T07:32:45.000Z</updated>
         <content type="html"><![CDATA[<h2 id="spring-web">Spring Web</h2>
@@ -3671,8 +3671,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[Bean Validation]]></title>
-        <id>https://boommanpro.cn/post/bean-validation/</id>
-        <link href="https://boommanpro.cn/post/bean-validation/">
+        <id>https://boommanpro.github.io/post/bean-validation/</id>
+        <link href="https://boommanpro.github.io/post/bean-validation/">
         </link>
         <updated>2020-06-01T01:13:45.000Z</updated>
         <content type="html"><![CDATA[<h2 id="background">Background</h2>
@@ -3755,8 +3755,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[正则最短匹配]]></title>
-        <id>https://boommanpro.cn/post/regex-match/</id>
-        <link href="https://boommanpro.cn/post/regex-match/">
+        <id>https://boommanpro.github.io/post/regex-match/</id>
+        <link href="https://boommanpro.github.io/post/regex-match/">
         </link>
         <updated>2020-05-15T09:12:19.000Z</updated>
         <content type="html"><![CDATA[<h2 id="贪婪与懒惰">贪婪与懒惰</h2>
@@ -3804,8 +3804,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[基于LightProxy的前后端调试]]></title>
-        <id>https://boommanpro.cn/post/tools-lightproxy/</id>
-        <link href="https://boommanpro.cn/post/tools-lightproxy/">
+        <id>https://boommanpro.github.io/post/tools-lightproxy/</id>
+        <link href="https://boommanpro.github.io/post/tools-lightproxy/">
         </link>
         <updated>2020-05-06T14:15:18.000Z</updated>
         <content type="html"><![CDATA[<h2 id="lightproxy">LightProxy</h2>
@@ -3847,8 +3847,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[基于Quartz  分布式任务调度 ]]></title>
-        <id>https://boommanpro.cn/post/spring-distributed-quartz/</id>
-        <link href="https://boommanpro.cn/post/spring-distributed-quartz/">
+        <id>https://boommanpro.github.io/post/spring-distributed-quartz/</id>
+        <link href="https://boommanpro.github.io/post/spring-distributed-quartz/">
         </link>
         <updated>2020-05-06T06:10:53.000Z</updated>
         <content type="html"><![CDATA[<h1 id="分布式定时任务">分布式定时任务</h1>
@@ -3887,8 +3887,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[搜索引擎使用技巧]]></title>
-        <id>https://boommanpro.cn/post/searching-skill/</id>
-        <link href="https://boommanpro.cn/post/searching-skill/">
+        <id>https://boommanpro.github.io/post/searching-skill/</id>
+        <link href="https://boommanpro.github.io/post/searching-skill/">
         </link>
         <updated>2020-05-04T13:32:53.000Z</updated>
         <content type="html"><![CDATA[<h2 id="背景">背景</h2>
@@ -3973,8 +3973,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Enum Strategy Pattern]]></title>
-        <id>https://boommanpro.cn/post/spring-enum-strategy-pattern/</id>
-        <link href="https://boommanpro.cn/post/spring-enum-strategy-pattern/">
+        <id>https://boommanpro.github.io/post/spring-enum-strategy-pattern/</id>
+        <link href="https://boommanpro.github.io/post/spring-enum-strategy-pattern/">
         </link>
         <updated>2020-05-04T11:09:39.000Z</updated>
         <content type="html"><![CDATA[<h2 id="introduce">Introduce</h2>
@@ -3987,8 +3987,8 @@ registry.getListenerContainer(&quot;id&quot;)
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Boot linux 运维脚本]]></title>
-        <id>https://boommanpro.cn/post/spring-boot-linux-script/</id>
-        <link href="https://boommanpro.cn/post/spring-boot-linux-script/">
+        <id>https://boommanpro.github.io/post/spring-boot-linux-script/</id>
+        <link href="https://boommanpro.github.io/post/spring-boot-linux-script/">
         </link>
         <updated>2020-05-03T06:13:36.000Z</updated>
         <content type="html"><![CDATA[<h2 id="项目结构">项目结构</h2>
@@ -4242,8 +4242,8 @@ exit 0
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring 扩展点梳理]]></title>
-        <id>https://boommanpro.cn/post/spring-boot-extension-points/</id>
-        <link href="https://boommanpro.cn/post/spring-boot-extension-points/">
+        <id>https://boommanpro.github.io/post/spring-boot-extension-points/</id>
+        <link href="https://boommanpro.github.io/post/spring-boot-extension-points/">
         </link>
         <updated>2020-04-24T03:54:07.000Z</updated>
         <content type="html"><![CDATA[<h1 id="背景-可能你想干的事">背景 &amp;&amp; 可能你想干的事</h1>
@@ -4335,13 +4335,13 @@ SmartInitializingSingleton</p>
 <h2 id="写在最后">写在最后</h2>
 <p>以上仅仅是自己工作中总结到的一些点，Spring Boot (Spring Core) 本身扩展点就很多，如果你集成其他框架，那就更多了，所以有时间还是可以多看看源码的。</p>
 <h3 id="more-and-more">More and More</h3>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1601451931277.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1601451931277.jpg" alt="" loading="lazy"></figure>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[WebSocket获取客户端ip]]></title>
-        <id>https://boommanpro.cn/post/spring-websocket/</id>
-        <link href="https://boommanpro.cn/post/spring-websocket/">
+        <id>https://boommanpro.github.io/post/spring-websocket/</id>
+        <link href="https://boommanpro.github.io/post/spring-websocket/">
         </link>
         <updated>2020-04-23T12:30:14.000Z</updated>
         <content type="html"><![CDATA[<h1 id="问题背景">问题背景</h1>
@@ -4531,8 +4531,8 @@ public class WebSocketPractice {
     </entry>
     <entry>
         <title type="html"><![CDATA[项目Maven使用总结]]></title>
-        <id>https://boommanpro.cn/post/java-maven/</id>
-        <link href="https://boommanpro.cn/post/java-maven/">
+        <id>https://boommanpro.github.io/post/java-maven/</id>
+        <link href="https://boommanpro.github.io/post/java-maven/">
         </link>
         <updated>2020-04-22T08:22:39.000Z</updated>
         <content type="html"><![CDATA[<h1 id="maven">Maven</h1>
@@ -4736,8 +4736,8 @@ mvn deploy,包含mvn install,然后，上传到私服</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring 多级缓存]]></title>
-        <id>https://boommanpro.cn/post/spring-cahce/</id>
-        <link href="https://boommanpro.cn/post/spring-cahce/">
+        <id>https://boommanpro.github.io/post/spring-cahce/</id>
+        <link href="https://boommanpro.github.io/post/spring-cahce/">
         </link>
         <updated>2020-04-14T12:52:26.000Z</updated>
         <content type="html"><![CDATA[<h2 id="why-use-cache">Why Use Cache</h2>
@@ -4767,7 +4767,7 @@ CPU需要数据时先从L1/L2中读取，如果没有到内存中找，如果还
 <h2 id="spring-cache-abstraction">Spring Cache Abstraction</h2>
 <p><a href="https://docs.spring.io/spring/docs/5.2.5.RELEASE/spring-framework-reference/integration.html#cache">spring-framework cache guide</a></p>
 <p>spring boot import Initializr use:<br>
-<img src="https://boommanpro.cn//post-images/1587020846600.png" alt="" loading="lazy"></p>
+<img src="https://boommanpro.github.io//post-images/1587020846600.png" alt="" loading="lazy"></p>
 <pre><code class="language-java">       &lt;dependency&gt;
             &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
             &lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;
@@ -4780,7 +4780,7 @@ CPU需要数据时先从L1/L2中读取，如果没有到内存中找，如果还
 <h2 id="spring-cache-jsr-107-注解规范">Spring Cache &amp; JSR 107 注解规范</h2>
 <p><a href="https://docs.spring.io/spring/docs/5.2.5.RELEASE/spring-framework-reference/integration.html#cache-jsr-107">Spring Cache &amp; JSR 107 注解规范</a></p>
 <h2 id="自定义缓存来实现多级缓存">自定义缓存来实现多级缓存</h2>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1587020719447.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1587020719447.jpg" alt="" loading="lazy"></figure>
 <h3 id="多进程缓存">多进程缓存</h3>
 <p>If you have a multi-process environment (that is, an application deployed on several nodes), you need to configure your cache provider accordingly. Depending on your use cases, a copy of the same data on several nodes can be enough. However, if you change the data during the course of the application, you may need to enable other propagation mechanisms.</p>
 <p>如果在多进程环境下使用缓存,在修改数据时,需要将缓存传播修改。</p>
@@ -4801,8 +4801,8 @@ CPU需要数据时先从L1/L2中读取，如果没有到内存中找，如果还
     </entry>
     <entry>
         <title type="html"><![CDATA[Java 异常体系]]></title>
-        <id>https://boommanpro.cn/post/java-exception-system/</id>
-        <link href="https://boommanpro.cn/post/java-exception-system/">
+        <id>https://boommanpro.github.io/post/java-exception-system/</id>
+        <link href="https://boommanpro.github.io/post/java-exception-system/">
         </link>
         <updated>2020-04-14T03:22:17.000Z</updated>
         <content type="html"><![CDATA[<h1 id="异常为了解决什么问题">异常为了解决什么问题?</h1>
@@ -4818,8 +4818,8 @@ CPU需要数据时先从L1/L2中读取，如果没有到内存中找，如果还
     </entry>
     <entry>
         <title type="html"><![CDATA[一种项目数据库的管理办法]]></title>
-        <id>https://boommanpro.cn/post/db-manager-method/</id>
-        <link href="https://boommanpro.cn/post/db-manager-method/">
+        <id>https://boommanpro.github.io/post/db-manager-method/</id>
+        <link href="https://boommanpro.github.io/post/db-manager-method/">
         </link>
         <updated>2020-04-08T02:42:02.000Z</updated>
         <content type="html"><![CDATA[<h2 id="需求背景">需求背景</h2>
@@ -4850,8 +4850,8 @@ CPU需要数据时先从L1/L2中读取，如果没有到内存中找，如果还
     </entry>
     <entry>
         <title type="html"><![CDATA[MYSQL 事务总结]]></title>
-        <id>https://boommanpro.cn/post/mysql-transactional-summary/</id>
-        <link href="https://boommanpro.cn/post/mysql-transactional-summary/">
+        <id>https://boommanpro.github.io/post/mysql-transactional-summary/</id>
+        <link href="https://boommanpro.github.io/post/mysql-transactional-summary/">
         </link>
         <updated>2020-03-19T06:47:56.000Z</updated>
         <content type="html"><![CDATA[<h2 id="问题汇总">问题汇总</h2>
@@ -5010,8 +5010,8 @@ CPU需要数据时先从L1/L2中读取，如果没有到内存中找，如果还
     </entry>
     <entry>
         <title type="html"><![CDATA[夜半,失眠 做一些改变 ]]></title>
-        <id>https://boommanpro.cn/post/happy-life-2020-03-15/</id>
-        <link href="https://boommanpro.cn/post/happy-life-2020-03-15/">
+        <id>https://boommanpro.github.io/post/happy-life-2020-03-15/</id>
+        <link href="https://boommanpro.github.io/post/happy-life-2020-03-15/">
         </link>
         <updated>2020-03-14T16:35:30.000Z</updated>
         <content type="html"><![CDATA[<h1 id="time-20200315-计划">Time: 2020/03/15 计划</h1>
@@ -5028,7 +5028,7 @@ CPU需要数据时先从L1/L2中读取，如果没有到内存中找，如果还
 </li>
 </ol>
 <p>小记: 用vue完成了前三点,实现了用户登录认证和番茄功能,最终开发除了web版本,但是没有开发Electron版本.</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1586826403920.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1586826403920.png" alt="" loading="lazy"></figure>
 <p>大致用了一下模块</p>
 <ul>
 <li>axios</li>
@@ -5054,8 +5054,8 @@ CPU需要数据时先从L1/L2中读取，如果没有到内存中找，如果还
     </entry>
     <entry>
         <title type="html"><![CDATA[让@EnableConfigurationProperties的值注入到@Value中]]></title>
-        <id>https://boommanpro.cn/post/spring-boot-enableConfigurationProperties/</id>
-        <link href="https://boommanpro.cn/post/spring-boot-enableConfigurationProperties/">
+        <id>https://boommanpro.github.io/post/spring-boot-enableConfigurationProperties/</id>
+        <link href="https://boommanpro.github.io/post/spring-boot-enableConfigurationProperties/">
         </link>
         <updated>2020-03-03T15:35:31.000Z</updated>
         <content type="html"><![CDATA[<h1 id="需求背景">需求背景</h1>
@@ -5140,7 +5140,7 @@ public class TaskConfigProperties implements InitializingBean , EnvironmentPostP
 <pre><code class="language-properties">org.springframework.boot.env.EnvironmentPostProcessor=\
 cn.boommanpro.config.TaskConfigProperties
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1583254295303.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1583254295303.png" alt="" loading="lazy"></figure>
 <p>所以addLast是优先级最低的，让我们新加入的配置优先级最低。</p>
 <p>以上就简单的完成了我们的需求。</p>
 <h2 id="最终实现">最终实现</h2>
@@ -5277,8 +5277,8 @@ cn.boommanpro.annotation.EnableBindEnvironmentPropertiesRegister
     </entry>
     <entry>
         <title type="html"><![CDATA[linux 常用命令 - for BoomMan]]></title>
-        <id>https://boommanpro.cn/post/linux-command-summary/</id>
-        <link href="https://boommanpro.cn/post/linux-command-summary/">
+        <id>https://boommanpro.github.io/post/linux-command-summary/</id>
+        <link href="https://boommanpro.github.io/post/linux-command-summary/">
         </link>
         <updated>2020-03-01T06:45:00.000Z</updated>
         <content type="html"><![CDATA[<h1 id="常用命令">常用命令</h1>
@@ -5375,16 +5375,16 @@ N    查找上一处</p>
 <li>操作系统 windows,mac,linux都支持</li>
 </ul>
 <h3 id="vim-快捷键">Vim 快捷键</h3>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1586845706978.gif" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1586845706978.gif" alt="" loading="lazy"></figure>
 <h3 id="git-快捷键">Git 快捷键</h3>
-<p><img src="https://boommanpro.cn//post-images/1586845719210.png" alt="" loading="lazy"><br>
-<img src="https://boommanpro.cn//post-images/1586845724526.jpg" alt="" loading="lazy"></p>
+<p><img src="https://boommanpro.github.io//post-images/1586845719210.png" alt="" loading="lazy"><br>
+<img src="https://boommanpro.github.io//post-images/1586845724526.jpg" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[Java 通过模板生成word文档]]></title>
-        <id>https://boommanpro.cn/post/java-generate-word/</id>
-        <link href="https://boommanpro.cn/post/java-generate-word/">
+        <id>https://boommanpro.github.io/post/java-generate-word/</id>
+        <link href="https://boommanpro.github.io/post/java-generate-word/">
         </link>
         <updated>2020-03-01T04:46:52.000Z</updated>
         <content type="html"><![CDATA[<h1 id="需求场景">需求场景</h1>
@@ -5423,7 +5423,7 @@ N    查找上一处</p>
 </ol>
 <h3 id="步骤二">步骤二</h3>
 <p>将word文件另存为:</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1583038948108.png" alt="word" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1583038948108.png" alt="word" loading="lazy"></figure>
 <h3 id="步骤三">步骤三</h3>
 <p>编辑xml文件,查询<code>${xxx}</code>是否完整,没有错位</p>
 <ol start="2">
@@ -5463,7 +5463,7 @@ N    查找上一处</p>
 <ol>
 <li>比如你用到了 word 华文仿宋GB2312字体,一定要看自己电脑是否装了这个字体，否则符号 数字 等会分割开，<code>${xxx}</code>在xml中会分隔开，达不到替换的目的</li>
 </ol>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1583117297658.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.github.io//post-images/1583117297658.png" alt="" loading="lazy"></figure>
 <ol start="2">
 <li>早期的WPS可能不支持 word.doc 升级下wps，而不是单纯的换技术</li>
 </ol>
@@ -5471,8 +5471,8 @@ N    查找上一处</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[HTTP 缓存详解]]></title>
-        <id>https://boommanpro.cn/post/http-huan-cun-xiang-jie/</id>
-        <link href="https://boommanpro.cn/post/http-huan-cun-xiang-jie/">
+        <id>https://boommanpro.github.io/post/http-huan-cun-xiang-jie/</id>
+        <link href="https://boommanpro.github.io/post/http-huan-cun-xiang-jie/">
         </link>
         <updated>2020-02-25T02:44:07.000Z</updated>
         <content type="html"><![CDATA[<p>常见禁止缓存的方式  请求后+v_发布版本的时间戳(毫秒)</p>
@@ -5483,8 +5483,8 @@ N    查找上一处</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[项目开发总结]]></title>
-        <id>https://boommanpro.cn/post/project-dev-summary/</id>
-        <link href="https://boommanpro.cn/post/project-dev-summary/">
+        <id>https://boommanpro.github.io/post/project-dev-summary/</id>
+        <link href="https://boommanpro.github.io/post/project-dev-summary/">
         </link>
         <updated>2020-02-22T12:46:13.000Z</updated>
         <content type="html"><![CDATA[<ol>
@@ -5528,11 +5528,11 @@ N    查找上一处</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[腾讯云开发者服务器申请]]></title>
-        <id>https://boommanpro.cn/post/tx-cloud-server/</id>
-        <link href="https://boommanpro.cn/post/tx-cloud-server/">
+        <id>https://boommanpro.github.io/post/tx-cloud-server/</id>
+        <link href="https://boommanpro.github.io/post/tx-cloud-server/">
         </link>
         <updated>2020-02-18T14:11:06.000Z</updated>
-        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1582037791930.png" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1582037791930.png" alt="" loading="lazy"></figure>
 <p>我的邀请Link : <a href="http://cloud.tencent.com/act/developer?sk=00c6d3faf36234a64c4e2cda8099cb3b">腾讯云开发者</a></p>
 <h3 id="学习到了一些小命令">学习到了一些小命令</h3>
 <ol>
@@ -5553,8 +5553,8 @@ N    查找上一处</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring State Machine Practice]]></title>
-        <id>https://boommanpro.cn/post/spring-state-machine-practice/</id>
-        <link href="https://boommanpro.cn/post/spring-state-machine-practice/">
+        <id>https://boommanpro.github.io/post/spring-state-machine-practice/</id>
+        <link href="https://boommanpro.github.io/post/spring-state-machine-practice/">
         </link>
         <updated>2020-02-14T15:45:08.000Z</updated>
         <content type="html"><![CDATA[<h2 id="guide">Guide</h2>
@@ -5764,8 +5764,8 @@ public interface StateMachineTransitionConfigurer&lt;S, E&gt; {
     </entry>
     <entry>
         <title type="html"><![CDATA[OkHttpClient 重试处理]]></title>
-        <id>https://boommanpro.cn/post/okhttpclient-retry/</id>
-        <link href="https://boommanpro.cn/post/okhttpclient-retry/">
+        <id>https://boommanpro.github.io/post/okhttpclient-retry/</id>
+        <link href="https://boommanpro.github.io/post/okhttpclient-retry/">
         </link>
         <updated>2020-02-14T14:21:02.000Z</updated>
         <content type="html"><![CDATA[<ol>
@@ -5928,8 +5928,8 @@ public class CustomerOkHttpRetryInterceptor implements Interceptor {
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Security 登录配置总结]]></title>
-        <id>https://boommanpro.cn/post/spring-security-summarize/</id>
-        <link href="https://boommanpro.cn/post/spring-security-summarize/">
+        <id>https://boommanpro.github.io/post/spring-security-summarize/</id>
+        <link href="https://boommanpro.github.io/post/spring-security-summarize/">
         </link>
         <updated>2020-02-13T10:18:02.000Z</updated>
         <content type="html"><![CDATA[<h1 id="引言">引言</h1>
@@ -6384,8 +6384,8 @@ isAssignableFrom()方法是判断是否为某个类的父类，instanceof关键�
     </entry>
     <entry>
         <title type="html"><![CDATA[服务器Jenkins搭建]]></title>
-        <id>https://boommanpro.cn/post/jenkins/</id>
-        <link href="https://boommanpro.cn/post/jenkins/">
+        <id>https://boommanpro.github.io/post/jenkins/</id>
+        <link href="https://boommanpro.github.io/post/jenkins/">
         </link>
         <updated>2020-02-12T08:23:48.000Z</updated>
         <content type="html"><![CDATA[<h2 id="安装插件">安装插件</h2>
@@ -6483,8 +6483,8 @@ npm run build
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Boot Mybatis Plus配置记录]]></title>
-        <id>https://boommanpro.cn/post/spring-boot-mybatis-plus/</id>
-        <link href="https://boommanpro.cn/post/spring-boot-mybatis-plus/">
+        <id>https://boommanpro.github.io/post/spring-boot-mybatis-plus/</id>
+        <link href="https://boommanpro.github.io/post/spring-boot-mybatis-plus/">
         </link>
         <updated>2020-02-11T08:26:08.000Z</updated>
         <content type="html"><![CDATA[<h2 id="1-maven依赖">1. maven依赖</h2>
@@ -6542,12 +6542,12 @@ npm run build
     </entry>
     <entry>
         <title type="html"><![CDATA[LeetCode Practice]]></title>
-        <id>https://boommanpro.cn/post/leetcode-practice/</id>
-        <link href="https://boommanpro.cn/post/leetcode-practice/">
+        <id>https://boommanpro.github.io/post/leetcode-practice/</id>
+        <link href="https://boommanpro.github.io/post/leetcode-practice/">
         </link>
         <updated>2020-01-17T13:26:26.000Z</updated>
         <content type="html"><![CDATA[<h1 id="leetcode">LeetCode</h1>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1622555017470.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1622555017470.png" alt="" loading="lazy"></figure>
 <h2 id="关于leetcode和面试">关于LeetCode和面试</h2>
 <p>仅对(2021年4月面试国内大中厂)经历的一些面试和朋友的面试总结做出一些心得。</p>
 <p>LeetCode刷题对于面试的开始热身环节和末尾的笔试都是很有意义的，这可能是区别你和其他非CS专业的手段，但是不要沉迷刷题，对于LeetCode的简单题目和中等难度题目会做，有自己的见解，能够白板答题，并且成功运行即可。</p>
@@ -6561,8 +6561,8 @@ npm run build
     </entry>
     <entry>
         <title type="html"><![CDATA[Java基础 复习]]></title>
-        <id>https://boommanpro.cn/post/java-basic/</id>
-        <link href="https://boommanpro.cn/post/java-basic/">
+        <id>https://boommanpro.github.io/post/java-basic/</id>
+        <link href="https://boommanpro.github.io/post/java-basic/">
         </link>
         <updated>2020-01-17T12:52:19.000Z</updated>
         <content type="html"><![CDATA[<h1 id="java基础">Java基础</h1>
@@ -6591,8 +6591,8 @@ npm run build
     </entry>
     <entry>
         <title type="html"><![CDATA[Spring Data Jpa 使用姿势]]></title>
-        <id>https://boommanpro.cn/post/spring-data-jpa-shi-yong-zi-shi/</id>
-        <link href="https://boommanpro.cn/post/spring-data-jpa-shi-yong-zi-shi/">
+        <id>https://boommanpro.github.io/post/spring-data-jpa-shi-yong-zi-shi/</id>
+        <link href="https://boommanpro.github.io/post/spring-data-jpa-shi-yong-zi-shi/">
         </link>
         <updated>2020-01-14T11:37:06.000Z</updated>
         <content type="html"><![CDATA[<h2 id="spring-data-jpa-guide">Spring Data Jpa Guide</h2>
@@ -6726,8 +6726,8 @@ nativeQuery = false时, 关联的是Table的表和字段</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[项目中使用 JDK8 时间的多种姿势]]></title>
-        <id>https://boommanpro.cn/post/proejct-date/</id>
-        <link href="https://boommanpro.cn/post/proejct-date/">
+        <id>https://boommanpro.github.io/post/proejct-date/</id>
+        <link href="https://boommanpro.github.io/post/proejct-date/">
         </link>
         <updated>2020-01-12T07:42:04.000Z</updated>
         <content type="html"><![CDATA[<h1 id="为什么使用jdk8的时间">为什么使用JDK8的时间</h1>
@@ -7019,7 +7019,7 @@ yyyy-MM-dd E a HH:mm:ss
 </ol>
 <pre><code>@DateTimeFormat(pattern = &quot;yyyy-MM-dd HH:mm:ss&quot;)
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1578898114859.png" alt="LocalDateTime Form Request" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1578898114859.png" alt="LocalDateTime Form Request" loading="lazy"></figure>
 <ol>
 <li>Long转LocalDateTime</li>
 </ol>
@@ -7047,7 +7047,7 @@ public class LocalDateTimeConverter implements Converter&lt;String, LocalDateTim
     }
 }
 </code></pre>
-<figure data-type="image" tabindex="2"><img src="https://boommanpro.cn//post-images/1578898797683.png" alt="Long2LocalDateTime" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://boommanpro.github.io//post-images/1578898797683.png" alt="Long2LocalDateTime" loading="lazy"></figure>
 <p><strong>注意</strong> 上下两种方式不能兼容使用 Convert级别高</p>
 <h2 id="json-格式化时间">Json  格式化时间</h2>
 <h3 id="json解析前提">Json解析前提</h3>
@@ -7154,8 +7154,8 @@ criteriaBuilder.between(root.get(&quot;workDay&quot;),start,end)
     </entry>
     <entry>
         <title type="html"><![CDATA[Nginx 常见配置]]></title>
-        <id>https://boommanpro.cn/post/nginx-config/</id>
-        <link href="https://boommanpro.cn/post/nginx-config/">
+        <id>https://boommanpro.github.io/post/nginx-config/</id>
+        <link href="https://boommanpro.github.io/post/nginx-config/">
         </link>
         <updated>2020-01-11T06:21:13.000Z</updated>
         <content type="html"><![CDATA[<h2 id="nginx-安装">Nginx 安装</h2>
@@ -7782,8 +7782,8 @@ ssl_ciphers	配置加密套件，写法遵循openssl标准
     </entry>
     <entry>
         <title type="html"><![CDATA[FRP配置部署 基于最新版本 v0.22.0]]></title>
-        <id>https://boommanpro.cn/post/frp-tools/</id>
-        <link href="https://boommanpro.cn/post/frp-tools/">
+        <id>https://boommanpro.github.io/post/frp-tools/</id>
+        <link href="https://boommanpro.github.io/post/frp-tools/">
         </link>
         <updated>2020-01-10T05:11:08.000Z</updated>
         <content type="html"><![CDATA[<p>作者的项目更新很快，看到我这篇博客看的人也蛮多的，我是搞java web 开发的，为什么这个看的多!!!</p>
@@ -7961,8 +7961,8 @@ fi
     </entry>
     <entry>
         <title type="html"><![CDATA[Yapi环境搭建及使用]]></title>
-        <id>https://boommanpro.cn/post/yapi-tools/</id>
-        <link href="https://boommanpro.cn/post/yapi-tools/">
+        <id>https://boommanpro.github.io/post/yapi-tools/</id>
+        <link href="https://boommanpro.github.io/post/yapi-tools/">
         </link>
         <updated>2020-01-09T01:42:34.000Z</updated>
         <content type="html"><![CDATA[<h2 id="前提准备">前提准备</h2>
@@ -8081,8 +8081,8 @@ fi
     </entry>
     <entry>
         <title type="html"><![CDATA[BoomMan For Windows]]></title>
-        <id>https://boommanpro.cn/post/boomman-for-windows/</id>
-        <link href="https://boommanpro.cn/post/boomman-for-windows/">
+        <id>https://boommanpro.github.io/post/boomman-for-windows/</id>
+        <link href="https://boommanpro.github.io/post/boomman-for-windows/">
         </link>
         <updated>2020-01-09T01:03:47.000Z</updated>
         <content type="html"><![CDATA[<h1 id="windows工具">Windows工具</h1>
@@ -8394,8 +8394,8 @@ fi
     </entry>
     <entry>
         <title type="html"><![CDATA[Java 编程技巧总结]]></title>
-        <id>https://boommanpro.cn/post/java-coding-summary/</id>
-        <link href="https://boommanpro.cn/post/java-coding-summary/">
+        <id>https://boommanpro.github.io/post/java-coding-summary/</id>
+        <link href="https://boommanpro.github.io/post/java-coding-summary/">
         </link>
         <updated>2020-01-08T09:49:30.000Z</updated>
         <content type="html"><![CDATA[<h2 id="lambda流式编程">Lambda流式编程</h2>
@@ -8435,8 +8435,8 @@ List&lt;List&lt;?&gt;&gt;=ListUtils.partition(list, size);</p>
     </entry>
     <entry>
         <title type="html"><![CDATA[BoomMan - IDEA]]></title>
-        <id>https://boommanpro.cn/post/boommanpro-idea-config/</id>
-        <link href="https://boommanpro.cn/post/boommanpro-idea-config/">
+        <id>https://boommanpro.github.io/post/boommanpro-idea-config/</id>
+        <link href="https://boommanpro.github.io/post/boommanpro-idea-config/">
         </link>
         <updated>2020-01-06T03:43:50.000Z</updated>
         <content type="html"><![CDATA[<h2 id="自用插件列表">自用插件列表</h2>
@@ -8556,7 +8556,7 @@ more and more
 <p>Match case :<br>
 <img src="https://img-blog.csdnimg.cn/20190124145246644.png" alt="在这里插入图片描述" loading="lazy"></p>
 <h2 id="代码tab设置">代码tab设置</h2>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1586825979310.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1586825979310.png" alt="" loading="lazy"></figure>
 <p>这样设置的目的是可以使用idea的双屏幕代码显示,之前一直是把tab关掉</p>
 <h3 id="jrebel-激活">Jrebel 激活</h3>
 <pre><code class="language-html">http://www.boommanpro.cn:8085/2475a295-cf38-44af-b440-1ffa98d9bed8
@@ -8643,8 +8643,8 @@ output
     </entry>
     <entry>
         <title type="html"><![CDATA[开发大佬们说的一些话]]></title>
-        <id>https://boommanpro.cn/post/saying/</id>
-        <link href="https://boommanpro.cn/post/saying/">
+        <id>https://boommanpro.github.io/post/saying/</id>
+        <link href="https://boommanpro.github.io/post/saying/">
         </link>
         <updated>2020-01-06T03:33:29.000Z</updated>
         <content type="html"><![CDATA[<h2 id="写在开头">写在开头</h2>
@@ -8692,8 +8692,8 @@ output
     </entry>
     <entry>
         <title type="html"><![CDATA[浏览器同源策略及JSONP]]></title>
-        <id>https://boommanpro.cn/post/jsonp/</id>
-        <link href="https://boommanpro.cn/post/jsonp/">
+        <id>https://boommanpro.github.io/post/jsonp/</id>
+        <link href="https://boommanpro.github.io/post/jsonp/">
         </link>
         <updated>2020-01-06T03:08:34.000Z</updated>
         <content type="html"><![CDATA[<h2 id="同源策略">同源策略</h2>
@@ -8724,7 +8724,7 @@ output
 <p>例如：</p>
 <p>一个域的页面去请求另一个域的资源；</p>
 <p>A域的页面去请求B域的资源。</p>
-<figure data-type="image" tabindex="1"><img src="https://boommanpro.cn//post-images/1578281955053.png" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://boommanpro.github.io//post-images/1578281955053.png" alt="" loading="lazy"></figure>
 <h2 id="jsonp实现跨域">😀 Jsonp实现跨域</h2>
 <h3 id="jsonp的基本原理">JSONP的基本原理</h3>
 <p><strong>动态添加一个标签，而script标签的src属性是没有跨域的限制的。</strong></p>
@@ -8828,8 +8828,8 @@ mockJson = cb + '(' + res + ')';
     </entry>
     <entry>
         <title type="html"><![CDATA[Gridea 个人搭建教程]]></title>
-        <id>https://boommanpro.cn/post/gridea-reference/</id>
-        <link href="https://boommanpro.cn/post/gridea-reference/">
+        <id>https://boommanpro.github.io/post/gridea-reference/</id>
+        <link href="https://boommanpro.github.io/post/gridea-reference/">
         </link>
         <updated>2020-01-02T05:48:20.000Z</updated>
         <content type="html"><![CDATA[<h1 id="gridea-introduce">Gridea Introduce</h1>
